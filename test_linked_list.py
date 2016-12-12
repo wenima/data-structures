@@ -20,3 +20,8 @@ def test_node_instantiation():
     """Test if the Node objects gets initiated correctly"""
     from linked_list import Node, init_node
     assert init_node() == "<class 'linked_list.Node'>"
+
+def test_node_assign_value():
+    """Test if the Node objects takes a value and returns it correctly"""
+    from linked_list import Node, set_note_attributes
+    assert set_note_attributes
