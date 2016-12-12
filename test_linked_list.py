@@ -17,7 +17,7 @@ def test_node_instantiation():
 def test_node_value():
     """Test the contents of nodes created with given input."""
     from linked_list import Node
-    node2 = Node("Something", "Something next")
+    node2 = Node("Something")
     assert node2.value == "Something" and node2.nxt == None
 
 
@@ -26,3 +26,10 @@ def test_linked_list_init():
     from linked_list import Linked_List
     assert type(Linked_List) == type
 
+
+def test_linked_list_push():
+    """Test the push method of the Linked List class."""
+    from linked_list import Node, Linked_List
+    new_ll = Linked_List()
+    new_ll.push("Something")
+    assert new_ll.head.value == "Something" and new_ll.tail.value == "Something" and new_ll.length == 1
