@@ -32,6 +32,11 @@ class Linked_List(object):
 
     def pop(self):
         """Pop the first value off the head of LL and return it."""
+        val = self.head.value
+        self.head = self.head.nxt
+        self.length -= 1
+
+        return val
 
 
     def search(self, value):
@@ -44,6 +49,7 @@ class Linked_List(object):
 
     def display():
         """Return a unicode string representing the Linked List as a tuple."""
+
 
 def init_node():
     node = Node(0)

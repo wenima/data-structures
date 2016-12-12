@@ -33,3 +33,19 @@ def test_linked_list_push():
     new_ll = Linked_List()
     new_ll.push("Something")
     assert new_ll.head.value == "Something" and new_ll.tail.value == "Something" and new_ll.length == 1
+
+
+# def test_linked_list_search():
+
+
+def test_linked_list_pop():
+    """Test the pop method of the Linked List class."""
+    from linked_list import Node, Linked_List, create_ll
+    new_ll = create_ll()
+    old_head_val = new_ll.head.value
+    new_ll.pop()
+    new_head_val = new_ll.head.value
+    assert old_head_val == "two" and new_head_val == "something else"
+
+
+# def test_linked_list_size():
