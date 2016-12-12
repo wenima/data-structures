@@ -7,18 +7,24 @@ class Node(object):
         self.value = value
         self.nxt = None
 
+
 def init_node():
     node = Node(0)
     return str(type(node))
 
+
 class Linked_List(object):
     """Create a Linked List Data Structure."""
-    def __init__():
+    def __init__(self):
         self.head = None
         self.tail = None
         self.length = 0
 
 
-    def add(self, value):
-        """Add a node"""
-        node = Node(value, self.head)
+    def push(self, value):
+        """Add a node."""
+        self.head = Node(value, self.head)
+        if self.tail is None:
+            self.tail = self.head
+
+        self.length += 1
