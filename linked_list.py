@@ -10,3 +10,15 @@ class Node(object):
 def init_node():
     node = Node(0)
     return str(type(node))
+
+class Linked_List(object):
+    """Create a Linked List Data Structure."""
+    def __init__():
+        self.head = None
+        self.tail = None
+        self.length = 0
+
+
+    def add(self, value):
+        """Add a node"""
+        node = Node(value, self.head)
