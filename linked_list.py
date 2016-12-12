@@ -6,3 +6,7 @@ class Node(object):
     def __init__(self, value, nxt=None):
         self.value = value
         self.nxt = None
+
+def init_node():
+    node = Node(0)
+    return str(type(node))

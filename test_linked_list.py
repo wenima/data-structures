@@ -13,5 +13,10 @@ def test_node_init():
     assert type(Node) == type
 
 # @pytest.mark.parametrize(value, nxt, PARAMS_NODE_VALUES)
-# def test_node_value(value, nxt):
-    """Test the contents of nodes created with given input."""
+# # def test_node_value(value, nxt):
+#     """Test the contents of nodes created with given input."""
+
+def test_node_instantiation():
+    """Test if the Node objects gets initiated correctly"""
+    from linked_list import Node, init_node
+    assert init_node() == "<class 'linked_list.Node'>"
