@@ -91,8 +91,8 @@ def test_linked_list_remove_node_exists():
     removing a node"""
     from linked_list import Node, Linked_List, create_ll
     new_linked_list = create_ll()
-    result = new_linked_list.remove("two")
-    assert result.startswith("Success")
+    new_linked_list.remove(new_linked_list.search("two"))
+    assert new_linked_list.length == 2
 
 
 def test_linked_list_remove_node_not_exists():
@@ -100,6 +100,6 @@ def test_linked_list_remove_node_not_exists():
     if the node does not exist"""
     from linked_list import Node, Linked_List, create_ll
     new_linked_list = create_ll()
-    result = new_linked_list.remove("owt")
-    assert result.startswith("ERROR")
+    new_linked_list.remove(new_linked_list.search("to"))
+    assert new_linked_list.length == 3
 
