@@ -60,8 +60,8 @@ class Linked_List(object):
             else:
                 cur_node = cur_node.nxt
         else:
-            print("ERROR: That node is not in this linked list.")
-            return r_node
+            raise ValueError("ERROR: That node is not in this linked list.")
+
 
     def display(self):
         """Return a unicode string representing the Linked List as a tuple."""
@@ -69,7 +69,7 @@ class Linked_List(object):
 
     def __len__(self):
         """Enable use of len() function."""
-        return self._size()
+        return self.size()
 
     def _iterate_from(self, list_item):
         while list_item is not None:
@@ -80,17 +80,3 @@ class Linked_List(object):
         """Helper function to return an iterable of node values"""
         node_values = [node.value for node in self._iterate_from(self.head)]
         return node_values
-
-
-
-def init_node():
-    node = Node(0)
-    return str(type(node))
-
-
-def create_ll():
-    values = ["something", "something else", "two"]
-    new_ll = Linked_List()
-    for value in values:
-        new_ll.push(value)
-    return new_ll
