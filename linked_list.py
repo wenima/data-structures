@@ -12,16 +12,12 @@ class Linked_List(object):
     """Create a Linked List Data Structure."""
     def __init__(self):
         self.head = None
-        self.tail = None
         self.length = 0
 
 
     def push(self, value):
         """Add a node."""
         self.head = Node(value, self.head)
-        if self.tail is None:
-            self.tail = self.head
-
         self.length += 1
 
 
@@ -42,18 +38,34 @@ class Linked_List(object):
     def search(self, query):
         """Return the node that contains the value."""
         cur_node = self.head
-        while True:
+        while cur_node:
             if cur_node.value == query:
                 return cur_node
-            elif cur_node == self.tail:
-                print("Value is not in this linked list.")
                 break
             else:
                 cur_node = cur_node.nxt
+        else:
+            print("That value is not in this linked list.")
 
 
-    def remove(self, node):
+    def remove(self, r_node):
         """Remove the given node from the LL."""
+        if self.head == r_node:
+            self.head = self.head.nxt
+            return ("Succesfully removed Node with value: {}".format(r_node.value))
+
+        cur_node = self.head
+        while cur_node:
+            if r_node == cur_node.nxt:
+                cur_node.nxt = cur_node.nxt.nxt
+                print("Succesfully removed Node with value: {}".format(r_node.value))
+                self.length -= 1
+                return
+            else:
+                cur_node = cur_node.nxt
+        else:
+            print("ERROR: That node is not in this linked list.")
+            return r_node
 
 
     def display(self):
