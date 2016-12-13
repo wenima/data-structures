@@ -71,12 +71,11 @@ class Linked_List(object):
     def display(self):
         """Return a unicode string representing the Linked List as a tuple."""
         cur_node = self.head
-        out_str = "("
+        out_str= []
         for i in range(self.length):
-            out_str += str(cur_node.value) + ', '
+            out_str.append(cur_node.value)
             cur_node = cur_node.nxt
-
-        return out_str + ')'
+        return str(tuple(out_str))
 
 
 def init_node():

@@ -47,5 +47,11 @@ def test_linked_list_pop():
     new_head_val = new_ll.head.value
     assert old_head_val == "two" and new_head_val == "something else"
 
+def test_linked_list_display():
+    """Test the display method of the Linked_List class."""
+    from linked_list import Node, Linked_List, create_ll
+    new_linked_list = create_ll()
+    result = "('two', 'something else', 'something')"
+    assert new_linked_list.display() == result
 
 # def test_linked_list_size():
