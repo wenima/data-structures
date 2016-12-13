@@ -45,22 +45,22 @@ class Linked_List(object):
             else:
                 cur_node = cur_node.nxt
         else:
-            print("That value is not in this linked list.")
+            return "That value is not in this linked list."
 
 
-    def remove(self, r_node):
+def remove(self, r_node):
         """Remove the given node from the LL."""
+        cur_node = self.head
         if self.head == r_node:
             self.head = self.head.nxt
-            return ("Succesfully removed Node with value: {}".format(r_node.value))
-
-        cur_node = self.head
+            self.length -= 1
+            return "Succesfully removed Node with value: \
+            {0}. New head set to {1}".format(r_node.value, self.head.value)
         while cur_node:
             if r_node == cur_node.nxt:
                 cur_node.nxt = cur_node.nxt.nxt
-                print("Succesfully removed Node with value: {}".format(r_node.value))
                 self.length -= 1
-                return
+                return "Succesfully removed Node with value: {}".format(r_node.value)
             else:
                 cur_node = cur_node.nxt
         else:
@@ -88,5 +88,14 @@ def create_ll():
     new_ll = Linked_List()
     for value in values:
         new_ll.push(value)
-
     return new_ll
+
+def iterate_from(list_item):
+     while list_item is not None:
+         yield list_item
+         list_item = list_item.nxt
+
+def node_values(a_linked_list):
+    """Helper function to return an iterable of node values"""
+    node_values = [node.value for node in iterate_from(a_linked_list.head)]
+    return node_values
