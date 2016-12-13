@@ -48,7 +48,7 @@ class Linked_List(object):
             return "That value is not in this linked list."
 
 
-def remove(self, r_node):
+    def remove(self, r_node):
         """Remove the given node from the LL."""
         cur_node = self.head
         if self.head == r_node:
