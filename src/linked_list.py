@@ -94,4 +94,3 @@ def create_ll():
     for value in values:
         new_ll.push(value)
     return new_ll
-
