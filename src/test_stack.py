@@ -1,37 +1,42 @@
 """Testing the linked_list class - CF 401 Python Week 2 Assignment."""
 import pytest
 
-PARAMS_SAMPLE_LIST = ["something", 1, "pear", 3, "apple"]
-
-def create_new_empty_ll(lst):
-    """Given a list, create a new Linked List with all the values."""
-    from linked_list import Node, Linked_List
-    new_ll = Linked_List()
-    for value in lst:
-        new_ll.push(value)
-    return new_ll
+@pytest.fixture
+def new_list():
+    from linked_list import  Linked_List
+    this_list = Linked_List()
+    return this_list
 
 
-def test_node_init():
-    """Test the initialization of a node."""
-    from linked_list import Node
-    assert type(Node) == type
+def test_create_new_empty_Stack_out_of_Linked_List():
+    from stack import Stack
+    new_stack = Stack()
+    assert new_stack._container.head is None
 
 
-def test_node_instantiation():
-    """Test if the Node objects gets initiated correctly"""
-    from linked_list import Node, init_node
-    assert init_node() == "<class 'linked_list.Node'>"
+def test_create_empty_Linked_List():
+    from linked_list import Linked_List
+    new_list = Linked_List()
+    assert new_list.head is None
 
 
-def empty_new_node_object_has_none():
+def test_empty_new_node_object_has_none():
     """Test the emptyiness of a node."""
     from linked_list import Node
     new_node = Node()
     assert new_node.value is None
     assert new_node.nxt is None
 
-def baseclass_has_none_as_nxt():
-    """Test if the baseclass has field set to None"""
+def test_new_node_has_data():
+    """Test if a new node is correctly created with data"""
     from linked_list import Node
-    assert Node.nxt == None
+    new_node = Node("five")
+    assert new_node.value == "five"
+
+def test_when_initialized_with_iterable_makes_nodes():
+    """Test if the number of nodes matches the number of elements passed with
+    the iterable"""
+    from stack import Stack
+    my_nodes = [1, 2, 3]
+    new_stack = Stack(my_nodes)
+    assert len(new_stack._container) == 3
