@@ -9,7 +9,6 @@ def create_new_ll(lst):
     new_ll = Linked_List()
     for value in lst:
         new_ll.push(value)
-
     return new_ll
 
 
