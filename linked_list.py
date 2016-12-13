@@ -39,16 +39,32 @@ class Linked_List(object):
         return val
 
 
-    def search(self, value):
+    def search(self, query):
         """Return the node that contains the value."""
+        cur_node = self.head
+        while True:
+            if cur_node.value == query:
+                return cur_node
+            elif cur_node == self.tail:
+                print("Value is not in this linked list.")
+                break
+            else:
+                cur_node = cur_node.nxt
 
 
-    def remove(node):
+    def remove(self, node):
         """Remove the given node from the LL."""
 
 
-    def display():
+    def display(self):
         """Return a unicode string representing the Linked List as a tuple."""
+        cur_node = self.head
+        out_str = "("
+        for i in range(self.length):
+            out_str += str(cur_node.value) + ', '
+            cur_node = cur_node.nxt
+
+        return out_str + ')'
 
 
 def init_node():
