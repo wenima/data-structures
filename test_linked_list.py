@@ -9,7 +9,6 @@ def create_new_ll(lst):
     new_ll = Linked_List()
     for value in lst:
         new_ll.push(value)
-
     return new_ll
 
 
@@ -43,16 +42,24 @@ def test_linked_list_push():
     from linked_list import Node, Linked_List
     new_ll = Linked_List()
     new_ll.push("Something")
-    assert new_ll.head.value == "Something" and new_ll.tail.value == "Something" and new_ll.length == 1
+    assert new_ll.head.value == "Something" and new_ll.length == 1
 
 
-# def test_linked_list_search_success():
-#     """Test the search method of the Linked List class with a search query that exists."""
-#     from linked_list import Node, Linked_List
-#     new_ll = 
+def test_linked_list_search_success():
+    """Test the search method of the Linked List class with a search query that exists."""
+    from linked_list import Node, Linked_List, create_ll
+    new_linked_list = create_ll()
+    result = new_linked_list.search('two')
+    assert result.value == 'two'
 
-# def test_linked_list_search_failure():
-#     """Test the search method of the Linked List class with a search query that DOES NOT exist."""
+
+def test_linked_list_search_failure():
+    """Test the search method of the Linked List class with a search query that DOES NOT exist."""
+    from linked_list import Node, Linked_List, create_ll
+    new_linked_list = create_ll()
+    result = new_linked_list.search('owt')
+    assert result.startswith('That')
+
 
 def test_linked_list_pop():
     """Test the pop method of the Linked List class."""
@@ -70,4 +77,29 @@ def test_linked_list_display():
     result = "('two', 'something else', 'something')"
     assert new_linked_list.display() == result
 
-# def test_linked_list_size():
+
+def test_linked_list_size():
+    """Test if the size method of the Linked_List class returns the size
+    correctly by independently iterating over the the linked list"""
+    from linked_list import Node, Linked_List, create_ll, node_values
+    new_linked_list = create_ll()
+    assert new_linked_list.length == len(node_values(new_linked_list))
+
+
+def test_linked_list_remove_node_exists():
+    """Test if the remove method of the Linked_List class is correctly
+    removing a node"""
+    from linked_list import Node, Linked_List, create_ll
+    new_linked_list = create_ll()
+    result = new_linked_list.remove("two")
+    assert result.startswith("Success")
+
+
+def test_linked_list_remove_node_not_exists():
+    """Test if the remove method of the Linked_List class is correctly behaving
+    if the node does not exist"""
+    from linked_list import Node, Linked_List, create_ll
+    new_linked_list = create_ll()
+    result = new_linked_list.remove("owt")
+    assert result.startswith("ERROR")
+
