@@ -1,6 +1,17 @@
 """Testing the linked_list class - CF 401 Python Week 2 Assignment."""
 import pytest
 
+PARAMS_SAMPLE_LIST = ["something", 1, "pear", 3, "apple"]
+
+def create_new_ll(lst):
+    """Given a list, create a new Linked List with all the values."""
+    from linked_list import Node, Linked_List
+    new_ll = Linked_List()
+    for value in lst:
+        new_ll.push(value)
+
+    return new_ll
+
 
 def test_node_init():
     """Test the initialization of a node."""
@@ -35,8 +46,13 @@ def test_linked_list_push():
     assert new_ll.head.value == "Something" and new_ll.tail.value == "Something" and new_ll.length == 1
 
 
-# def test_linked_list_search():
+def test_linked_list_search_success():
+    """Test the search method of the Linked List class with a search query that exists."""
+    from linked_list import Node, Linked_List
+    new_ll = 
 
+def test_linked_list_search_failure():
+    """Test the search method of the Linked List class with a search query that DOES NOT exist."""
 
 def test_linked_list_pop():
     """Test the pop method of the Linked List class."""
