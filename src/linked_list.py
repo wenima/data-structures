@@ -3,56 +3,59 @@
 
 class Node(object):
     """Create Node objects for use in a Linked List data structure."""
-    def __init__(self, value, nxt=None):
+    def __init__(self, value=None, nxt=None):
         self.value = value
         self.nxt = nxt
 
 
 class Linked_List(object):
     """Create a Linked List Data Structure."""
-    def __init__(self):
+    def __init__(self, iterable=None):
+        """Intialize a Linked List Object."""
         self.head = None
-        self.length = 0
-
+        self._size = 0
+        if iterable and hasattr(iterable, "__iter__"):
+            for value in iterable:
+                self.push(value)
+        elif iterable:
+            raise TypeError
 
     def push(self, value):
         """Add a node."""
         self.head = Node(value, self.head)
-        self.length += 1
-
+        self._size += 1
 
     def size(self):
         """Return the length of the Linked_List."""
-        return self.length
-
+        return self._size
 
     def pop(self):
         """Pop the first value off the head of LL and return it."""
+        if self.head is None:
+            raise IndexError("Cannot pop from an empty Linked List.")
         val = self.head.value
         self.head = self.head.nxt
-        self.length -= 1
+        self._size -= 1
 
         return val
 
-
     def search(self, query):
         """Return the node that contains the value."""
-        match = [node for node in iterate_from(self.head) if node.value == query]
+        match = [node for node in self._iterate_from(self.head) if node.value == query]
         return match[0] if match else "That value is not in this linked list."
-
 
     def remove(self, r_node):
         """Remove the given node from the LL."""
         cur_node = self.head
-        if self.head == r_node:
+        if self.head is r_node:
             self.head = self.head.nxt
-            self.length -= 1
+            self._size -= 1
             return "Succesfully removed Node with value: \
             {0}. New head set to {1}".format(r_node.value, self.head.value)
         while cur_node:
             if r_node == cur_node.nxt:
                 cur_node.nxt = cur_node.nxt.nxt
-                self.length -= 1
+                self._size -= 1
                 return "Succesfully removed Node with value: {}".format(r_node.value)
             else:
                 cur_node = cur_node.nxt
@@ -60,10 +63,24 @@ class Linked_List(object):
             print("ERROR: That node is not in this linked list.")
             return r_node
 
-
     def display(self):
         """Return a unicode string representing the Linked List as a tuple."""
-        return str(tuple(node_values(self)))
+        return str(tuple(self._node_values()))
+
+    def __len__(self):
+        """Enable use of len() function."""
+        return self._size()
+
+    def _iterate_from(self, list_item):
+        while list_item is not None:
+            yield list_item
+            list_item = list_item.nxt
+
+    def _node_values(self):
+        """Helper function to return an iterable of node values"""
+        node_values = [node.value for node in self._iterate_from(self.head)]
+        return node_values
+
 
 
 def init_node():
@@ -78,12 +95,3 @@ def create_ll():
         new_ll.push(value)
     return new_ll
 
-def iterate_from(list_item):
-     while list_item is not None:
-         yield list_item
-         list_item = list_item.nxt
-
-def node_values(a_linked_list):
-    """Helper function to return an iterable of node values"""
-    node_values = [node.value for node in iterate_from(a_linked_list.head)]
-    return node_values
