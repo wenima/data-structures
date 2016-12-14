@@ -93,6 +93,7 @@ class Linked_List(object):
                         self._size -= 1
                         return "Succesfully removed Node with value: {}".format(r_node.value)
 
+
     def display(self):
         """Return a unicode string representing the Linked List as a tuple."""
         return str(tuple(self._node_values()))
