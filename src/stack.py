@@ -15,4 +15,9 @@ class Stack(object):
 
     def pop(self):
         """Use Linked List pop() method to remove one from stack."""
-        return self._container.pop()
+        try:
+            return self._container.pop()
+        except:
+            raise IndexError("Cannot pop from empty stack.")
+
+
