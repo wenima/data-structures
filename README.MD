@@ -16,6 +16,8 @@ For more information on the assignment, see here: https://codefellows.github.io/
 # Coverage:
 
 ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+
+
 | Name                | Stmts | Miss | Cover | Missing |
 | ------------------- | ----- | ---- | ----- | ------- |
 | linked_list.py      |  47   |  0   | 100%  |         |
