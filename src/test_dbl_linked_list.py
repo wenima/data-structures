@@ -40,6 +40,13 @@ def test_create_empty_dbl_linked_list(create_empty_dbl_ll):
     assert dll.tail is None
 
 
+def test_create_dbl_with_iterable():
+    """Given an iterable, test that new Dbl_LL is created."""
+    from dbl_linked_list import Dbl_Linked_List
+    new_dll = Dbl_Linked_List([1, 2, 3])
+    assert new_dll.head.value == 3
+
+
 def test_pushed_val_is_new_head_and_tail(create_empty_dbl_ll):
     """Test pushed val is new head and tail."""
     dll = create_empty_dbl_ll
@@ -72,4 +79,10 @@ def test_push_old_prev_points_to_new_head(create_empty_dbl_ll):
     assert old.prev is dll.head
 
 
-
+def test_push_old_head_is_now_tail(create_empty_dbl_ll):
+    """Test the old head is now tail in list of two."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    old_tail = dll.head
+    dll.push(4)
+    assert old_tail.value == dll.tail.value
