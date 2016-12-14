@@ -67,7 +67,7 @@ def test_linked_list_search_failure(new_ll):
     """Test the search method of the Linked List class with a search query that DOES NOT exist."""
     from linked_list import Linked_List
     result = new_ll.search('owt')
-    assert result.startswith('That')
+    assert result is None
 
 
 def test_linked_list_pop(new_ll):
@@ -76,7 +76,7 @@ def test_linked_list_pop(new_ll):
     old_head_val = new_ll.head.value
     new_ll.pop()
     new_head_val = new_ll.head.value
-    assert old_head_val == "apple" and new_head_val == 3
+    assert new_head_val == 3
 
 def test_pop_from_empty_list(new_empty_ll):
     """Tests behaviour of Linked_List.pop function when executed on empty
@@ -118,7 +118,6 @@ def test_linked_list_remove_node_exists(new_ll):
     r_node = new_ll.search("pear")
     new_ll.remove(r_node)
     assert new_ll.size() == 4
-    #result.startswith("Success")
 
 
 def test_linked_list_remove_node_not_exists(new_ll):
