@@ -48,7 +48,7 @@ class Linked_List(object):
         """Remove the given node from the LL."""
         for node in self._iterate_from(self.head):
             if r_node.value == node.value:
-                if self.head.value == 'apple':
+                if self.head.value == r_node.value:
                     self.pop()
                     return "Succesfully removed Node with value: \
                     {0}. New head set to {1}".format(r_node.value, self.head.value)
