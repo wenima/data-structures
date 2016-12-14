@@ -1,7 +1,15 @@
 """Testing the linked_list class - CF 401 Python Week 2 Assignment."""
 import pytest
+import random
 
 PARAMS_SAMPLE_LIST = ["something", 1, "pear", 3, "apple"]
+sample_from_the_midde_of_iterable = random.choice(PARAMS_SAMPLE_LIST[1:len(PARAMS_SAMPLE_LIST) - 1])
+
+REMOVE_TESTS = [
+    (PARAMS_SAMPLE_LIST[0], "Succesfully removed Node with value: something"), #PARAMS_SAMPLE_LIST[0]
+    (sample_from_the_midde_of_iterable, "Succesfully removed Node with value: {0}".format(sample_from_the_midde_of_iterable)),
+    (PARAMS_SAMPLE_LIST[len(PARAMS_SAMPLE_LIST) - 1], "Succesfully removed Node with value: apple. New head set to 3"),
+]
 
 
 @pytest.fixture
@@ -102,22 +110,13 @@ def test_linked_list_size(new_ll):
     assert new_ll.size() == len(PARAMS_SAMPLE_LIST)
 
 
-def test_linked_list_remove_node_exists(new_ll, capsys):
+@pytest.mark.parametrize('s , out', REMOVE_TESTS)
+def test_linked_list_remove_node_exists(s, out):
     """Test if the remove method of the Linked_List class is correctly
     removing the head of a linked list."""
     from linked_list import Linked_List
-    r_node = new_ll.search("apple")
-    new_ll.remove(r_node)
-    assert new_ll.size() == 4
-
-
-def test_linked_list_remove_node_exists(new_ll):
-    """Test if the remove method of the Linked_List class is correctly
-    removing a node."""
-    from linked_list import Linked_List
-    r_node = new_ll.search("pear")
-    new_ll.remove(r_node)
-    assert new_ll.size() == 4
+    new_ll = Linked_List(PARAMS_SAMPLE_LIST)
+    assert new_ll.remove(s) == out
 
 
 def test_linked_list_remove_node_not_exists(new_ll):

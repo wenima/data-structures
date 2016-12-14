@@ -44,18 +44,26 @@ class Linked_List(object):
         match = [node for node in self._iterate_from(self.head) if node.value == query]
         return match[0] if match else None
 
-    def remove(self, r_node):
+    def remove(self, value):
         """Remove the given node from the LL."""
+        r_node = self.search(value)
+        if r_node is None:
+            raise ValueError("ERROR: That node is not in this linked list.")
         for node in self._iterate_from(self.head):
             if r_node.value == node.value:
                 if self.head.value == r_node.value:
                     self.pop()
-                    return "Succesfully removed Node with value: \
-                    {0}. New head set to {1}".format(r_node.value, self.head.value)
-                node.nxt = node.nxt.nxt
-                self._size -= 1
-                return "Succesfully removed Node with value: {}".format(r_node.value)
-        raise ValueError("ERROR: That node is not in this linked list.")
+                    return "Succesfully removed Node with value: {0}. New head set to {1}".format(r_node.value, self.head.value)
+                else:
+                    node.nxt = node.nxt.nxt
+                    self._size -= 1
+                    return "Succesfully removed Node with value: {}".format(r_node.value)
+            else:
+                if node.nxt.nxt is None:
+                    if node.nxt == r_node:
+                        node.nxt = None
+                        self._size -= 1
+                        return "Succesfully removed Node with value: {}".format(r_node.value)
 
 
     def display(self):
