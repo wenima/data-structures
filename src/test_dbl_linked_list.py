@@ -2,6 +2,8 @@
 
 import pytest
 
+TEST_ITER = [1, 2, 3, 4, 5]
+
 @pytest.fixture
 def create_empty_node():
     from dbl_linked_list import Dbl_Node
@@ -43,8 +45,8 @@ def test_create_empty_dbl_linked_list(create_empty_dbl_ll):
 def test_create_dbl_with_iterable():
     """Given an iterable, test that new Dbl_LL is created."""
     from dbl_linked_list import Dbl_Linked_List
-    new_dll = Dbl_Linked_List([1, 2, 3])
-    assert new_dll.head.value == 3
+    new_dll = Dbl_Linked_List(TEST_ITER)
+    assert new_dll.head.value == 5
 
 
 def test_pushed_val_is_new_head_and_tail(create_empty_dbl_ll):
@@ -84,5 +86,13 @@ def test_push_old_head_is_now_tail(create_empty_dbl_ll):
     dll = create_empty_dbl_ll
     dll.push(5)
     old_tail = dll.head
+    dll.push(4)
+    assert old_tail.value == dll.tail.value
+
+def test_push_tail_still_tail(create_empty_dbl_ll):
+    """Test that the old tail is still tail when pushed."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    old_tail = dll.tail
     dll.push(4)
     assert old_tail.value == dll.tail.value
