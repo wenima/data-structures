@@ -8,6 +8,12 @@ def create_empty_node():
     new_node = Dbl_Node()
     return new_node
 
+@pytest.fixture
+def create_empty_dbl_ll():
+    from dbl_linked_list import Dbl_Linked_List
+    new_dll = Dbl_Linked_List()
+    return new_dll
+
 
 def test_create_empty_dbl_node(create_empty_node):
     """Test creation of an empty node."""
@@ -16,4 +22,54 @@ def test_create_empty_dbl_node(create_empty_node):
     assert create_empty_node.prev is None
 
 
-def test_create_node_with_
+def test_create_node_with_val_nxt_prev():
+    """Test creation of Nodes with values and nxt, prev references."""
+    from dbl_linked_list import Dbl_Node
+    node1 = Dbl_Node(1)
+    assert node1.value == 1 and node1.nxt is None and node1.prev is None
+    node2 = Dbl_Node("two", node1)
+    assert node2.value == "two" and node2.nxt is node1 and node2.prev is None
+    node3 = Dbl_Node([3], node1, node2)
+    assert node3.val == [3] and node3.nxt is node1 and node3.prev is node2
+
+
+def test_create_empty_dbl_linked_list(create_empty_dbl_ll):
+    """Test creation of empty Dbl_Linked_List."""
+    dll = create_empty_dbl_ll
+    assert dll.head is None
+    assert dll.tail is None
+
+
+def test_pushed_val_is_new_head_and_tail(create_empty_dbl_ll):
+    """Test pushed val is new head and tail."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    assert dll.head.value == 5 and dll.tail.value == 5
+
+
+def test_first_pushed_val_nxt_prev_is_none(create_empty_dbl_ll):
+    """Test that the first pushed Node has no nxt or prev."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    assert dll.head.nxt is None and dll.head.prev is None
+
+
+def test_push_new_head_points_to_old_head(create_empty_dbl_ll):
+    """Test new head points to old head, old head to new."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    old = dll.head
+    dll.push(3)
+    assert dll.head.next is old
+
+
+def test_push_old_prev_points_to_new_head(create_empty_dbl_ll):
+    """Test that the new head is prev of old head."""
+    dll = create_empty_dbl_ll
+    dll.push(5)
+    old = dll.head
+    dll.push(3)
+    assert old.prev is dll.head
+
+
+
