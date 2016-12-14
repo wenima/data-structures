@@ -3,7 +3,8 @@ import pytest
 
 PARAMS_SAMPLE_LIST = ["something", 1, "pear", 3, "apple"]
 
-def create_new_empty_ll(lst):
+@pytest.fixture
+def create_ll_from_list(lst):
     """Given a list, create a new Linked List with all the values."""
     from linked_list import Node, Linked_List
     new_ll = Linked_List()
