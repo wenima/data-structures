@@ -6,8 +6,10 @@ PARAMS_SAMPLE_LIST = ["something", 1, "pear", 3, "apple"]
 
 @pytest.fixture
 def create_empty_node():
+    """Return an empty Node object."""
     from linked_list import Node
     return Node()
+
 
 @pytest.fixture
 def new_ll():
@@ -16,18 +18,13 @@ def new_ll():
     this_ll = Linked_List(PARAMS_SAMPLE_LIST)
     return this_ll
 
+
 @pytest.fixture
 def new_empty_ll():
     """Create an empty object of type Stack to be used in test functions."""
     from linked_list import Linked_List
     this_empty_ll = Linked_List()
     return this_empty_ll
-
-
-def test_node_init():
-    """Test the initialization of a node."""
-    from linked_list import Node
-    assert type(Node) == type
 
 
 def test_node_instantiation(create_empty_node):
@@ -40,7 +37,7 @@ def test_node_value():
     """Test the contents of nodes created with given input."""
     from linked_list import Node
     node2 = Node("Something")
-    assert node2.value == "Something" and node2.nxt == None
+    assert node2.value == "Something" and node2.nxt is None
 
 
 def test_linked_list_init():
@@ -77,6 +74,7 @@ def test_linked_list_pop(new_ll):
     new_ll.pop()
     new_head_val = new_ll.head.value
     assert new_head_val == 3
+
 
 def test_pop_from_empty_list(new_empty_ll):
     """Tests behaviour of Linked_List.pop function when executed on empty
