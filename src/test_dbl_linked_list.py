@@ -190,6 +190,7 @@ def test_pop_reassign_head(create_list_with_iter):
     dll.pop()
     assert old_head.nxt.value == dll.head.value
 
+
 def test_pop_decrease_size(create_list_with_iter):
     """Test that pop correctly decreases size."""
     dll = create_list_with_iter
@@ -203,6 +204,7 @@ def test_pop_reassign_nxt_prev(create_list_with_iter):
     dll = create_list_with_iter
     dll.pop()
     assert dll.head.prev is None and dll.head.nxt.prev is dll.head
+
 
 def test_pop_returns_correct_value(create_list_with_iter):
     """Test that pop returns the correct value."""
@@ -225,6 +227,7 @@ def test_shift_reassign_tail(create_list_with_iter):
     dll.shift()
     assert old_tail.prev.value == dll.tail.value
 
+
 def test_shift_decrease_size(create_list_with_iter):
     """Test that shift correctly decreases size."""
     dll = create_list_with_iter
@@ -239,7 +242,8 @@ def test_shift_reassign_nxt_prev(create_list_with_iter):
     dll.shift()
     assert dll.tail.nxt is None and dll.tail.prev.tail is dll.head
 
-def test_pop_returns_correct_value(create_list_with_iter):
+
+def test_shift_returns_correct_value(create_list_with_iter):
     """Test that shift returns the correct value."""
     dll = create_list_with_iter
     tail_value = dll.tail.value
@@ -247,3 +251,56 @@ def test_pop_returns_correct_value(create_list_with_iter):
 
 
 """REMOVE SPECIFIC TESTS"""
+def test_remove_empty_list_raise_error(create_empty_dbl_ll):
+    """Test remove on empty list raises an Index Error."""
+    dll = create_empty_dbl_ll
+    with pytest.raises(IndexError):
+        dll.remove("something")
+
+
+def test_remove_val_not_in_list(create_list_with_iter):
+    """Test remove with value not in list raises Value Error."""
+    dll = create_list_with_iter
+    with pytest.raises(ValueError):
+        dll.remove("something")
+
+
+def test_remove_case_head(create_list_with_iter):
+    """Test remove with case head.  Should run pop()."""
+    dll = create_list_with_iter
+    old_head = dll.head.nxt
+    dll.remove(old_head.value)
+    assert dll.head.value is old_head_nxt.value
+
+
+def test_remove_case_tail(create_list_with_iter):
+    """Test remove with case tail.  Should run shift()."""
+    dll = create_list_with_iter
+    old_tail = dll.tail
+    dll.remove(old_tail.value)
+    assert dll.tail.value == old_tail.prev.value
+
+
+def test_remove_head_tail_do_not_change(create_list_with_iter):
+    """Test that remove on any other node does not change head or tail."""
+    dll = create_list_with_iter
+    old_tail = dll.tail
+    old_head = dll.head
+    dll.remove(dll.head.nxt.value)
+    assert old_tail is dll.tail and old_head is dll.head
+
+
+def test_remove_prev_nxt_reassigned(create_list_with_iter):
+    """Test that remove correctly changes prev and nxt."""
+    dll = create_list_with_iter
+    removed = dll.head.nxt
+    dll.remove(removed.value)
+    assert dll.head.nxt is removed.nxt and dll.head.nxt.prev is dll.head
+
+
+def test_remove_correctly_changes_size(create_list_with_iter):
+    """Test that remove method correctly changes size."""
+    dll = create_list_with_iter
+    old_size = dll.size
+    dll.remove(dll.head.nxt.value)
+    assert old_size == dll.size - 1
