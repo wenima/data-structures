@@ -31,7 +31,7 @@ def test_node_init():
 
 
 def test_node_instantiation(create_empty_node):
-    """Test if the Node objects gets initiated correctly"""
+    """Test if the Node objects gets initiated correctly."""
     from linked_list import Node
     assert create_empty_node.value is None
 
@@ -80,7 +80,7 @@ def test_linked_list_pop(new_ll):
 
 def test_pop_from_empty_list(new_empty_ll):
     """Tests behaviour of Linked_List.pop function when executed on empty
-    linked list"""
+    linked list."""
     from linked_list import Linked_List
     with pytest.raises(IndexError):
         new_empty_ll.pop()
@@ -95,16 +95,25 @@ def test_linked_list_display(new_ll):
 
 def test_linked_list_size(new_ll):
     """Test if the size method of the Linked_List class returns the size
-    correctly by independently iterating over the the linked list"""
+    correctly by independently iterating over the the linked list."""
     from linked_list import Linked_List
     assert new_ll._size == len(PARAMS_SAMPLE_LIST)
     assert len(new_ll) == len(PARAMS_SAMPLE_LIST)
     assert new_ll.size() == len(PARAMS_SAMPLE_LIST)
 
 
+def test_linked_list_remove_node_exists(new_ll, capsys):
+    """Test if the remove method of the Linked_List class is correctly
+    removing the head of a linked list."""
+    from linked_list import Linked_List
+    r_node = new_ll.search("apple")
+    new_ll.remove(r_node)
+    assert new_ll.size() == 4
+
+
 def test_linked_list_remove_node_exists(new_ll):
     """Test if the remove method of the Linked_List class is correctly
-    removing a node"""
+    removing a node."""
     from linked_list import Linked_List
     r_node = new_ll.search("pear")
     new_ll.remove(r_node)
@@ -114,8 +123,15 @@ def test_linked_list_remove_node_exists(new_ll):
 
 def test_linked_list_remove_node_not_exists(new_ll):
     """Test if the remove method of the Linked_List class is correctly behaving
-    if the node does not exist"""
+    if the node does not exist."""
     from linked_list import Linked_List, Node
     r_node = Node("bear")
     with pytest.raises(ValueError):
         new_ll.remove(r_node)
+
+
+def test_lined_list_create_with_non_iterable():
+    """Test that passing a non iterable gets still added as a node."""
+    from linked_list import Linked_List
+    new_linked_list = Linked_List(-100)
+    assert new_linked_list.head.value == -100

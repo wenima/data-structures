@@ -10,15 +10,16 @@ class Node(object):
 
 class Linked_List(object):
     """Create a Linked List Data Structure."""
-    def __init__(self, iterable=None):
+    def __init__(self, maybe_an_iterable=None):
         """Intialize a Linked List Object."""
         self.head = None
         self._size = 0
-        if iterable and hasattr(iterable, "__iter__"):
-            for value in iterable:
-                self.push(value)
-        elif iterable:
-            raise TypeError
+        if maybe_an_iterable:
+            try:
+                for value in maybe_an_iterable:
+                    self.push(value)
+            except TypeError:
+                self.push(maybe_an_iterable)
 
     def push(self, value):
         """Add a node."""
