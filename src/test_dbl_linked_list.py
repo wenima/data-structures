@@ -48,7 +48,7 @@ def test_create_dbl_with_iterable():
     new_dll = Dbl_Linked_List(TEST_ITER)
     assert new_dll.head.value == 5
 
-
+"""PUSH SPECIFIC TESTS"""
 def test_pushed_val_is_new_head_and_tail(create_empty_dbl_ll):
     """Test pushed val is new head and tail."""
     dll = create_empty_dbl_ll
@@ -98,5 +98,36 @@ def test_push_tail_still_tail(create_empty_dbl_ll):
     dll.push(4)
     assert old_tail.value == dll.tail.value
 
+"""APPEND SPECIFIC TESTS"""
+def test_append_empty_list_new_tail_and_head(create_empty_dbl_ll):
+    """Test that new tail is created on append."""
+    dll = create_empty_dbl_ll
+    dll.append(5)
+    assert dll.head.value == 5 and dll.tail.value == 5
 
-def test_append_new_tail_added
+def test_append_new_tail(create_empty_dbl_ll):
+    """Test that when a new tail is added, the tail attribute is updated."""
+    dll = create_empty_dbl_ll
+    dll.append(5)
+    dll.append(4)
+    assert dll.tail.value == 4
+
+def test_append_tail_head_doesnt_change(create_empty_dbl_ll):
+    """Test that when a new tail is added, the head doesn't change."""
+    dll = create_empty_dbl_ll
+    dll.append(5)
+    new_head = dll.head
+    dll.append(4)
+    assert new_head.value == dll.head.value
+
+def test_append_tail_nxt_prev_updated(create_empty_dbl_ll):
+    """Test that when a val is appended, the prev of the old tail is updated."""
+    dll = create_empty_node
+    dll.append(5)
+    old_tail = dll.tail
+    dll.append(4)
+    assert old_tail.prev.value == dll.tail.value
+    assert dll.tail.nxt.value == old_tail.value
+
+"""POP SPECIFIC TESTS"""
+
