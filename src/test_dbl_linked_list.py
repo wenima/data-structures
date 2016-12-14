@@ -16,6 +16,12 @@ def create_empty_dbl_ll():
     new_dll = Dbl_Linked_List()
     return new_dll
 
+@pytest.fixture
+def create_list_with_iter():
+    from dbl_linked_list import Dbl_Linked_List
+    new_dll = Dbl_Linked_List(TEST_ITER)
+    return new_dll
+
 
 def test_create_empty_dbl_node(create_empty_node):
     """Test creation of an empty node."""
@@ -69,7 +75,7 @@ def test_push_new_head_points_to_old_head(create_empty_dbl_ll):
     dll.push(5)
     old = dll.head
     dll.push(3)
-    assert dll.head.next is old
+    assert dll.head.nxt is old
 
 
 def test_push_old_prev_points_to_new_head(create_empty_dbl_ll):
@@ -130,4 +136,39 @@ def test_append_tail_nxt_prev_updated(create_empty_dbl_ll):
     assert dll.tail.nxt.value == old_tail.value
 
 """POP SPECIFIC TESTS"""
+def test_pop_empty_list_raise_error(create_empty_dbl_ll):
+    """Test that popping an empty list raises an Index Error."""
+    dll = create_empty_dbl_ll
+    with pytest.raises(IndexError):
+        dll.pop()
 
+
+def test_pop_reassign_head(create_list_with_iter):
+    """Test that popping a populated list reassigns head."""
+    dll = create_list_with_iter
+    old_head = dll.head
+    dll.pop()
+    assert old_head.value == dll.head.value
+
+
+def test_pop_reassign_nxt_prev(create_list_with_iter):
+    """Test that popping a populated list reassigns head.nxt and head.nxt.prev."""
+    dll = create_list_with_iter
+    old_head = dll.head
+    dll.pop()
+    assert old_head.nxt 
+
+"""SHIFT SPECIFIC TESTS"""
+def test_shift_empty_list_raise_error(create_empty_dbl_ll):
+    """Test that shifting an empty list raises an Index Error."""
+    dll = create_empty_dbl_ll
+    with pytest.raises(IndexError):
+        dll.shift()
+
+
+def test_shift_reassign_tail():
+    """Test that shifting a populated list reassigns tail."""
+    dll = create_list_with_iter
+    old_tail = dll.tail
+    dll.shift()
+    assert old_tail.value == dll.head.value
