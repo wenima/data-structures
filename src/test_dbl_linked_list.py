@@ -53,12 +53,14 @@ def test_create_empty_dbl_linked_list(create_empty_dbl_ll):
     assert dll.head is None
     assert dll.tail is None
 
+
 def test_create_list_with_one_value():
     """Test that a list can be created with one value."""
     from dbl_linked_list import Dbl_Linked_List
     dll = Dbl_Linked_List(5)
     assert dll.head.value == 5
     assert dll.tail.value == 5
+
 
 def test_create_list_with_one_value_assign_head_tail(create_dbl_ll_one_value):
     """Test that a list created with one value has correct prev/next."""
@@ -80,7 +82,8 @@ def test_create_dbl_with_iterable():
 def test_create_dbl_with_iter_correct_size(create_list_with_iter):
     """Test that creating a dbl_ll with an iterable results in correct length."""
     dll = create_list_with_iter
-    assert dll.size == 5
+    assert dll._size == 5
+
 
 def test_create_dbl_with_iter_correct_prev_nxt(create_list_with_iter):
     """Creating a Dbl_LL with an iter head.nxt and tail.prev are correct."""
@@ -115,7 +118,7 @@ def test_push_assigns_new_head(create_list_with_iter):
     """Test new head assigned."""
     dll = create_list_with_iter
     dll.push(6)
-    assert dll.head.value == 5
+    assert dll.head.value == 6
 
 
 def test_push_reassigns_prev_nxt(create_list_with_iter):
@@ -126,11 +129,12 @@ def test_push_reassigns_prev_nxt(create_list_with_iter):
     assert dll.head.nxt.value == old_head.value
     assert dll.head.nxt.prev is dll.head
 
+
 def test_push_increases_size(create_list_with_iter):
     dll = create_list_with_iter
-    old_size = dll.size
+    old_size = dll._size
     dll.push(6)
-    assert dll.size == old_size + 1
+    assert dll._size == old_size + 1
 
 """APPEND SPECIFIC TESTS"""
 def test_append_empty_list(create_empty_dbl_ll):
@@ -158,22 +162,24 @@ def test_append_assigns_new_tail(create_list_with_iter):
     """Test new tail is assigned."""
     dll = create_list_with_iter
     dll.append(6)
-    assert dll.tail.value == 5
+    assert dll.tail.value == 6
 
 
 def test_append_reassigns_prev_nxt(create_list_with_iter):
     """Test that appending to a full list correctly assigns prev, nxt."""
     dll = create_list_with_iter
-    old_tail = dll.head
+    old_tail = dll.tail
     dll.push(6)
     assert dll.tail.prev.value == old_tail.value
     assert dll.tail.prev.nxt is dll.tail
 
+
 def test_append_increases_size(create_list_with_iter):
+    """Test that append increases size correctly."""
     dll = create_list_with_iter
-    old_size = dll.size
+    old_size = dll._size
     dll.append(6)
-    assert dll.size == old_size + 1
+    assert dll._size == old_size + 1
 
 """POP SPECIFIC TESTS"""
 def test_pop_empty_list_raise_error(create_empty_dbl_ll):
@@ -194,9 +200,9 @@ def test_pop_reassign_head(create_list_with_iter):
 def test_pop_decrease_size(create_list_with_iter):
     """Test that pop correctly decreases size."""
     dll = create_list_with_iter
-    old_size = dll.size
+    old_size = dll._size
     dll.pop()
-    assert dll.size == old_size - 1
+    assert dll._size == old_size - 1
 
 
 def test_pop_reassign_nxt_prev(create_list_with_iter):
@@ -231,9 +237,9 @@ def test_shift_reassign_tail(create_list_with_iter):
 def test_shift_decrease_size(create_list_with_iter):
     """Test that shift correctly decreases size."""
     dll = create_list_with_iter
-    old_size = dll.size
+    old_size = dll._size
     dll.shift()
-    assert dll.size == old_size - 1
+    assert dll._size == old_size - 1
 
 
 def test_shift_reassign_nxt_prev(create_list_with_iter):
@@ -301,6 +307,6 @@ def test_remove_prev_nxt_reassigned(create_list_with_iter):
 def test_remove_correctly_changes_size(create_list_with_iter):
     """Test that remove method correctly changes size."""
     dll = create_list_with_iter
-    old_size = dll.size
+    old_size = dll._size
     dll.remove(dll.head.nxt.value)
-    assert old_size == dll.size - 1
+    assert old_size == dll._size - 1
