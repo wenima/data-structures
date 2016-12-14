@@ -270,7 +270,7 @@ def test_remove_case_head(create_list_with_iter):
     dll = create_list_with_iter
     old_head = dll.head.nxt
     dll.remove(old_head.value)
-    assert dll.head.value is old_head_nxt.value
+    assert dll.head.value is old_head.nxt.value
 
 
 def test_remove_case_tail(create_list_with_iter):
