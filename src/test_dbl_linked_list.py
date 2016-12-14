@@ -32,7 +32,7 @@ def test_create_node_with_val_nxt_prev():
     node2 = Dbl_Node("two", node1)
     assert node2.value == "two" and node2.nxt is node1 and node2.prev is None
     node3 = Dbl_Node([3], node1, node2)
-    assert node3.val == [3] and node3.nxt is node1 and node3.prev is node2
+    assert node3.value == [3] and node3.nxt is node1 and node3.prev is node2
 
 
 def test_create_empty_dbl_linked_list(create_empty_dbl_ll):
@@ -89,6 +89,7 @@ def test_push_old_head_is_now_tail(create_empty_dbl_ll):
     dll.push(4)
     assert old_tail.value == dll.tail.value
 
+
 def test_push_tail_still_tail(create_empty_dbl_ll):
     """Test that the old tail is still tail when pushed."""
     dll = create_empty_dbl_ll
@@ -96,3 +97,6 @@ def test_push_tail_still_tail(create_empty_dbl_ll):
     old_tail = dll.tail
     dll.push(4)
     assert old_tail.value == dll.tail.value
+
+
+def test_append_new_tail_added
