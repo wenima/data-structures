@@ -190,13 +190,25 @@ def test_pop_reassign_head(create_list_with_iter):
     dll.pop()
     assert old_head.nxt.value == dll.head.value
 
+def test_pop_decrease_size(create_list_with_iter):
+    """Test that pop correctly decreases size."""
+    dll = create_list_with_iter
+    old_size = dll.size
+    dll.pop()
+    assert dll.size == old_size - 1
+
 
 def test_pop_reassign_nxt_prev(create_list_with_iter):
     """Test that popping a populated list reassigns head.nxt and head.nxt.prev."""
     dll = create_list_with_iter
-    old_head = dll.head
     dll.pop()
-    assert old_head.nxt 
+    assert dll.head.prev is None and dll.head.nxt.prev is dll.head
+
+def test_pop_returns_correct_value(create_list_with_iter):
+    """Test that pop returns the correct value."""
+    dll = create_list_with_iter
+    head_value = dll.head.value
+    assert dll.pop() == head_value
 
 """SHIFT SPECIFIC TESTS"""
 def test_shift_empty_list_raise_error(create_empty_dbl_ll):
@@ -206,9 +218,32 @@ def test_shift_empty_list_raise_error(create_empty_dbl_ll):
         dll.shift()
 
 
-def test_shift_reassign_tail():
-    """Test that shifting a populated list reassigns tail."""
+def test_shift_reassign_tail(create_list_with_iter):
+    """Test that shifting a populated list reassigns head."""
     dll = create_list_with_iter
     old_tail = dll.tail
     dll.shift()
-    assert old_tail.value == dll.head.value
+    assert old_tail.prev.value == dll.tail.value
+
+def test_shift_decrease_size(create_list_with_iter):
+    """Test that shift correctly decreases size."""
+    dll = create_list_with_iter
+    old_size = dll.size
+    dll.shift()
+    assert dll.size == old_size - 1
+
+
+def test_shift_reassign_nxt_prev(create_list_with_iter):
+    """Test that shifting a populated list reassigns head.nxt and head.nxt.prev."""
+    dll = create_list_with_iter
+    dll.shift()
+    assert dll.tail.nxt is None and dll.tail.prev.tail is dll.head
+
+def test_pop_returns_correct_value(create_list_with_iter):
+    """Test that shift returns the correct value."""
+    dll = create_list_with_iter
+    tail_value = dll.tail.value
+    assert dll.shift() == tail_value
+
+
+"""REMOVE SPECIFIC TESTS"""
