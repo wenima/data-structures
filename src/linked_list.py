@@ -10,15 +10,16 @@ class Node(object):
 
 class Linked_List(object):
     """Create a Linked List Data Structure."""
-    def __init__(self, iterable=None):
+    def __init__(self, maybe_an_iterable=None):
         """Intialize a Linked List Object."""
         self.head = None
         self._size = 0
-        if iterable and hasattr(iterable, "__iter__"):
-            for value in iterable:
-                self.push(value)
-        elif iterable:
-            raise TypeError
+        if maybe_an_iterable:
+            try:
+                for value in maybe_an_iterable:
+                    self.push(value)
+            except TypeError:
+                self.push(maybe_an_iterable)
 
     def push(self, value):
         """Add a node."""
@@ -36,31 +37,25 @@ class Linked_List(object):
         val = self.head.value
         self.head = self.head.nxt
         self._size -= 1
-
         return val
 
     def search(self, query):
         """Return the node that contains the value."""
         match = [node for node in self._iterate_from(self.head) if node.value == query]
-        return match[0] if match else "That value is not in this linked list."
+        return match[0] if match else None
 
     def remove(self, r_node):
         """Remove the given node from the LL."""
-        cur_node = self.head
-        if self.head is r_node:
-            self.head = self.head.nxt
-            self._size -= 1
-            return "Succesfully removed Node with value: \
-            {0}. New head set to {1}".format(r_node.value, self.head.value)
-        while cur_node:
-            if r_node == cur_node.nxt:
-                cur_node.nxt = cur_node.nxt.nxt
+        for node in self._iterate_from(self.head):
+            if r_node.value == node.value:
+                if self.head.value == r_node.value:
+                    self.pop()
+                    return "Succesfully removed Node with value: \
+                    {0}. New head set to {1}".format(r_node.value, self.head.value)
+                node.nxt = node.nxt.nxt
                 self._size -= 1
                 return "Succesfully removed Node with value: {}".format(r_node.value)
-            else:
-                cur_node = cur_node.nxt
-        else:
-            raise ValueError("ERROR: That node is not in this linked list.")
+        raise ValueError("ERROR: That node is not in this linked list.")
 
 
     def display(self):
