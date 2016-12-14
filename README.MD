@@ -15,24 +15,18 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 # Coverage:
 
-* ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
-  | Name           | Stmts | Miss | Cover |   Missing   |
-  | -------------- | :---: | :--: | :---: |   -------
-  | linked_list.py |  47   |  0   |  100% |             |
-  | stack.py   |  8    |  0   |  100% |             |
-  | test_linked_list.py |  47   |  0   |  100% |             |
-  | test_stack.py |  47   |  0   |  100% |             |
-  | -------------- | :---: | :--: | :---: |   -------   |
-  | TOTAL |  174   |  0   |  100% |             |
+---------- coverage: platform darwin, python 3.5.2-final-0 -----------
+| Name                | Stmts | Miss | Cover | Missing |
+| ------------------- | :---: | :--: | :---: | ------- |
+| linked_list.py      |  47   |  0   | 100%  |         |
+| stack.py            |   8   |  0   | 100%  |         |
+| test_linked_list.py |  47   |  0   | 100%  |         |
+| test_stack.py       |  47   |  0   | 100%  |         |
+| --------------      |  ---  |  --  | ----  | ------- |
+| TOTAL               |  174  |  0   | 100%  |         |
 
 * comment on coverage: I confirmed with David that my code worked and we couldn't figure out why pytest was not able to step into it when pythontutor.com and my local run was. I'll try to type it up in Jupyter as well and see what happens there. I commented that piece of code out now as it was prompting you to comment on our pull request that we had untested code.
 
-
-# Github:
-
-https://github.com/wenima/data-structures/tree/stack
-
-Pull request: coming
 
 # Comments about implementation:
 
