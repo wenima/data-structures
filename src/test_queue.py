@@ -7,6 +7,7 @@ to also be the first to leave it.
 An example would be a line in a bank where the first customer in the line will
 be the first one served and thus the first to exit the bank"""
 
+import pytest
 
 TEST_ITER = [1, 2, 3, 4, 5]
 
