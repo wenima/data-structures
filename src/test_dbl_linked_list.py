@@ -256,12 +256,12 @@ def test_shift_returns_correct_value(create_list_with_iter):
     assert dll.shift() == tail_value
 
 
-"""REMOVE SPECIFIC TESTS"""
-def test_remove_empty_list_raise_error(create_empty_dbl_ll):
-    """Test remove on empty list raises an Index Error."""
-    dll = create_empty_dbl_ll
-    with pytest.raises(IndexError):
-        dll.remove("something")
+# """REMOVE SPECIFIC TESTS"""
+# def test_remove_empty_list_raise_error(create_empty_dbl_ll):
+#     """Test remove on empty list raises an Index Error."""
+#     dll = create_empty_dbl_ll
+#     with pytest.raises(IndexError):
+#         dll.remove("something")
 
 
 def test_remove_val_not_in_list(create_list_with_iter):
