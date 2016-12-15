@@ -147,7 +147,7 @@ def test_append_empty_list(create_empty_dbl_ll):
 def test_append_empty_list_new_head_tail(create_empty_dbl_ll):
     """Test that appending on an empty list results in a new head, tail."""
     dll = create_empty_dbl_ll
-    dll.push(5)
+    dll.append(5)
     assert dll.head is dll.tail
 
 
@@ -274,17 +274,17 @@ def test_remove_val_not_in_list(create_list_with_iter):
 def test_remove_case_head(create_list_with_iter):
     """Test remove with case head.  Should run pop()."""
     dll = create_list_with_iter
-    old_head = dll.head.nxt
-    dll.remove(old_head.value)
-    assert dll.head.value is old_head.nxt.value
+    new_head = dll.head.nxt
+    dll.remove(dll.head.value)
+    assert new_head is dll.head
 
 
 def test_remove_case_tail(create_list_with_iter):
     """Test remove with case tail.  Should run shift()."""
     dll = create_list_with_iter
-    old_tail = dll.tail
-    dll.remove(old_tail.value)
-    assert dll.tail.value == old_tail.prev.value
+    new_tail = dll.tail.prev
+    dll.remove(dll.tail.value)
+    assert new_tail is dll.tail
 
 
 def test_remove_head_tail_do_not_change(create_list_with_iter):
@@ -309,4 +309,4 @@ def test_remove_correctly_changes_size(create_list_with_iter):
     dll = create_list_with_iter
     old_size = dll._size
     dll.remove(dll.head.nxt.value)
-    assert old_size == dll._size - 1
+    assert old_size == dll._size + 1
