@@ -12,11 +12,10 @@ class Queue(object):
 
     def __init__(self, maybe_an_iterable=None):
         """Initialize Queue as a Dbl_Linked_List-esque object."""
-        try:
-            maybe_an_iterable.reverse()
-        except AttributeError:
-            pass
-        self._container = Dbl_Linked_List(maybe_an_iterable)
+        if type(maybe_an_iterable) not in (list, tuple):
+            self._container = Dbl_Linked_List(maybe_an_iterable)
+        else:
+            self._container = Dbl_Linked_List(reversed(maybe_an_iterable))
 
     def enqueue(self, value):
         """Add a new node with given value to the end (tail) of the queue."""
