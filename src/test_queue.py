@@ -63,9 +63,9 @@ def test_create_queue_with_one_value():
 # def test_create_queue_with_one_value_assign_head_tail(new_q): #refactor this / rolled into test_create_queue_with_one_value
 #     """Test that a list created with one value has correct prev/next."""
 #     assert new_q.head.nxt is None
-#     assert dll.head.prev is None
-#     assert dll.tail.nxt is None
-#     assert dll.tail.prev is None
+#     assert new_q.head.prev is None
+#     assert new_q.tail.nxt is None
+#     assert new_q.tail.prev is None
 
 def test_create_queue_with_iterable(new_q):
     """Given an iterable, test that new Queue is created correctly."""
@@ -76,20 +76,19 @@ def test_create_queue_with_iterable(new_q):
 
 def test_create_queue_with_iter_correct_size(new_q):
     """Test that creating a queue with an iterable results in correct length."""
-    assert dll._size == len(TEST_ITER)
+    assert new_q._size == len(TEST_ITER)
 
 
 def test_create_queue_with_iter_correct_prev_nxt(new_q):
     """Creating a queue with an iter head.nxt and tail.prev are correct."""
-    dll = create_list_with_iter
-    assert dll.head.nxt.value == TEST_ITER[-2]
-    assert dll.tail.prev.value == TEST_ITER[1]
+    assert new_q.head.nxt.value == TEST_ITER[-2]
+    assert new_q.tail.prev.value == TEST_ITER[1]
 
 #Enqueue SPECIFIC TESTS
 def test_enque_empty_list(new_empty_q):
     """Test enqueued val is new tail."""
     new_empty_q.enqueue(5)
-    assert dll.head.value == 5 and dll.tail.value == 5
+    assert new_empty_q.head.value == 5 and new_empty_q.tail.value == 5
 
 def test_enqueue_empty_queue_new_head_tail(new_empty_q):
     """Test that enquing on an empty queue results in a new head, tail."""
@@ -110,8 +109,8 @@ def test_enqueue_reassigns_prev_nxt(new_q):
     """Test that enqueing to a full list correctly assigns prev, nxt."""
     old_head = new_q.head
     new_q.enqueue(6)
-    assert dll.tail.prev.value == old_tail.value
-    assert dll.tail.prev.nxt is dll.tail
+    assert new_q.tail.prev.value == old_tail.value
+    assert new_q.tail.prev.nxt is new_q.tail
 
 def test_enqueue_increases_size(new_q):
     """Test that enqueing a node is increasing the size by 1"""
@@ -119,36 +118,41 @@ def test_enqueue_increases_size(new_q):
     new_q.push(6)
     assert new_q._size == old_size + 1
 
-"""DEQUEUE SPECIFIC TESTS"""
+# """DEQUEUE SPECIFIC TESTS"""
 def test_dequeue_empty_list_raise_error(new_empty_q):
     """Test that dequeing an empty list raises an Index Error."""
-    dll = create_empty_dbl_ll
     with pytest.raises(IndexError):
-        dll.dequeue()
+        new_empty_q.dequeue()
 
 def test_dequeue_reassign_head(new_q):
     """Test that dequeueing a non-empty list reassigns head."""
-    dll = create_list_with_iter
-    old_head = dll.head
-    dll.dequeue()
-    assert old_head.nxt.value == dll.head.value
+    old_head = new_q.head
+    new_q.dequeue()
+    assert old_head.nxt.value == new_q.head.value
 
 def test_dequeue_decrease_size(new_q):
     """Test that dequeue correctly decreases size."""
-    dll = create_list_with_iter
-    old_size = dll._size
-    dll.dequeue()
-    assert dll._size == old_size - 1
+    old_size = new_q._size
+    new_q.dequeue()
+    assert new_q._size == old_size - 1
 
 def test_dequeue_reassign_nxt_prev(new_q):
     """Test that dequeueing a non-empty list reassigns head.nxt and head.nxt.prev."""
-    dll = create_list_with_iter
-    dll.dequeue()
-    assert dll.head.prev is None and dll.head.nxt.prev is dll.head
+    new_q.dequeue()
+    assert new_q.head.prev is None and new_q.head.nxt.prev is new_q.head
 
 
 def test_dequeue_returns_correct_value(new_q):
     """Test that dequeue returns the correct value."""
-    dll = create_list_with_iter
-    head_value = dll.head.value
-    assert dll.dequeue() == head_value
+    new_q = create_list_with_iter
+    head_value = new_q.head.value
+    assert new_q.dequeue() == head_value
+
+#Peek specific TESTS
+def test_peek_returns_None_on_empty_queue(new_empty_q):
+    """Test that peeking on an empty Queue object returns None"""
+    assert new_empty_q.peek() is None
+
+def test_peek_returns_first_in_queue(new_q):
+    """Test that peek returns the value of the first node in the Queue object"""
+    assert new_q.peek() == head.value
