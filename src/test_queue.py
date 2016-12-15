@@ -162,4 +162,4 @@ def test_peek_returns_None_on_empty_queue(new_empty_q):
 
 def test_peek_returns_first_in_queue(new_q):
     """Test that peek returns the value of the first node in the Queue object"""
-    assert new_q.peek() == new_q.head.value
+    assert new_q.peek() == new_q._container.head.value
