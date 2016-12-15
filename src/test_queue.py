@@ -1,4 +1,11 @@
-"""Test dbl_linked_list data structures."""
+"""Test the Queue data structure.
+
+A Queue works based on the FIFO principle which is based in accounting and it
+describes the method of the first item/person/inventory to enter something
+to also be the first to leave it.
+
+An example would be a line in a bank where the first customer in the line will
+be the first one served and thus the first to exit the bank"""
 
 import pytest
 
@@ -7,7 +14,7 @@ TEST_ITER = [1, 2, 3, 4, 5]
 @pytest.fixture
 def create_empty_node():
     """Return an empty Node object."""
-    from linked_list import Node
+    from dbl_linked_list import Node
     return Node()
 
 
