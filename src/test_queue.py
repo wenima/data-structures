@@ -1,13 +1,23 @@
-"""Test dbl_linked_list data structures."""
+"""Test the Queue data structure.
+
+A Queue works based on the FIFO principle which is based in accounting and it
+describes the method of the first item/person/inventory to enter something
+to also be the first to leave it.
+
+An example would be a line in a bank where the first customer in the line will
+be the first one served and thus the first to exit the bank"""
 
 import pytest
+from random import choice, randint
+
 
 TEST_ITER = [1, 2, 3, 4, 5]
+
 
 @pytest.fixture
 def create_empty_node():
     """Return an empty Node object."""
-    from linked_list import Node
+    from dbl_linked_list import Node
     return Node()
 
 
@@ -53,8 +63,8 @@ def test_create_empty_Queue(new_q):
 def test_create_queue_with_one_value():
     """Test that a queue can be created with one value."""
     from queue import Queue
-    new_q = Queue(5)
-    assert new_q.head.value == 5 and new_q.tail.value == 5
+    new_q = Queue(TEST_ITER[-1])
+    assert new_q.head.value == TEST_ITER[-1] and new_q.tail.value == TEST_ITER[-1]
     assert new_q.head.nxt is None
     assert new_q.head.prev is None
     assert new_q.tail.nxt is None
@@ -70,8 +80,8 @@ def test_create_queue_with_one_value():
 def test_create_queue_with_iterable(new_q):
     """Given an iterable, test that new Queue is created correctly."""
     from queue import Queue
-    assert new_q.head.value == TEST_ITER[-1]
-    assert new_q.tail.value == TEST_ITER[0]
+    assert new_q.head.value == TEST_ITER[0]
+    assert new_q.tail.value == TEST_ITER[-1]
 
 
 def test_create_queue_with_iter_correct_size(new_q):
@@ -81,23 +91,23 @@ def test_create_queue_with_iter_correct_size(new_q):
 
 def test_create_queue_with_iter_correct_prev_nxt(new_q):
     """Creating a queue with an iter head.nxt and tail.prev are correct."""
-    assert new_q.head.nxt.value == TEST_ITER[-2]
-    assert new_q.tail.prev.value == TEST_ITER[1]
+    assert new_q.head.nxt.value == TEST_ITER[1]
+    assert new_q.tail.prev.value == TEST_ITER[-2]
 
 #Enqueue SPECIFIC TESTS
 def test_enque_empty_list(new_empty_q):
     """Test enqueued val is new tail."""
-    new_empty_q.enqueue(5)
-    assert new_empty_q.head.value == 5 and new_empty_q.tail.value == 5
+    new_empty_q.enqueue(TEST_ITER[-1])
+    assert new_empty_q.head.value == TEST_ITER[-1] and new_empty_q.tail.value == TEST_ITER[-1]
 
 def test_enqueue_empty_queue_new_head_tail(new_empty_q):
     """Test that enquing on an empty queue results in a new head, tail."""
-    new_empty_q.enqueue(5)
+    new_empty_q.enqueue(TEST_ITER[-1])
     assert new_empty_q.head is new_empty_q.tail
 
 def test_first_enqueued_val_nxt_prev_is_none(new_empty_q):
     """Test that the first enqueued Node has no nxt or prev."""
-    new_empty_q.enqueue(5)
+    new_empty_q.enqueue(TEST_ITER[-1])
     assert new_empty_q.head.nxt is None and new_empty_q.head.prev is None
 
 def test_enqueued_assigns_new_head(new_q):
