@@ -5,8 +5,15 @@ from dbl_linked_list import Dbl_Linked_List
 
 class Queue(object):
     """The Queue Data structure is a compoisition of a Double Linked List.
-    
-    The Queue method is composed from the Dbl
+
+    Methods:
+            enqueue(val):  Add a new node to the end (tail) of the queue.
+
+            dequeue():     Remove the node at the head of the queue.
+
+            peek():        Return value at head of queue.
+
+            size():        Return size of queue.
 
     """
 
@@ -23,11 +30,14 @@ class Queue(object):
 
     def dequeue(self):
         """Remove the node at the head of the queue and return the value."""
-        self._container.pop()
+        return self._container.pop()
 
     def peek(self):
         """Return the value at the head of the queue.  None if empty."""
-        return self._container.head.value
+        try:
+            return self._container.head.value
+        except AttributeError:
+            return None
 
     def size(self):
         """Return the size of the queue."""
