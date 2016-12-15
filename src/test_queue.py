@@ -14,9 +14,9 @@ TEST_ITER = [1, 2, 3, 4, 5]
 
 @pytest.fixture
 def create_empty_node():
-    """Return an empty Node object."""
+    """Return an empty Dbl_Node object."""
     from dbl_linked_list import Dbl_Node
-    return Node()
+    return Dbl_Node()
 
 
 @pytest.fixture
@@ -43,13 +43,13 @@ def test_create_empty_dbl_node(create_empty_node):
 
 
 def test_create_node_with_val_nxt_prev(): #multiple asserts are bad
-    """Test creation of Nodes with values and nxt, prev references."""
-    from queue import Node
-    node1 = Node(1)
+    """Test creation of Dbl_Nodes with values and nxt, prev references."""
+    from queue import Dbl_Node
+    node1 = Dbl_Node(1)
     assert node1.value == 1 and node1.nxt is None and node1.prev is None
-    node2 = Node("two", node1)
+    node2 = Dbl_Node("two", node1)
     assert node2.value == "two" and node2.nxt is node1 and node2.prev is None
-    node3 = Node([3], node1, node2)
+    node3 = Dbl_Node([3], node1, node2)
     assert node3.value == [3] and node3.nxt is node1 and node3.prev is node2
 
 def test_create_empty_Queue(new_q):
@@ -104,7 +104,7 @@ def test_enqueue_empty_queue_new_head_tail(new_empty_q):
     assert new_empty_q._container.head is new_empty_q._container.tail
 
 def test_first_enqueued_val_nxt_prev_is_none(new_empty_q):
-    """Test that the first enqueued Node has no nxt or prev."""
+    """Test that the first enqueued Dbl_Node has no nxt or prev."""
     new_empty_q._container.enqueue(TEST_ITER[-1])
     assert new_empty_q._container.head.nxt is None and new_empty_q._container.head.prev is None
 
