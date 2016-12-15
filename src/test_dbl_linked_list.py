@@ -169,7 +169,7 @@ def test_append_reassigns_prev_nxt(create_list_with_iter):
     """Test that appending to a full list correctly assigns prev, nxt."""
     dll = create_list_with_iter
     old_tail = dll.tail
-    dll.push(6)
+    dll.append(6)
     assert dll.tail.prev.value == old_tail.value
     assert dll.tail.prev.nxt is dll.tail
 
