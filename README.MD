@@ -29,6 +29,10 @@ For more information on the assignment, see here: https://codefellows.github.io/
 | TOTAL                    |  439  |  6   | 99%   |         |
 
 
+# Thoughts on when to use a singly linked list vs a doubly_linked_list:
+it seems that for a really long list, it would be much better to have access to the tail as it would make search algorithms faster as you can climb up and go down. For a Stack data structure it seems that a singly linked list is better as we are happy to just have the option to delete at the head. If we build more complex data structures, it would probably also make sense to use singly linked lists as they woul be more flexible to build more advanced structures?
+For doubly_linked_list it seems sine we have the pointer to a deleted node, we could also re-insert as we still know the pre and next. 
+
 # Comments about implementation:
 
 * the keeping state of size of the object is not optimal and it would be better to call it in it own function
