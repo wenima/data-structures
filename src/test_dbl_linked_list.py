@@ -243,10 +243,10 @@ def test_shift_decrease_size(create_list_with_iter):
 
 
 def test_shift_reassign_nxt_prev(create_list_with_iter):
-    """Test that shifting a populated list reassigns head.nxt and head.nxt.prev."""
+    """Test that shifting a populated list reassigns tail.prev"""
     dll = create_list_with_iter
     dll.shift()
-    assert dll.tail.nxt is None and dll.tail.prev.tail is dll.head
+    assert dll.tail.nxt is None and dll.tail.prev.nxt is dll.tail
 
 
 def test_shift_returns_correct_value(create_list_with_iter):
