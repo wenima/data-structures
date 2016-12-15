@@ -115,7 +115,7 @@ def test_enqueued_assigns_new_head(new_q):
 
 def test_enqueue_reassigns_prev_nxt(new_q):
     """Test that enqueing to a full list correctly assigns prev, nxt."""
-    old_head = new_q._container.head
+    old_tail = new_q._container.head
     new_q.enqueue(6)
     assert new_q._container.tail.prev.value == old_tail.value
     assert new_q._container.tail.prev.nxt is new_q._container.tail
@@ -162,4 +162,4 @@ def test_peek_returns_None_on_empty_queue(new_empty_q):
 
 def test_peek_returns_first_in_queue(new_q):
     """Test that peek returns the value of the first node in the Queue object"""
-    assert new_q.peek() == head.value
+    assert new_q.peek() == new_q.head.value
