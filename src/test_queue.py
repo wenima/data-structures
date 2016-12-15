@@ -115,7 +115,7 @@ def test_enqueued_assigns_new_head(new_q):
 
 def test_enqueue_reassigns_prev_nxt(new_q):
     """Test that enqueing to a full list correctly assigns prev, nxt."""
-    old_tail = new_q._container.head
+    old_tail = new_q._container.tail
     new_q.enqueue(6)
     assert new_q._container.tail.prev.value == old_tail.value
     assert new_q._container.tail.prev.nxt is new_q._container.tail
