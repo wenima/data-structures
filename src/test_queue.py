@@ -44,7 +44,7 @@ def test_create_empty_dbl_node(create_empty_node):
 
 def test_create_node_with_val_nxt_prev(): #multiple asserts are bad
     """Test creation of Dbl_Nodes with values and nxt, prev references."""
-    from queue import Dbl_Node
+    from dbl_linked_list import Dbl_Node
     node1 = Dbl_Node(1)
     assert node1.value == 1 and node1.nxt is None and node1.prev is None
     node2 = Dbl_Node("two", node1)
@@ -52,7 +52,7 @@ def test_create_node_with_val_nxt_prev(): #multiple asserts are bad
     node3 = Dbl_Node([3], node1, node2)
     assert node3.value == [3] and node3.nxt is node1 and node3.prev is node2
 
-def test_create_empty_Queue(new_q):
+def test_create_empty_Queue(new_empty_q):
     """Test creation of empty Queue."""
     assert new_q._container.head is None
     assert new_q._container.tail is None
