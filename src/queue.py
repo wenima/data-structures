@@ -30,7 +30,10 @@ class Queue(object):
 
     def dequeue(self):
         """Remove the node at the head of the queue and return the value."""
-        return self._container.pop()
+        try:
+            return self._container.pop()
+        except IndexError:
+            raise IndexError("Cannot dequeue from empty queue.")
 
     def peek(self):
         """Return the value at the head of the queue.  None if empty."""
