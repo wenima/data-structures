@@ -7,17 +7,24 @@ to also be the first to leave it.
 An example would be a line in a bank where the first customer in the line will
 be the first one served and thus the first to exit the bank"""
 
-import pytest
-from random import choice, randint
+def create_test_data():
+    TEST_ITER_FAKER =
 
 
 TEST_ITER = [1, 2, 3, 4, 5]
+sample_from_the_midde_of_iterable = random.choice(PARAMS_SAMPLE_LIST[1:len(PARAMS_SAMPLE_LIST) - 1])
+
+REMOVE_TESTS = [
+    (PARAMS_SAMPLE_LIST[0], "Succesfully removed Node with value: something"),
+    (sample_from_the_midde_of_iterable, "Succesfully removed Node with value: {0}".format(sample_from_the_midde_of_iterable)),
+    (PARAMS_SAMPLE_LIST[len(PARAMS_SAMPLE_LIST) - 1], "Succesfully removed Node with value: {0}. New head set to {1}".format(PARAMS_SAMPLE_LIST[len(PARAMS_SAMPLE_LIST) - 1], PARAMS_SAMPLE_LIST[len(PARAMS_SAMPLE_LIST) - 2])),
+]
 
 
 @pytest.fixture
 def create_empty_node():
     """Return an empty Node object."""
-    from dbl_linked_list import Node
+    from dbl_linked_list import Dbl_Node
     return Node()
 
 
