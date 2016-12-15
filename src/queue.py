@@ -12,7 +12,7 @@ class Queue(object):
 
     def __init__(self, maybe_an_iterable=None):
         """Initialize Queue as a Dbl_Linked_List-esque object."""
-        if type(maybe_an_iterable) not in (list, tuple):
+        if type(maybe_an_iterable) not in (list, tuple, dict):
             self._container = Dbl_Linked_List(maybe_an_iterable)
         else:
             self._container = Dbl_Linked_List(reversed(maybe_an_iterable))
