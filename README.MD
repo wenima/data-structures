@@ -8,7 +8,8 @@ in Python containing 6 methods:
 * peek(): returns the next value in the queue without dequeueing it. If the queue is empty, returns None
 * size(): return the size of the queue. Should return 0 if the queue is empty.
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/doubly_linked_list.html
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/queue.html
+
 
 
 # Coverage:
