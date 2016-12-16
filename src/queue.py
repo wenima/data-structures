@@ -22,7 +22,7 @@ class Queue(object):
         if type(maybe_an_iterable) not in (list, tuple, dict):
             self._container = Dbl_Linked_List(maybe_an_iterable)
         else:
-            self._container = Dbl_Linked_List(reversed(maybe_an_iterable))
+            self._container = Dbl_Linked_List(maybe_an_iterable[::-1])
 
     def enqueue(self, value):
         """Add a new node with given value to the end (tail) of the queue."""
