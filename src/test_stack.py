@@ -37,7 +37,7 @@ def test_that_pop_fails_when_called_on_empty_stack(new_empty_stack):
 def test_that_pop_removes_the_head(stack_123):
     """Test that Stack.pop() removes the top element of the Stack"""
     stack_123.pop()
-    assert len(stack_123._container) == 2
+    assert len(stack_123) == 2
 
 
 def test_that_push_adds_on_top_of_existing_stack(stack_123):
