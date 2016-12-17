@@ -27,7 +27,7 @@ For more information:
 
 https://github.com/wenima/data-structures/tree/stack
 
-Pull request: coming
+Pull request: https://github.com/wenima/data-structures/pull/2
 
 # Comments about implementation:
 
