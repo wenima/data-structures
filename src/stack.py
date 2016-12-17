@@ -4,20 +4,28 @@ from linked_list import Linked_List
 
 
 class Stack(object):
-    """The stack data structure is a composition of the Linked List structure."""
+    """This class defines a stack data structure.
+
+    The stack will store and return values based on Last-In-First-Out.
+
+    Methods:
+        push(val):     Given a value, push a new node onto the stack.
+        pop():         Pop the first item off the stack and return the value.
+
+    """
     def __init__(self, iterable=None):
         """Initialize stack as a Linked_List-esque object."""
         self._container = Linked_List(iterable)
 
     def push(self, val):
-        """Use Linked List push method to add one Node to stack."""
+        """Given a value, push a new node onto the stack."""
         self._container.push(val)
 
     def pop(self):
-        """Use Linked List pop() method to remove one from stack."""
+        """Remove first item of stack and return value."""
         try:
             return self._container.pop()
-        except:
+        except IndexError:
             raise IndexError("Cannot pop from empty stack.")
 
 
