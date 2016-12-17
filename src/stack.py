@@ -13,6 +13,7 @@ class Stack(object):
         pop():         Pop the first item off the stack and return the value.
 
     """
+
     def __init__(self, iterable=None):
         """Initialize stack as a Linked_List-esque object."""
         self._container = Linked_List(iterable)
@@ -28,4 +29,6 @@ class Stack(object):
         except IndexError:
             raise IndexError("Cannot pop from empty stack.")
 
-
+    def __len__(self):
+        """Return the size of the stack."""
+        return self._container.size()
