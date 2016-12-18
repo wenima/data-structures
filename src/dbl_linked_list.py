@@ -99,7 +99,7 @@ class DblLinkedList(object):
         """Remove tail node from DLL and return its value."""
         if self.tail is None:
             raise IndexError("Cannot shift from an empty Double Linked List.")
-        val = self.head.value
+        val = self.tail.value
         if self._size == 1:
             self.head = None
             self.tail = None
@@ -126,20 +126,20 @@ class DblLinkedList(object):
         """Remove the given node from the DLL."""
         r_node = [node for node in self._iterate_from(self.head) if node.value == value]
         if not r_node:
-            raise ValueError("ERROR: That node is not in this linked list.")
+            return ValueError
         for node in self._iterate_from(self.head):
             if r_node[0].value == node.value:
                 if self.head.value == r_node[0].value:
                     self.pop()
-                    return "Succesfully removed Node with value: {0}. New head set to {1}".format(r_node[0].value, self.head.value)
+                    return "Succesfully removed Node with value: {0}. New head set to {1}, new size is {2}".format(r_node[0].value, self.head.value, self._size)
                 elif node.nxt is None:
                     self.shift()
-                    return "Succesfully removed Node with value: {0}. New tail set to {1}".format(r_node[0].value, self.tail.value)
+                    return "Succesfully removed Node with value: {0}. New tail set to {1}, new size is {2}".format(r_node[0].value, self.tail.value, self._size)
                 else:
                     r_node[0].prev.nxt = r_node[0].nxt
                     r_node[0].nxt.prev = r_node[0].prev
                     self._size -= 1
-                    return "Succesfully removed Node with value: {}".format(r_node[0].value)
+                    return "Succesfully removed Node with value: {0}. {1} points now to {2} and {3} to {4}, new size is {5}".format(r_node[0].value, r_node[0].prev.value, r_node[0].prev.nxt.value, r_node[0].nxt.value, r_node[0].nxt.prev.value, self._size)
 
     def _iterate_from(self, list_item):
         """Return a generator."""
