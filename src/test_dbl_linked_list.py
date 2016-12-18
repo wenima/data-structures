@@ -4,6 +4,7 @@ import pytest
 import random
 
 TEST_ITER = [1, 2, 3, 4, 5]
+TEST_ITER_2 = [1, 2]
 middle_item = random.choice(TEST_ITER[1:len(TEST_ITER) - 1])
 idx = [i for i, x in enumerate(TEST_ITER) if x == middle_item]
 
@@ -14,6 +15,10 @@ REMOVE_TESTS_STR = [
     (TEST_ITER[-1], "Succesfully removed Node with value: {0}. New head set to {1}, new size is {2}".format(TEST_ITER[-1], TEST_ITER[ - 2], len(TEST_ITER) - 1)),
     ("not_in_list", ValueError),
 ]
+
+# POP_TESTS = [
+#     (, IndexError)
+# ]
 
 @pytest.fixture
 def create_empty_node():
@@ -37,6 +42,12 @@ def dbl_ll_one_value():
 def dbl_ll():
     from dbl_linked_list import DblLinkedList
     new_dll = DblLinkedList(TEST_ITER)
+    return new_dll
+
+@pytest.fixture
+def dbl_ll_2():
+    from dbl_linked_list import DblLinkedList
+    new_dll = DblLinkedList(TEST_ITER_2)
     return new_dll
 
 
@@ -181,35 +192,23 @@ def test_append_increases_size(dbl_ll):
 """POP SPECIFIC TESTS"""
 
 
-def test_pop_empty_list_raise_error(dbl_ll_empty):
-    """Test that popping an empty list raises an Index Error."""
+def test_pop_from_empty_list(dbl_ll_empty):
+    """Test pop from empty list to return an IndexError"""
     with pytest.raises(IndexError):
         dbl_ll_empty.pop()
 
 
-def test_pop_reassign_head(dbl_ll):
-    """Test that popping a populated list reassigns head."""
-    old_head = dbl_ll.head
-    dbl_ll.pop()
-    assert old_head.nxt.value == dbl_ll.head.value
+def test_pop_from_list_size_2(dbl_ll_2):
+    """Test pop on a list of size 2"""
+    old_head = dbl_ll_2.head
+    old_size = dbl_ll_2._size
+    assert dbl_ll_2.head.value == dbl_ll_2.pop() and old_head.nxt == dbl_ll_2.head and dbl_ll_2._size == old_size - 1
 
 
-def test_pop_decrease_size(dbl_ll):
-    """Test that pop correctly decreases size."""
-    old_size = dbl_ll._size
-    dbl_ll.pop()
-    assert dbl_ll._size == old_size - 1
-
-
-def test_pop_reassign_nxt_prev(dbl_ll):
-    """Test that popping a populated list reassigns head.nxt and head.nxt.prev."""
-    dbl_ll.pop()
-    assert dbl_ll.head.prev is None and dbl_ll.head.nxt.prev is dbl_ll.head
-
-
-def test_pop_returns_correct_value(dbl_ll):
-    """Test that pop returns the correct value."""
-    assert dbl_ll.head.value == dbl_ll.pop()
+def test_pop_on_list_size_1(dbl_ll_one_value):
+    """Test pop on list containing one element, head&tail should be None"""
+    dbl_ll_one_value.pop()
+    assert dbl_ll_one_value.head is None and dbl_ll_one_value.tail is None
 
 
 """SHIFT SPECIFIC TESTS"""
@@ -220,31 +219,17 @@ def test_shift_empty_list_raise_error(dbl_ll_empty):
     with pytest.raises(IndexError):
         dbl_ll_empty.shift()
 
-
-def test_shift_reassign_tail(dbl_ll):
-    """Test that shifting a populated list reassigns tail."""
-    old_tail = dbl_ll.tail
-    dbl_ll.shift()
-    assert old_tail.prev.value == dbl_ll.tail.value
+def test_shift_on_list_size_1(dbl_ll_one_value):
+    """Test shit on list containing one element, head&tail should be None"""
+    dbl_ll_one_value.shift()
+    assert dbl_ll_one_value.head is None and dbl_ll_one_value.tail is None
 
 
-def test_shift_decrease_size(dbl_ll):
-    """Test that shift correctly decreases size."""
-    old_size = dbl_ll._size
-    dbl_ll.shift()
-    assert dbl_ll._size == old_size - 1
-
-
-def test_shift_reassign_nxt_prev(dbl_ll):
-    """Test that shifting a populated list reassigns tail.prev"""
-    dbl_ll.shift()
-    assert dbl_ll.tail.nxt is None and dbl_ll.tail.prev.nxt is dbl_ll.tail
-
-
-def test_shift_returns_correct_value(dbl_ll):
-    """Test that shift returns the correct value."""
-    tail_value = dbl_ll.tail.value
-    assert dbl_ll.shift() == tail_value
+def test_shift_list_size_2(dbl_ll_2):
+    """Test that shifting a list of size 2 reassigns tail."""
+    old_tail = dbl_ll_2.tail
+    old_size = dbl_ll_2._size
+    assert dbl_ll_2.tail.value == dbl_ll_2.shift() and old_tail.prev ==  dbl_ll_2.tail and dbl_ll_2._size == old_size - 1
 
 
 """REMOVE SPECIFIC TESTS"""
