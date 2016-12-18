@@ -1,9 +1,17 @@
-"""This module defines Queue Data Structure."""
+"""This module defines Queue Data Structure.
 
-from dbl_linked_list import Dbl_Linked_List
+A Queue works based on the FIFO principle which is based in accounting and it
+describes the method of the first item/person/inventory to enter something
+to also be the first to leave it.
+
+An example would be a line in a bank where the first customer in the line will
+be the first one served and thus the first to exit the bank."""
+
+from dbl_linked_list import DblLinkedList
 
 
 class Queue(object):
+
     """The Queue Data structure is a compoisition of a Double Linked List.
 
     Methods:
@@ -18,11 +26,11 @@ class Queue(object):
     """
 
     def __init__(self, maybe_an_iterable=None):
-        """Initialize Queue as a Dbl_Linked_List-esque object."""
+        """Initialize Queue as a DblLinkedList-esque object."""
         if type(maybe_an_iterable) not in (list, tuple, dict):
-            self._container = Dbl_Linked_List(maybe_an_iterable)
+            self._container = DblLinkedList(maybe_an_iterable)
         else:
-            self._container = Dbl_Linked_List(maybe_an_iterable[::-1])
+            self._container = DblLinkedList(maybe_an_iterable[::-1])
 
     def enqueue(self, value):
         """Add a new node with given value to the end (tail) of the queue."""
