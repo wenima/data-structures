@@ -194,8 +194,7 @@ def test_pop_reassign_nxt_prev(dbl_ll):
 
 def test_pop_returns_correct_value(dbl_ll):
     """Test that pop returns the correct value."""
-    head_value = dbl_ll.head.value
-    assert dbl_ll.pop() == head_value
+    assert dbl_ll.head.value == dbl_ll.pop()
 
 
 """SHIFT SPECIFIC TESTS"""
