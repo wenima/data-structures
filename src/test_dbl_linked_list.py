@@ -1,10 +1,19 @@
 """Test dbl_linked_list data structures."""
 
 import pytest
+import random
 
 TEST_ITER = [1, 2, 3, 4, 5]
-sample_from_the_midde_of_iterable = random.choice(TEST_ITER[1:len(TEST_ITER) - 1])
+middle_item = random.choice(TEST_ITER[1:len(TEST_ITER) - 1])
+idx = [i for i, x in enumerate(TEST_ITER) if x == middle_item]
 
+
+REMOVE_TESTS_STR = [
+    (TEST_ITER[0], "Succesfully removed Node with value: {0}. New tail set to {1}, new size is {2}".format(TEST_ITER[0], TEST_ITER[1], len(TEST_ITER) - 1)),
+    (middle_item, "Succesfully removed Node with value: {0}. {1} points now to {2} and {3} to {4}, new size is {5}".format(TEST_ITER[idx[0]], TEST_ITER[idx[0] + 1], TEST_ITER[idx[0] - 1], TEST_ITER[idx[0] - 1], TEST_ITER[idx[0] + 1], len(TEST_ITER) - 1)),
+    (TEST_ITER[-1], "Succesfully removed Node with value: {0}. New head set to {1}, new size is {2}".format(TEST_ITER[-1], TEST_ITER[ - 2], len(TEST_ITER) - 1)),
+    ("not_in_list", ValueError),
+]
 
 @pytest.fixture
 def create_empty_node():
@@ -71,8 +80,8 @@ def test_create_list_with_one_value_assign_head_tail(dbl_ll_one_value):
 
 def test_create_dbl_with_iterable(dbl_ll):
     """Given an iterable, test that new Dbl_LL is created."""
-    assert new_dll.head.value == TEST_ITER[-1]
-    assert new_dll.tail.value == TEST_ITER[0]
+    assert dbl_ll.head.value == TEST_ITER[-1]
+    assert dbl_ll.tail.value == TEST_ITER[0]
 
 
 def test_create_dbl_with_iter_correct_size(dbl_ll):
@@ -241,48 +250,8 @@ def test_shift_returns_correct_value(dbl_ll):
 """REMOVE SPECIFIC TESTS"""
 
 
-def test_remove_val_not_in_list(dbl_ll):
-    """Test remove with value not in list raises Value Error."""
-    with pytest.raises(ValueError):
-        dbl_ll.remove("something")
-
-@pytest.mark.parametrize('s, result', TEST_STRINGS)
-def test_string_to_array(s, result):
-    """Test if string_to_array outputs a list from an input string"""
-    from kata_string_to_array import string_to_array
-    assert string_to_array(s) == result
-
-@pytest.mark.parametrize('s, result', REMOVE_TESTS)
-def test_remove_case_head(s, result, dbl_ll):
-    """Test remove with case head.  Should run pop()."""
-    new_head = dbl_ll.head.nxt
-    assert dbl_ll.remove(TEST_ITER[-1]) == result and new_head == dbl_ll.head
-
-
-def test_remove_case_tail(dbl_ll):
-    """Test remove with case tail.  Should run shift()."""
-    new_tail = dbl_ll.tail.prev
-    dbl_ll.remove(TEST_ITER[0])
-    assert new_tail is dbl_ll.tail
-
-
-def test_remove_head_tail_do_not_change(dbl_ll):
-    """Test that remove on any other node does not change head or tail."""
-    old_tail = dbl_ll.tail
-    old_head = dbl_ll.head
-    dbl_ll.remove(sample_from_the_midde_of_iterable)
-    assert old_tail is dbl_ll.tail and old_head is dbl_ll.head
-
-
-def test_remove_prev_nxt_reassigned(dbl_ll):
-    """Test that remove correctly changes prev and nxt."""
-    removed = dbl_ll.head.nxt
-    dbl_ll.remove(removed.value)
-    assert dbl_ll.head.nxt is removed.nxt and dbl_ll.head.nxt.prev is dbl_ll.head
-
-
-def test_remove_correctly_changes_size(dbl_ll):
-    """Test that remove method correctly changes size."""
-    old_size = dbl_ll._size
-    dbl_ll.remove(dbl_ll.head.nxt.value)
-    assert old_size == dbl_ll._size + 1
+@pytest.mark.parametrize('s, result', REMOVE_TESTS_STR)
+def test_remove_head_tail_middle(s, result, dbl_ll):
+    """Test remove with 1 operation on either end and 1 in the middle.
+    remove() should run pop() if s is head and shift() if s is tail."""
+    assert dbl_ll.remove(s) == result
