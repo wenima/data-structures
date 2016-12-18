@@ -27,10 +27,10 @@ class Queue(object):
 
     def __init__(self, maybe_an_iterable=None):
         """Initialize Queue as a DblLinkedList-esque object."""
-        if type(maybe_an_iterable) not in (list, tuple, dict):
-            self._container = DblLinkedList(maybe_an_iterable)
-        else:
+        try:
             self._container = DblLinkedList(maybe_an_iterable[::-1])
+        except TypeError:
+            self._container = DblLinkedList(maybe_an_iterable)
 
     def enqueue(self, value):
         """Add a new node with given value to the end (tail) of the queue."""
