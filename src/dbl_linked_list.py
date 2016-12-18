@@ -139,7 +139,7 @@ class DblLinkedList(object):
                     r_node[0].prev.nxt = r_node[0].nxt
                     r_node[0].nxt.prev = r_node[0].prev
                     self._size -= 1
-                    return "Succesfully removed Node with value: {0}. {1} points now to {2} and {3} to {4}, new size is {5}".format(r_node[0].value, r_node[0].prev.value, r_node[0].prev.nxt.value, r_node[0].nxt.value, r_node[0].nxt.prev.value, self._size)
+                    return "Succesfully removed Node with value: {0}. {1} points now to {2} and {3} to {4}, new size is {5}".format(r_node[0].value, r_node[0].prev.value, r_node[0].prev.nxt.value, r_node[0].nxt.value, r_node[0].nxt.prev.value, len(self))
 
     def _iterate_from(self, list_item):
         """Return a generator."""
