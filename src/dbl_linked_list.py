@@ -76,8 +76,12 @@ class Dbl_Linked_List(object):
         if self.head is None:
             raise IndexError("Cannot pop from an empty Double Linked List.")
         val = self.head.value
-        self.head = self.head.nxt
-        self.head.prev = None
+        if self._size == 1:
+            self.head = None
+            self.tail = None
+        else:
+            self.head = self.head.nxt
+            self.head.prev = None
         self._size -= 1
         return val
 
@@ -85,9 +89,13 @@ class Dbl_Linked_List(object):
         """Remove tail node from DLL and return its value."""
         if self.tail is None:
             raise IndexError("Cannot shift from an empty Double Linked List.")
-        val = self.tail.value
-        self.tail.prev.nxt = None
-        self.tail = self.tail.prev
+        val = self.head.value
+        if self._size == 1:
+            self.head = None
+            self.tail = None
+        else:
+            self.tail = self.tail.prev
+            self.tail.nxt = None
         self._size -= 1
         return val
 
