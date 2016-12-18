@@ -1,7 +1,16 @@
-"""Create a Double Linked List Data Structure."""
+"""Create a Double Linked List Data Structure. A doubly linked list is a
+linked data structure that consists of a set of sequentially linked records
+called nodes. Each node contains two fields, called links, that are references
+to the previous and to the next node in the sequence of nodes. The beginning and
+ending nodes' previous and next links, respectively, point to some kind of
+terminator, typically a sentinel node or null, to facilitate traversal of the
+list.
+
+Taken from https://en.wikipedia.org/wiki/Doubly_linked_list"""
 
 
-class Dbl_Node(object):
+class DblNode(object):
+
     """Create Node objects for use in a Linked List data structure.
 
     Attributes:
@@ -17,7 +26,8 @@ class Dbl_Node(object):
         self.prev = prev
 
 
-class Dbl_Linked_List(object):
+class DblLinkedList(object):
+
     """Double Linked List (DLL) style Data Structure.
 
     If initialized with an iterable, will create nodes for each item in
@@ -60,7 +70,7 @@ class Dbl_Linked_List(object):
 
     def push(self, value):
         """Add a node at the beginning of list and reassign head."""
-        new = Dbl_Node(value)
+        new = DblNode(value)
         if self._size > 0:
             old = self.head
             self.head = new
@@ -101,7 +111,7 @@ class Dbl_Linked_List(object):
 
     def append(self, value):
         """Append a new node at the end of list and reassign tail."""
-        new = Dbl_Node(value)
+        new = DblNode(value)
         if self._size > 0:
             old = self.tail
             self.tail = new
