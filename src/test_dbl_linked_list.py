@@ -3,29 +3,31 @@
 import pytest
 
 TEST_ITER = [1, 2, 3, 4, 5]
+sample_from_the_midde_of_iterable = random.choice(TEST_ITER[1:len(TEST_ITER) - 1])
+
 
 @pytest.fixture
 def create_empty_node():
-    from dbl_linked_list import Dbl_Node
-    new_node = Dbl_Node()
+    from dbl_linked_list import DblNode
+    new_node = DblNode()
     return new_node
 
 @pytest.fixture
 def dbl_ll_empty():
-    from dbl_linked_list import Dbl_Linked_List
-    new_dll = Dbl_Linked_List()
+    from dbl_linked_list import DblLinkedList
+    new_dll = DblLinkedList()
     return new_dll
 
 @pytest.fixture
 def dbl_ll_one_value():
-    from dbl_linked_list import Dbl_Linked_List
-    new_dll = Dbl_Linked_List(TEST_ITER[-1])
+    from dbl_linked_list import DblLinkedList
+    new_dll = DblLinkedList(TEST_ITER[-1])
     return new_dll
 
 @pytest.fixture
 def dbl_ll():
-    from dbl_linked_list import Dbl_Linked_List
-    new_dll = Dbl_Linked_List(TEST_ITER)
+    from dbl_linked_list import DblLinkedList
+    new_dll = DblLinkedList(TEST_ITER)
     return new_dll
 
 
@@ -38,17 +40,17 @@ def test_create_empty_dbl_node(create_empty_node):
 
 def test_create_node_with_val_nxt_prev():
     """Test creation of Nodes with values and nxt, prev references."""
-    from dbl_linked_list import Dbl_Node
-    node1 = Dbl_Node(1)
+    from dbl_linked_list import DblNode
+    node1 = DblNode(1)
     assert node1.value == 1 and node1.nxt is None and node1.prev is None
-    node2 = Dbl_Node("two", node1)
+    node2 = DblNode("two", node1)
     assert node2.value == "two" and node2.nxt is node1 and node2.prev is None
-    node3 = Dbl_Node([3], node1, node2)
+    node3 = DblNode([3], node1, node2)
     assert node3.value == [3] and node3.nxt is node1 and node3.prev is node2
 
 
 def test_create_empty_dbl_linked_list(dbl_ll_empty):
-    """Test creation of empty Dbl_Linked_List."""
+    """Test creation of empty DblLinkedList."""
     assert dbl_ll_empty.head is None
     assert dbl_ll_empty.tail is None
 
@@ -67,41 +69,41 @@ def test_create_list_with_one_value_assign_head_tail(dbl_ll_one_value):
     assert dbl_ll_one_value.tail.prev is None
 
 
-def test_create_dbl_with_iterable():
+def test_create_dbl_with_iterable(dbl_ll):
     """Given an iterable, test that new Dbl_LL is created."""
-    from dbl_linked_list import Dbl_Linked_List
-    new_dll = Dbl_Linked_List(TEST_ITER)
-    assert new_dll.head.value == 5
-    assert new_dll.tail.value == 1
+    assert new_dll.head.value == TEST_ITER[-1]
+    assert new_dll.tail.value == TEST_ITER[0]
 
 
 def test_create_dbl_with_iter_correct_size(dbl_ll):
     """Test that creating a dbl_ll with an iterable results in correct length."""
-    assert dbl_ll._size == 5
+    assert dbl_ll._size == TEST_ITER[-1]
 
 
 def test_create_dbl_with_iter_correct_prev_nxt(dbl_ll):
     """Creating a Dbl_LL with an iter head.nxt and tail.prev are correct."""
-    assert dbl_ll.head.nxt.value == 4
-    assert dbl_ll.tail.prev.value == 2
+    assert dbl_ll.head.nxt.value == TEST_ITER[-2]
+    assert dbl_ll.tail.prev.value == TEST_ITER[1]
 
 
 """PUSH SPECIFIC TESTS"""
+
+
 def test_push_empty_list(dbl_ll_empty):
     """Test pushed val is new head and tail."""
-    dbl_ll_empty.push(5)
-    assert dbl_ll_empty.head.value == 5 and dbl_ll_empty.tail.value == 5
+    dbl_ll_empty.push(TEST_ITER[-1])
+    assert dbl_ll_empty.head.value == TEST_ITER[-1] and dbl_ll_empty.tail.value == TEST_ITER[-1]
 
 
 def test_push_empty_list_new_head_tail(dbl_ll_empty):
     """Test that pushing on an empty list results in a new head, tail."""
-    dbl_ll_empty.push(5)
+    dbl_ll_empty.push(TEST_ITER[-1])
     assert dbl_ll_empty.head is dbl_ll_empty.tail
 
 
 def test_first_pushed_val_nxt_prev_is_none(dbl_ll_empty):
     """Test that the first pushed Node has no nxt or prev."""
-    dbl_ll_empty.push(5)
+    dbl_ll_empty.push(TEST_ITER[-1])
     assert dbl_ll_empty.head.nxt is None and dbl_ll_empty.head.prev is None
 
 
@@ -126,21 +128,23 @@ def test_push_increases_size(dbl_ll):
 
 
 """APPEND SPECIFIC TESTS"""
+
+
 def test_append_empty_list(dbl_ll_empty):
     """Test appended val is new head and tail."""
-    dbl_ll_empty.append(5)
-    assert dbl_ll_empty.head.value == 5 and dbl_ll_empty.tail.value == 5
+    dbl_ll_empty.append(TEST_ITER[-1])
+    assert dbl_ll_empty.head.value == TEST_ITER[-1] and dbl_ll_empty.tail.value == TEST_ITER[-1]
 
 
 def test_append_empty_list_new_head_tail(dbl_ll_empty):
     """Test that appending on an empty list results in a new head, tail."""
-    dbl_ll_empty.append(5)
+    dbl_ll_empty.append(TEST_ITER[-1])
     assert dbl_ll_empty.head is dbl_ll_empty.tail
 
 
 def test_first_appended_val_nxt_prev_is_none(dbl_ll_empty):
     """Test that the first appended Node has no nxt or prev."""
-    dbl_ll_empty.append(5)
+    dbl_ll_empty.append(TEST_ITER[-1])
     assert dbl_ll_empty.tail.nxt is None and dbl_ll_empty.tail.prev is None
 
 
@@ -166,6 +170,8 @@ def test_append_increases_size(dbl_ll):
 
 
 """POP SPECIFIC TESTS"""
+
+
 def test_pop_empty_list_raise_error(dbl_ll_empty):
     """Test that popping an empty list raises an Index Error."""
     with pytest.raises(IndexError):
@@ -198,6 +204,8 @@ def test_pop_returns_correct_value(dbl_ll):
 
 
 """SHIFT SPECIFIC TESTS"""
+
+
 def test_shift_empty_list_raise_error(dbl_ll_empty):
     """Test that shifting an empty list raises an Index Error."""
     with pytest.raises(IndexError):
@@ -205,7 +213,7 @@ def test_shift_empty_list_raise_error(dbl_ll_empty):
 
 
 def test_shift_reassign_tail(dbl_ll):
-    """Test that shifting a populated list reassigns head."""
+    """Test that shifting a populated list reassigns tail."""
     old_tail = dbl_ll.tail
     dbl_ll.shift()
     assert old_tail.prev.value == dbl_ll.tail.value
@@ -230,11 +238,7 @@ def test_shift_returns_correct_value(dbl_ll):
     assert dbl_ll.shift() == tail_value
 
 
-# """REMOVE SPECIFIC TESTS"""
-# def test_remove_empty_list_raise_error(dbl_ll_empty):
-#     """Test remove on empty list raises an Index Error."""
-#     with pytest.raises(IndexError):
-#         dbl_ll_empty.remove("something")
+"""REMOVE SPECIFIC TESTS"""
 
 
 def test_remove_val_not_in_list(dbl_ll):
@@ -242,18 +246,23 @@ def test_remove_val_not_in_list(dbl_ll):
     with pytest.raises(ValueError):
         dbl_ll.remove("something")
 
+@pytest.mark.parametrize('s, result', TEST_STRINGS)
+def test_string_to_array(s, result):
+    """Test if string_to_array outputs a list from an input string"""
+    from kata_string_to_array import string_to_array
+    assert string_to_array(s) == result
 
-def test_remove_case_head(dbl_ll):
+@pytest.mark.parametrize('s, result', REMOVE_TESTS)
+def test_remove_case_head(s, result, dbl_ll):
     """Test remove with case head.  Should run pop()."""
     new_head = dbl_ll.head.nxt
-    dbl_ll.remove(dbl_ll.head.value)
-    assert new_head is dbl_ll.head
+    assert dbl_ll.remove(TEST_ITER[-1]) == result and new_head == dbl_ll.head
 
 
 def test_remove_case_tail(dbl_ll):
     """Test remove with case tail.  Should run shift()."""
     new_tail = dbl_ll.tail.prev
-    dbl_ll.remove(dbl_ll.tail.value)
+    dbl_ll.remove(TEST_ITER[0])
     assert new_tail is dbl_ll.tail
 
 
@@ -261,7 +270,7 @@ def test_remove_head_tail_do_not_change(dbl_ll):
     """Test that remove on any other node does not change head or tail."""
     old_tail = dbl_ll.tail
     old_head = dbl_ll.head
-    dbl_ll.remove(dbl_ll.head.nxt.value)
+    dbl_ll.remove(sample_from_the_midde_of_iterable)
     assert old_tail is dbl_ll.tail and old_head is dbl_ll.head
 
 
