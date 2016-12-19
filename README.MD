@@ -1,6 +1,6 @@
 #Summary
 
-The assignment was to implement a [Deque](https://codefellows.github.io/sea-python-401d5/assignments/deque.html)
+The assignment was to implement a [Deque](https://en.wikipedia.org/wiki/Double-ended_queue)
 in Python containing 7 methods:
 
 * append(val): adds value to the end of the deque
@@ -11,7 +11,7 @@ in Python containing 7 methods:
 * peekleft(): returns the next value that would be returned by popleft but leaves the value in the deque (returns None if the deque is empty)
 * size(): returns the count of items in the queue (returns 0 if the queue is empty)
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/doubly_linked_list.html
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/deque.html
 
 
 # Coverage:
