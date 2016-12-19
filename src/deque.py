@@ -5,13 +5,13 @@ describes the method of the first item/person/inventory to enter something
 to also be the first to leave it.
 
 An example would be a line in a bank where the first customer in the line will
-be the first one served and thus the first to exit the bank."""
+be the first one served and thus the first to exit the bank.
+"""
 
 from dbl_linked_list import DblLinkedList
 
 
 class Deque(object):
-
     """The Queue Data structure is a compoisition of a Double Linked List.
 
     Methods:
@@ -41,26 +41,26 @@ class Deque(object):
         self._container.append(value)
 
     def appendleft(self, value):
-        """Add a new node with a given value to the beginning (head) of the deque"""
+        """Add a new node with a given value to the beginning (head) of the deque."""
         self._container.push(value)
 
     def pop(self):
-        """removes a value from the end of the deque and returns it (raises an exception if the deque is empty)"""
+        """Remove a value from the end of the deque and returns it (raises an exception if the deque is empty)."""
         self._container.shift()
 
     def popleft(self):
-        """removes a value from the front of the deque and returns it (raises an exception if the deque is empty)"""
+        """Remove a value from the front of the deque and returns it (raises an exception if the deque is empty)."""
         self._container.pop()
 
     def peek(self):
-        """(aka reverse peek): returns the next value that would be returned by pop but leaves the value in the deque (returns None if the deque is empty)"""
+        """(aka reverse peek): returns the next value that would be returned by pop but leaves the value in the deque (returns None if the deque is empty)."""
         try:
             return self._container.tail.value
         except AttributeError:
             return None
 
     def peekleft(self):
-        """(aka reverse peek): returns the next value that would be returned by pop but leaves the value in the deque (returns None if the deque is empty)"""
+        """(aka reverse peek): returns the next value that would be returned by pop but leaves the value in the deque (returns None if the deque is empty)."""
         try:
             return self._container.head.value
         except AttributeError:
