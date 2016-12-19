@@ -35,9 +35,9 @@ class Deque(object):
     def __init__(self, maybe_an_iterable=None):
         """Initialize Queue as a DblLinkedList-esque object."""
         try:
-            self._container = DblLinkedList(maybe_an_iterable[::-1])
+            self._container = DblLinkedList()
         except TypeError:
-            self._container = DblLinkedList(maybe_an_iterable)
+            self._container = DblLinkedList()
 
     def append(self, value):
         """Add a new node with given value to the end (tail) of the deque."""

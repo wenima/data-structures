@@ -50,4 +50,4 @@ def test_append_to_deque_of_two(deq_two):
     assert deq_two._container.head.value == 1
     assert deq_two._container.tail.value == 3
 
-    
+
