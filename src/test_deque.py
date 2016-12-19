@@ -136,6 +136,18 @@ def test_peek_at_deque_of_two(deq_two):
     assert deq_two.peek() == 2
     assert deq_two.size() == 2
 
+"""Tests for peekleft()"""
+
+def test_peekleft_returns_None_on_empty_queue(deq_empty):
+    """Test that peeking on an empty Queue object returns None"""
+    assert deq_empty.peek() is None
+
+
+def test_peekleft_returns_first_in_queue(deq_two):
+    """Test that peeking left returns the value of the first node in the Queue object"""
+    head_before_peekleft = deq_two._container.head
+    assert deq_two.peekleft() == deq_two._container.head.value
+    assert deq_two._container.head == head_before_peekleft
 
 # Tests for size()
 
