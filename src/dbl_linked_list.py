@@ -54,12 +54,17 @@ class DblLinkedList(object):
                         Else, raise a ValueError.
     """
 
-    def __init__(self):
+    def __init__(self, maybe_an_iterable=None):
         """Intialize a Double Linked List Object."""
         self.head = None
         self.tail = None
         self._size = 0
-
+        if maybe_an_iterable:
+            try:
+                for value in maybe_an_iterable:
+                    self.push(value)
+            except TypeError:
+                self.push(maybe_an_iterable)
 
     def push(self, value):
         """Add a node at the beginning of list and reassign head."""

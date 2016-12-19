@@ -32,7 +32,7 @@ class Deque(object):
 
     """
 
-    def __init__(self, maybe_an_iterable=None):
+    def __init__(self):
         """Initialize Queue as a DblLinkedList-esque object."""
         try:
             self._container = DblLinkedList()
@@ -47,11 +47,11 @@ class Deque(object):
         """Add a new node with a given value to the beginning (head) of the deque"""
         self._container.push(value)
 
-    def pop(self, value):
+    def pop(self):
         """removes a value from the end of the deque and returns it (raises an exception if the deque is empty)"""
         self._container.shift()
 
-    def popleft(self, value):
+    def popleft(self, val):
         """removes a value from the front of the deque and returns it (raises an exception if the deque is empty)"""
         self._container.pop()
 
