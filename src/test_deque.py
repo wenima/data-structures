@@ -50,4 +50,10 @@ def test_append_to_deque_of_two(deq_two):
     assert deq_two._container.head.value == 1
     assert deq_two._container.tail.value == 3
 
-    
+"""APPENDLEFT specific Test"""
+
+def test_push_empty_list(deq_empty):
+    """Test left appended val is new head and tail."""
+    deq_empty.appendleft(1)
+    assert deq_empty.head.value == 1
+    assert deq_empty.tail.value == 1
