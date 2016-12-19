@@ -4,7 +4,7 @@ setup(
     name="data-structures",
     description="this module will be expanded as we write more data-structures",
     version=1.1,
-    author="Ted Callahan and Mark Kessler-Wenicker",
+    author="Marc Fieser and Mark Kessler-Wenicker",
     author_email="",
     license="MIT",
     package_dir={'': 'src'},
