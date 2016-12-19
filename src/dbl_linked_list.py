@@ -63,8 +63,6 @@ class DblLinkedList(object):
             try:
                 for value in maybe_an_iterable:
                     self.push(value)
-                nodes = [node for node in self._iterate_from(self.head)]
-                self.tail = nodes[-1]
             except TypeError:
                 self.push(maybe_an_iterable)
 
