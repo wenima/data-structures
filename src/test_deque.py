@@ -94,7 +94,7 @@ def test_appendleft_reassigns_prev_nxt(deq_two):
     assert deq_two._container.head.nxt.value == old_head.value
     assert deq_two._container.head.nxt.prev is deq_two._container.head
 
-# Tests for pop()
+# Tests for popleft()
 
 
 def test_pop_from_empty_deque(deq_empty):
@@ -127,7 +127,41 @@ def test_pop_from_deque_of_three(deq_three):
     assert deq_three.size() == 2
 
 
+# Tests for popleft()
+
+
+def test_popleft_from_empty_deque(deq_empty):
+    """Test that you cannot popleft from an empty deque."""
+    with pytest.raises(IndexError):
+        deq_empty.popleft()
+
+
+def test_popleft_from_deque_of_one(deq_one):
+    """Test that popleft from list of one returns head and tail to none."""
+    deq_one.popleft()
+    assert deq_one._container.head is None
+    assert deq_one._container.tail is None
+    assert deq_one.size() == 0
+
+
+def test_popleft_from_deque_of_two(deq_two):
+    """Test that popleft from a deque of two leaves one element."""
+    deq_two.popleft()
+    assert deq_two._container.head.value == 2
+    assert deq_two._container.tail.value == 2
+    assert deq_two.size() == 1
+
+
+def test_popleft_from_deque_of_three(deq_three):
+    """Test that popleft from a deque of three removes the head element."""
+    deq_three.popleft()
+    assert deq_three._container.tail.value == 3
+    assert deq_three._container.head.value == 2
+    assert deq_three.size() == 2
+
+
 # Tests for peek()
+
 
 def test_peek_at_an_empty_deque(deq_empty):
     """Test that peek of an emty queue returns None."""
@@ -137,8 +171,7 @@ def test_peek_at_an_empty_deque(deq_empty):
 def test_peek_at_deque_of_one(deq_one):
     """Test that peeking at deque of one returns value and leaves node."""
     assert deq_one.peek() == 1
-    assert deq_one._container.head.value == 1
-    assert deq_one.size() == 1
+    assert deq_one._container.tail.value == 1
 
 
 def test_peek_at_deque_of_two(deq_two):
@@ -147,8 +180,13 @@ def test_peek_at_deque_of_two(deq_two):
     assert deq_two.size() == 2
 
 
-# Tests for size()
+# Test for size()
 
 def test_size_of_empty_deque(deq_empty):
     """Test that an empty deque has a size of zero."""
     assert deq_empty.size() == 0
+
+
+def test_dunder_length(deq_three):
+    """Test that the len method works."""
+    assert len(deq_three) == 3

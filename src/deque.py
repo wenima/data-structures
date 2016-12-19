@@ -34,10 +34,7 @@ class Deque(object):
 
     def __init__(self):
         """Initialize Queue as a DblLinkedList-esque object."""
-        try:
-            self._container = DblLinkedList()
-        except TypeError:
-            self._container = DblLinkedList()
+        self._container = DblLinkedList()
 
     def append(self, value):
         """Add a new node with given value to the end (tail) of the deque."""
@@ -51,7 +48,7 @@ class Deque(object):
         """removes a value from the end of the deque and returns it (raises an exception if the deque is empty)"""
         self._container.shift()
 
-    def popleft(self, val):
+    def popleft(self):
         """removes a value from the front of the deque and returns it (raises an exception if the deque is empty)"""
         self._container.pop()
 
