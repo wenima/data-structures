@@ -77,8 +77,6 @@ def test_appendleft_empty_list_new_head_tail(deq_empty):
     """Test that appendleft on an empty list results in a new head, tail."""
     deq_empty.appendleft(5)
     assert deq_empty._container.head is deq_empty._container.tail
-    assert deq_empty._container.head.nxt is None
-    assert deq_empty._container.head.prev is None
 
 
 def test_appendleft_assigns_new_head(deq_empty):
@@ -87,14 +85,7 @@ def test_appendleft_assigns_new_head(deq_empty):
     assert deq_empty._container.head.value == 6
 
 
-def test_appendleft_reassigns_prev_nxt(deq_two):
-    """Test that appendlefting to a full list correctly assigns prev, nxt."""
-    old_head = deq_two._container.head
-    deq_two.appendleft(6)
-    assert deq_two._container.head.nxt.value == old_head.value
-    assert deq_two._container.head.nxt.prev is deq_two._container.head
-
-# Tests for popleft()
+# Tests for pop()
 
 
 def test_pop_from_empty_deque(deq_empty):
@@ -164,7 +155,7 @@ def test_popleft_from_deque_of_three(deq_three):
 
 
 def test_peek_at_an_empty_deque(deq_empty):
-    """Test that peek of an emty queue returns None."""
+    """Test that peek of an empty queue returns None."""
     assert deq_empty.peek() is None
 
 
@@ -180,7 +171,23 @@ def test_peek_at_deque_of_two(deq_two):
     assert deq_two.size() == 2
 
 
+"""Tests for peekleft()"""
+
+
+def test_peekleft_returns_none_on_empty_queue(deq_empty):
+    """Test that peeking on an empty Queue object returns None."""
+    assert deq_empty.peekleft() is None
+
+
+def test_peekleft_returns_first_in_queue(deq_two):
+    """Test that peeking left returns the value of the first node in the Queue object."""
+    head_before_peekleft = deq_two._container.head
+    assert deq_two.peekleft() == deq_two._container.head.value
+    assert deq_two._container.head == head_before_peekleft
+
+
 # Test for size()
+
 
 def test_size_of_empty_deque(deq_empty):
     """Test that an empty deque has a size of zero."""
