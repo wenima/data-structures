@@ -80,3 +80,9 @@ def test_raise_up_not_to_top():
     from binheap import Binheap
     heap = Binheap([10, 20, 30, 40, 50, 60, 70, 15])
     assert heap._raise_up(8) == [0, 10, 15, 30, 20, 50, 60, 70, 40]
+
+
+def test_pop_removes_and_returns_top_value(heap_many):
+    """Test that pop removes top value and returns it."""
+    assert heap_many.pop() == 10
+    assert heap_many._heap[1] == 5
