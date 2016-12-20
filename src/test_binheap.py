@@ -72,11 +72,11 @@ def test_add_smaller_value_that_raises(heap):
 
 def test_raise_up_multiple_rows(heap_many):
     """Test that raise up works across multiple rows of the heap."""
-    assert heap_many._raise_up(8) == [5, 10, 30, 20, 50, 60, 70, 40]
+    assert heap_many._raise_up(8) == [0, 5, 10, 30, 20, 50, 60, 70, 40]
 
 
 def test_raise_up_not_to_top():
     """Test that raise up works across multiple rows of the heap."""
     from binheap import Binheap
     heap = Binheap([10, 20, 30, 40, 50, 60, 70, 15])
-    assert heap._raise_up(8) == [10, 15, 30, 20, 50, 60, 70, 40]
+    assert heap._raise_up(8) == [0, 10, 15, 30, 20, 50, 60, 70, 40]
