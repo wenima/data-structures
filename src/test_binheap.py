@@ -52,5 +52,5 @@ def test_add_larger_value_that_remains(one_heap):
 
 def test_add_smaller_value_that_raises(heap):
     """Test that a heap with the smallest number at the end raises to the top."""
-    heap._raise_up(5)
-    assert heap._heap == [0, 5, 10, 20]
+    heap._raise_up(3)
+    assert heap._heap == [0, 5, 20, 10]

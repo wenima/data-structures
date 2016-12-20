@@ -34,16 +34,12 @@ class Binheap(object):
     def _raise_up(self, i):
         """Raise i into the tree until the tree structure is satisfied."""
         print(self._heap, i)
-        print(1 // 2)
-        #while i // 2 > 0:
-        for i in range(len(self._heap)):
+        while i // 2 > 0:
             if self._heap[i] < self._heap[i // 2]:
                 tmp = self._heap[i // 2]
                 self._heap[i // 2] = self._heap[i]
                 self._heap[i] = tmp
-                print(i)
-                i = i // 2
-                print(i)
+            i = i // 2
         return self._heap
 
     def _sink_down(self, i):
