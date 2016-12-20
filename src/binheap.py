@@ -4,32 +4,52 @@
 class Binheap(object):
     """Create a binary heap tree structure."""
 
-    def __init__(self):
+    def __init__(self, maybe_an_iterable=None):
         """Initialize an instance of the binheap."""
         self._heap = [0]
-        self._size = 0
+        if maybe_an_iterable:
+            try:
+                for value in maybe_an_iterable:
+                    self._heap.append(value)
+            except TypeError:
+                self.push(maybe_an_iterable)
+        self._size = len(self._heap) - 1
+        print(self._heap)
+
 
     def push(self, value):
         """Push a new value to the heap."""
-        pass
+        self._heap.append(value)
+        self._raise_up(len(self._heap) - 1)
+        return self._heap
 
     def pop(self):
         """Remove the root node from the tree."""
-        pass
+        self._heap
 
-    def insert(self, value):
+    def _insert(self, value):
         """Insert value into the tree structure and reorganize."""
         pass
 
-    def raise_up(self, i):
+    def _raise_up(self, i):
         """Raise i into the tree until the tree structure is satisfied."""
-        pass
+        print(self._heap, i)
+        print(1 // 2)
+        #while i // 2 > 0:
+        for i in range(len(self._heap)):
+            if self._heap[i] < self._heap[i // 2]:
+                tmp = self._heap[i // 2]
+                self._heap[i // 2] = self._heap[i]
+                self._heap[i] = tmp
+                print(i)
+                i = i // 2
+                print(i)
+        return self._heap
 
-    def sink_down(self, i):
+    def _sink_down(self, i):
         """Sink i down the tree until the tree structure is satisfied."""
         pass
 
-    def get_min_child(self, i):
+    def _get_min_child(self, i):
         """Determine the smaller of two children."""
         pass
-        
