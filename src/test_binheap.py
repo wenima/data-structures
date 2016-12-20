@@ -2,6 +2,16 @@
 
 import pytest
 
+TEST_ITER = [10, 20, 5]
+
+
+@pytest.fixture
+def heap():
+    """Prebuilt heap."""
+    from binheap import Binheap
+    heap = Binheap(TEST_ITER)
+    return heap
+
 
 @pytest.fixture
 def empty_heap():
@@ -11,10 +21,13 @@ def empty_heap():
     return heap
 
 
-def one_heap(empty_heap):
-    """Heap of one."""
-    empty_heap.push(10)
-    return empty_heap
+@pytest.fixture
+def one_heap():
+    """One heap."""
+    from binheap import Binheap
+    heap = Binheap()
+    heap.push(10)
+    return heap
 
 
 def test_binheap_is_initialized():
@@ -37,7 +50,7 @@ def test_add_larger_value_that_remains(one_heap):
     assert one_heap._heap == [0, 10, 20]
 
 
-def test_add_smaller_value_that_raises(one_heap):
-    """Test that adding to a list with a larger value it gets added to the end."""
-    one_heap.push(5)
-    assert one_heap._heap == [0, 5, 10]
+def test_add_smaller_value_that_raises(heap):
+    """Test that a heap with the smallest number at the end raises to the top."""
+    heap._raise_up(5)
+    assert heap._heap == [0, 5, 10, 20]
