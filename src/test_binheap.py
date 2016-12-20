@@ -2,7 +2,14 @@
 
 import pytest
 
+TEST_TABLE = [
+    (5, [0, 5, 20, 10]),
+    (8, [5, 10, 30, 20, 50, 60, 70, 40]),
+]
+
 TEST_ITER = [10, 20, 5]
+
+TEST_ITER_MANY = [10, 20, 30, 40, 50, 60, 70, 5]
 
 
 @pytest.fixture
@@ -10,6 +17,14 @@ def heap():
     """Prebuilt heap."""
     from binheap import Binheap
     heap = Binheap(TEST_ITER)
+    return heap
+
+
+@pytest.fixture
+def heap_many():
+    """Prebuilt heap with multiple values."""
+    from binheap import Binheap
+    heap = Binheap(TEST_ITER_MANY)
     return heap
 
 
@@ -52,5 +67,16 @@ def test_add_larger_value_that_remains(one_heap):
 
 def test_add_smaller_value_that_raises(heap):
     """Test that a heap with the smallest number at the end raises to the top."""
-    heap._raise_up(3)
-    assert heap._heap == [0, 5, 20, 10]
+    assert heap._raise_up(3) == [0, 5, 20, 10]
+
+
+def test_raise_up_multiple_rows(heap_many):
+    """Test that raise up works across multiple rows of the heap."""
+    assert heap_many._raise_up(8) == [5, 10, 30, 20, 50, 60, 70, 40]
+
+
+def test_raise_up_not_to_top():
+    """Test that raise up works across multiple rows of the heap."""
+    from binheap import Binheap
+    heap = Binheap([10, 20, 30, 40, 50, 60, 70, 15])
+    assert heap._raise_up(8) == [10, 15, 30, 20, 50, 60, 70, 40]
