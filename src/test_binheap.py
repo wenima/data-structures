@@ -86,3 +86,9 @@ def test_pop_removes_and_returns_top_value(heap_many):
     """Test that pop removes top value and returns it."""
     assert heap_many.pop() == 10
     assert heap_many._heap[1] == 5
+
+
+def test_pop_from_empty_heap_raises_index_error(empty_heap):
+    """Test that popping form an empty heap returns a index error."""
+    with pytest.raises(IndexError):
+        empty_heap.pop()
