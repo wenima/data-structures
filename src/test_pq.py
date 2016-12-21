@@ -64,6 +64,6 @@ def test_that_items_are_returned_in_correct_order(pq_empty):
     pq_empty.insert(("check_critical_news", 1))
     pq_empty.insert(("check_emails", 10))
     assert ROUTINES[0][1] in pq_empty.pop()
-    assert pq_empty.pop() == "check_critical_news"
-    assert pq._binheap._heap[-1] == ("check_emails", 10)
+    assert "check_critical_news" in pq_empty.pop()
+    assert "check_emails" in pq._binheap._heap[-1]
     assert len(pq_empty) == cur_len + 1
