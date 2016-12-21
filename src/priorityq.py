@@ -40,7 +40,8 @@ class PriorityQueue(object):
 
     def peek(self):
         """Look at the item that is next on the priority queue."""
-        return self._heap._heap[1]
+        return self._binheap._heap[1]
 
     def __len__(self):
+        """Return size of underlying binary heap."""
         return self._heap._size
