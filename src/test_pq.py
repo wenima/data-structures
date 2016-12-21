@@ -23,30 +23,26 @@ def pq_empty():
     return new_pq
 
 @pytest.fixture
-def pq1():
-    from priorityq import PriorityQueue
-    new_pq = PriorityQueue(ROUTINES[-1])
-    return new_pq
-
-@pytest.fixture
 def pq():
     from priorityq import PriorityQueue
     new_pq = PriorityQueue(ROUTINES)
     return new_pq
-
 
 def test_create_empty_pq(pq_empty):
     """Test creation of empty PriorityQueue."""
     assert pq_empty._binheap._heap[0] == 0
     assert len(pq_empty) == 0
 
-def test_create_priority_queue_with_one_value(pq1):
-    """Test that a PriorityQueue can be created with one value."""
-    assert ROUTINES[-1][0] in pq1._binheap._heap[-1]
+def test_create_priority_queue_with_one_value():
+    """Test that a PriorityQueue cannot be created with one value and throws an error"""
+    from priorityq import PriorityQueue
+    with pytest.raises(TypeError):
+        new_pq = PriorityQueue(ROUTINES[-1])
 
-def test_that_popping_and_peeking_gives_an_error_message(pq1):
+def test_that_popping_and_peeking_gives_an_error_message(pq_empty):
     """Test that popping and peeking on a queue with 1 element is Falsey"""
-    pq1.pop()
+    pq_empty.insert("sleep", 1)
+    pq_empty.pop()
     assert pq.peek() is False
 
 def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
@@ -57,7 +53,7 @@ def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
 def test_peek_returns_item_of_highest_prio(pq):
     """Test that peek returns item of highest prio but keeps it in the list"""
     assert pq.peek() == ROUTINES[0][0]
-    assert ROUTINES[0] in pq._binheap._heap[1]
+    assert ROUTINES[0][0] in pq._binheap._heap[1]
 
 
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
