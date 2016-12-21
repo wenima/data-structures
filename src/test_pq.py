@@ -41,7 +41,7 @@ def test_create_priority_queue_with_one_value():
 
 def test_that_popping_and_peeking_gives_an_error_message(pq_empty):
     """Test that popping and peeking on a queue with 1 element is Falsey"""
-    pq_empty.insert("sleep", 1)
+    pq_empty.insert(("sleep", 1))
     pq_empty.pop()
     assert pq.peek() is False
 
