@@ -43,7 +43,7 @@ def test_that_popping_and_peeking_gives_an_error_message(pq_empty):
     """Test that popping and peeking on a queue with 1 element is Falsey"""
     pq_empty.insert(("sleep", 1))
     pq_empty.pop()
-    assert pq.peek() is False
+    assert pq_empy.peek() is False
 
 def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
     """Test that popping on an empty queue raises an exception"""
