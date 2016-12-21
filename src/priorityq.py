@@ -29,7 +29,7 @@ class PriorityQueue(object):
                     i += 1
             except:
                 raise TypeError("Not an iterable")
-        
+
     def insert(self, item):
         """Insert an item into the priority queue and order it by priority."""
         pq_set = (item[1], self._binheap._size, item[0])
@@ -41,7 +41,7 @@ class PriorityQueue(object):
 
     def peek(self):
         """Look at the item that is next on the priority queue."""
-        return self._binheap._heap[1]
+        return self._binheap._heap[1][2]
 
     def __len__(self):
         """Return size of underlying binary heap."""
