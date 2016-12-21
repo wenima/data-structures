@@ -2,6 +2,7 @@
 
 import pytest
 
+TEST_ITER = [30, 20, 15, 75, 65, 1, 90, 55]
 
 """The test dict below contains a list of lists that are used for varying tests throughout this module.  The commented line above each list is the reason for the list followed by the index of that list."""
 TEST_DICT = [
@@ -12,15 +13,16 @@ TEST_DICT = [
     # raise part way - 2
     ([10, 20, 30, 40, 50, 60, 70, 15]),
     # sink down - 3
-    ([30, 10, 20]),
+    ([5, 10, 20]),
     # sink way down - 4
-    ([80, 10, 20, 30, 40, 50, 60, 70]),
+    ([5, 10, 20, 30, 40, 50, 60, 70]),
     # sink part way - 5
-    ([55, 10, 20, 30, 40, 50, 60, 70]),
+    ([5, 10, 20, 30, 40, 50, 60, 70]),
     # well formed- 6
-    ([5, 10, 20, 25, 30, 35, 40, 55, 60]),
+    ([5, 10, 20, 25, 30, 35, 40, 55]),
     # child on right is smaller for sink - 7
     ([10, 5, 3]),
+    ([30, 20, 15, 75, 65, 1, 90, 55])
 
 
 ]
@@ -49,6 +51,13 @@ def test_binheap_is_initialized():
     heap = Binheap()
     assert heap._heap[0] == 0
     assert heap._size == 0
+
+
+def test_binheap_has_valid_structure_post_instantiating():
+    """Validate the binheap has valid structure after it has been initalized."""
+    from binheap import Binheap
+    minheap = Binheap(TEST_ITER)
+    assert minheap._heap == [0, 1, 30, 15, 55, 65, 20, 90, 75]
 
 
 def test_cannot_init_with_non_iterable():
@@ -94,8 +103,9 @@ def test_pop_removes_and_returns_top_value():
     """Test that pop removes top value and returns it."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[6])
+    heap.push(60)
     assert heap.pop() == 5
-    assert heap._heap[1] == 60
+    assert heap._heap[1] == 10
 
 
 def test_pop_from_empty_heap_raises_index_error(empty_heap):
@@ -108,6 +118,8 @@ def test_sink_to_bottom():
     """Test that the larger numbers sink down the tree of small tree."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[3])
+    heap.push(30)
+    heap.pop()
     assert heap._sink_down(1) == [0, 10, 30, 20]
 
 
@@ -115,6 +127,8 @@ def test_sink_all_the_way_to_bottom():
     """Test that the larger numbers sink down the tree of large tree."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[4])
+    heap.push(80)
+    heap.pop()
     assert heap._sink_down(1) == [0, 10, 30, 20, 70, 40, 50, 60, 80]
 
 
@@ -122,6 +136,8 @@ def test_sink_part_way_to_bottom():
     """Test that the larger numbers sink down the tree part way."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[5])
+    heap.push(55)
+    assert heap.pop() == 5
     assert heap._sink_down(1) == [0, 10, 30, 20, 55, 40, 50, 60, 70]
 
 

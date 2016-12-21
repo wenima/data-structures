@@ -15,6 +15,7 @@ class Binheap(object):
     def __init__(self, maybe_an_iterable=None):
         """Initialize an instance of the binheap."""
         self._heap = [0]
+        self._size = 0
         if maybe_an_iterable:
             try:
                 for value in maybe_an_iterable:
@@ -22,8 +23,10 @@ class Binheap(object):
                     self._heap.append(value)
             except TypeError:
                 return "Only an iterable of integers is an accepted input"
+            for item in reversed(maybe_an_iterable):
+                self._raise_up(self._heap.index(item))
         self._size = len(self._heap) - 1
-        print(self._heap)
+
 
     def push(self, value):
         """Push a new value to the heap."""
@@ -38,6 +41,8 @@ class Binheap(object):
         root = self._heap[1]
         self._heap[1] = self._heap[-1]
         del self._heap[-1]
+        self._size -= 1
+        self._sink_down(1)
         return root
 
     def _raise_up(self, i):
