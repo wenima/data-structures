@@ -70,7 +70,7 @@ def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
 
 def test_that_items_are_returned_in_correct_order(pq):
     """Test that items are returned in the correct order."""
-    cur_len = len(pq_empty)
+    cur_len = len(pq)
     pq.insert(("wake_kids", 5))
     pq.insert(("check_critical_news", 1))
     pq.insert(("check_emails", 10))
