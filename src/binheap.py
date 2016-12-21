@@ -12,10 +12,9 @@ class Binheap(object):
                 for value in maybe_an_iterable:
                     self._heap.append(value)
             except TypeError:
-                self.push(maybe_an_iterable)
+                raise(TypeError)
         self._size = len(self._heap) - 1
         print(self._heap)
-
 
     def push(self, value):
         """Push a new value to the heap."""
@@ -33,10 +32,6 @@ class Binheap(object):
         # self._sink_down()
         return root
 
-    def _insert(self, value):
-        """Insert value into the tree structure and reorganize."""
-        pass
-
     def _raise_up(self, i):
         """Raise i into the tree until the tree structure is satisfied."""
         while i // 2 > 0:
@@ -46,7 +41,6 @@ class Binheap(object):
                 self._heap[i] = tmp
             i = i // 2
         return self._heap
-
 
     def _sink_down(self, i):
         """Sink the input node down the tree until the tree structure is satisfied."""
@@ -59,7 +53,6 @@ class Binheap(object):
             parent = self._heap[idx_child]
             i = idx_child
         return self._heap
-
 
     def _get_min_child(self, i):
         """Determine the smaller of two children."""

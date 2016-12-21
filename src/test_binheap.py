@@ -18,7 +18,9 @@ TEST_DICT = [
     # sink part way - 5
     ([55, 10, 20, 30, 40, 50, 60, 70]),
     # well formed- 6
-    ([5, 10, 20, 25, 30, 35, 40, 55, 60])
+    ([5, 10, 20, 25, 30, 35, 40, 55, 60]),
+    # child on right is smaller for sink - 7
+    ([10, 5, 3]),
 
 
 ]
@@ -47,6 +49,12 @@ def test_binheap_is_initialized():
     heap = Binheap()
     assert heap._heap[0] == 0
     assert heap._size == 0
+
+
+def test_cannot_init_with_non_iterable():
+    from binheap import Binheap
+    with pytest.raises(TypeError):
+        Binheap(8)
 
 
 def test_add_to_empty_binheap(empty_heap):
@@ -115,3 +123,10 @@ def test_sink_part_way_to_bottom():
     from binheap import Binheap
     heap = Binheap(TEST_DICT[5])
     assert heap._sink_down(1) == [0, 10, 30, 20, 55, 40, 50, 60, 70]
+
+
+def test_sink_to_the_right():
+    """Test that sinking to the right works."""
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[7])
+    assert heap._sink_down(1) == [0, 3, 5, 10]
