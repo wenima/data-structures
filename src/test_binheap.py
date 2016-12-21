@@ -2,6 +2,8 @@
 
 import pytest
 
+
+"""The test dict below contains a list of lists that are used for varying tests throughout this module.  The commented line above each list is the reason for the list followed by the index of that list."""
 TEST_DICT = [
     # raise to top - 0
     ([10, 20, 5]),
@@ -20,26 +22,6 @@ TEST_DICT = [
 
 
 ]
-
-TEST_ITER = [10, 20, 5]
-
-TEST_ITER_MANY = [10, 20, 30, 40, 50, 60, 70, 5]
-
-
-@pytest.fixture
-def heap():
-    """Prebuilt heap."""
-    from binheap import Binheap
-    heap = Binheap(TEST_ITER)
-    return heap
-
-
-@pytest.fixture
-def heap_many():
-    """Prebuilt heap with multiple values."""
-    from binheap import Binheap
-    heap = Binheap(TEST_ITER_MANY)
-    return heap
 
 
 @pytest.fixture
@@ -100,7 +82,7 @@ def test_raise_up_not_to_top():
     assert heap._raise_up(8) == [0, 10, 15, 30, 20, 50, 60, 70, 40]
 
 
-def test_pop_removes_and_returns_top_value(heap_many):
+def test_pop_removes_and_returns_top_value():
     """Test that pop removes top value and returns it."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[6])
@@ -118,18 +100,18 @@ def test_sink_to_bottom():
     """Test that the larger numbers sink down the tree of small tree."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[3])
-    assert heap._sink_down(1) == [10, 30, 20]
+    assert heap._sink_down(1) == [0, 10, 30, 20]
 
 
 def test_sink_all_the_way_to_bottom():
     """Test that the larger numbers sink down the tree of large tree."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[4])
-    assert heap._sink_down(1) == [10, 30, 20, 70, 40, 50, 60, 80]
+    assert heap._sink_down(1) == [0, 10, 30, 20, 70, 40, 50, 60, 80]
 
 
 def test_sink_part_way_to_bottom():
     """Test that the larger numbers sink down the tree part way."""
     from binheap import Binheap
     heap = Binheap(TEST_DICT[5])
-    assert heap._sink_down(1) == [10, 30, 20, 55, 40, 50, 60, 70]
+    assert heap._sink_down(1) == [0, 10, 30, 20, 55, 40, 50, 60, 70]
