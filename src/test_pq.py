@@ -59,11 +59,11 @@ def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
 
 def test_that_items_are_returned_in_correct_order(pq_empty):
     """Test that items are returned in the correct order."""
-    cur_len = len(pq)
-    pq.insert(("wake_kids", 5))
-    pq.insert(("check_critical_news", 1))
-    pq.insert(("check_emails", 10))
-    assert ROUTINES[0][0] == pop()
+    cur_len = len(pq_empty)
+    pq_empty.insert(("wake_kids", 5))
+    pq_empty.insert(("check_critical_news", 1))
+    pq_empy.insert(("check_emails", 10))
+    assert ROUTINES[0][1] in pop()
     assert pop() == "check_critical_news"
     assert pq._binheap._heap[-1] == ("check_emails", 10)
-    assert len(pq) == cur_len + 1
+    assert len(pq_empty) == cur_len + 1
