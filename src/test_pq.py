@@ -42,7 +42,7 @@ def test_create_empty_pq(pq_empty):
 
 def test_create_priority_queue_with_one_value(pq1):
     """Test that a PriorityQueue can be created with one value."""
-    assert ROUTINES[-1][1] in pq1._binheap._heap[-1]
+    assert ROUTINES[-1][0] in pq1._binheap._heap[-1]
 
 def test_that_popping_and_peeking_gives_an_error_message(pq1):
     """Test that popping and peeking on a queue with 1 element is Falsey"""
@@ -56,25 +56,25 @@ def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
 
 def test_peek_returns_item_of_highest_prio(pq):
     """Test that peek returns item of highest prio but keeps it in the list"""
-    assert pq.peek() == ROUTINES[0][1]
+    assert pq.peek() == ROUTINES[0][0]
     assert ROUTINES[0] in pq._binheap._heap[1]
 
 
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
     """Test that popping from PriorityQueue returns the item with the highest prio and remove it from the queue."""
     cur_len = len(pq)
-    assert ROUTINES[0][1] in pq.pop()
-    assert ROUTINES[1][1] in pq._binheap._heap[1]
+    assert ROUTINES[0][0] in pq.pop()
+    assert ROUTINES[1][0] in pq._binheap._heap[1]
     assert len(pq) == cur_len - 1
 
 
-def test_that_items_are_returned_in_correct_order(pq_empty):
+def test_that_items_are_returned_in_correct_order(pq):
     """Test that items are returned in the correct order."""
     cur_len = len(pq_empty)
-    pq_empty.insert(("wake_kids", 5))
-    pq_empty.insert(("check_critical_news", 1))
-    pq_empty.insert(("check_emails", 10))
-    assert ROUTINES[0][1] in pq_empty.pop()
-    assert "check_critical_news" in pq_empty.pop()
+    pq.insert(("wake_kids", 5))
+    pq.insert(("check_critical_news", 1))
+    pq.insert(("check_emails", 10))
+    assert ROUTINES[0][0] in pq.pop()
+    assert "check_critical_news" in pq.pop()
     assert "check_emails" in pq._binheap._heap[-1]
-    assert len(pq_empty) == cur_len + 1
+    assert len(pq) == cur_len + 1
