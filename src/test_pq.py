@@ -47,7 +47,7 @@ def test_create_priority_queue_with_one_value(pq1):
 def test_peek_returns_item_of_highest_prio(pq):
     """Test that peek returns item of highest prio but keeps it in the list"""
     assert pq.peek() == ROUTINES[0][2]
-    assert ROUTINES[0] in pq._binheap._[1]
+    assert ROUTINES[0] in pq._binheap._heap[1]
 
 
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
