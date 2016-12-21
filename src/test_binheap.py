@@ -2,9 +2,23 @@
 
 import pytest
 
-TEST_TABLE = [
-    (5, [0, 5, 20, 10]),
-    (8, [5, 10, 30, 20, 50, 60, 70, 40]),
+TEST_DICT = [
+    # raise to top - 0
+    ([10, 20, 5]),
+    # raise all the way to the top - 1
+    ([10, 20, 30, 40, 50, 60, 70, 5]),
+    # raise part way - 2
+    ([10, 20, 30, 40, 50, 60, 70, 15]),
+    # sink down - 3
+    ([30, 10, 20]),
+    # sink way down - 4
+    ([80, 10, 20, 30, 40, 50, 60, 70]),
+    # sink part way - 5
+    ([55, 10, 20, 30, 40, 50, 60, 70]),
+    # well formed- 6
+    ([5, 10, 20, 25, 30, 35, 40, 55, 60])
+
+
 ]
 
 TEST_ITER = [10, 20, 5]
@@ -65,30 +79,57 @@ def test_add_larger_value_that_remains(one_heap):
     assert one_heap._heap == [0, 10, 20]
 
 
-def test_add_smaller_value_that_raises(heap):
+def test_add_smaller_value_that_raises():
     """Test that a heap with the smallest number at the end raises to the top."""
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[0])
     assert heap._raise_up(3) == [0, 5, 20, 10]
 
 
-def test_raise_up_multiple_rows(heap_many):
+def test_raise_up_multiple_rows():
     """Test that raise up works across multiple rows of the heap."""
-    assert heap_many._raise_up(8) == [0, 5, 10, 30, 20, 50, 60, 70, 40]
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[1])
+    assert heap._raise_up(8) == [0, 5, 10, 30, 20, 50, 60, 70, 40]
 
 
 def test_raise_up_not_to_top():
     """Test that raise up works across multiple rows of the heap."""
     from binheap import Binheap
-    heap = Binheap([10, 20, 30, 40, 50, 60, 70, 15])
+    heap = Binheap(TEST_DICT[2])
     assert heap._raise_up(8) == [0, 10, 15, 30, 20, 50, 60, 70, 40]
 
 
 def test_pop_removes_and_returns_top_value(heap_many):
     """Test that pop removes top value and returns it."""
-    assert heap_many.pop() == 10
-    assert heap_many._heap[1] == 5
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[6])
+    assert heap.pop() == 5
+    assert heap._heap[1] == 60
 
 
 def test_pop_from_empty_heap_raises_index_error(empty_heap):
     """Test that popping form an empty heap returns a index error."""
     with pytest.raises(IndexError):
         empty_heap.pop()
+
+
+def test_sink_to_bottom():
+    """Test that the larger numbers sink down the tree of small tree."""
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[3])
+    assert heap._sink_down(1) == [10, 30, 20]
+
+
+def test_sink_all_the_way_to_bottom():
+    """Test that the larger numbers sink down the tree of large tree."""
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[4])
+    assert heap._sink_down(1) == [10, 30, 20, 70, 40, 50, 60, 80]
+
+
+def test_sink_part_way_to_bottom():
+    """Test that the larger numbers sink down the tree part way."""
+    from binheap import Binheap
+    heap = Binheap(TEST_DICT[5])
+    assert heap._sink_down(1) == [10, 30, 20, 55, 40, 50, 60, 70]
