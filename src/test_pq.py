@@ -49,6 +49,11 @@ def test_that_popping_and_peeking_gives_an_error_message(pq1):
     pq1.pop()
     assert pq.peek() is False
 
+def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
+    """Test that popping on an empty queue raises an exception"""
+    with pytest.raises(IndexError):
+        pq_empty.pop()
+
 def test_peek_returns_item_of_highest_prio(pq):
     """Test that peek returns item of highest prio but keeps it in the list"""
     assert pq.peek() == ROUTINES[0][1]
@@ -57,9 +62,10 @@ def test_peek_returns_item_of_highest_prio(pq):
 
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
     """Test that popping from PriorityQueue returns the item with the highest prio and remove it from the queue."""
+    cur_len = len(pq)
     assert ROUTINES[0][1] in pq.pop()
     assert ROUTINES[1][1] in pq._binheap._heap[1]
-    assert len(pq) == len(pq) - 1
+    assert len(pq) == cur_len - 1
 
 
 def test_that_items_are_returned_in_correct_order(pq_empty):
