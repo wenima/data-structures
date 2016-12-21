@@ -32,11 +32,11 @@ class PriorityQueue(object):
     def insert(self, item):
         """Insert an item into the priority queue and order it by priority."""
         pq_set = (item[1], self._binheap._size, item[0])
-        self._heap.push(pq_set)
+        self._binheap.push(pq_set)
 
     def pop(self):
         """Remove the top item from return its item."""
-        return self._heap.pop()
+        return self._binheap.pop()
 
     def peek(self):
         """Look at the item that is next on the priority queue."""
@@ -44,4 +44,4 @@ class PriorityQueue(object):
 
     def __len__(self):
         """Return size of underlying binary heap."""
-        return self._heap._size
+        return self._binheap._size
