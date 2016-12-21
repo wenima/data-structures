@@ -53,7 +53,7 @@ def test_peek_returns_item_of_highest_prio(pq):
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
     """Test that popping from PriorityQueue returns the item with the highest prio and remove it from the queue."""
     assert ROUTINES[0][0] == pq.pop()
-    assert pq._heap[1] == ROUTINES[1]
+    assert pq._binheap._heap[1] == ROUTINES[1]
     assert len(pq) == len(pq) - 1
 
 
@@ -65,5 +65,5 @@ def test_that_items_are_returned_in_correct_order(pq_empty):
     pq.insert(("check_emails", 10))
     assert ROUTINES[0][0] == pop()
     assert pop() == "check_critical_news"
-    assert pq._heap[-1] == ("check_emails", 10)
+    assert pq._binheap._heap[-1] == ("check_emails", 10)
     assert len(pq) == cur_len + 1
