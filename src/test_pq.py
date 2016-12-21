@@ -44,6 +44,11 @@ def test_create_priority_queue_with_one_value(pq1):
     """Test that a PriorityQueue can be created with one value."""
     assert ROUTINES[-1][1] in pq1._binheap._heap[-1]
 
+def test_that_popping_and_peeking_gives_an_error_message(pq1):
+    """Test that popping and peeking on a queue with 1 element is Falsey"""
+    pq1.pop()
+    assert pq.peek() is False
+
 def test_peek_returns_item_of_highest_prio(pq):
     """Test that peek returns item of highest prio but keeps it in the list"""
     assert pq.peek() == ROUTINES[0][1]
@@ -53,7 +58,7 @@ def test_peek_returns_item_of_highest_prio(pq):
 def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
     """Test that popping from PriorityQueue returns the item with the highest prio and remove it from the queue."""
     assert ROUTINES[0][1] in pq.pop()
-    assert pq._binheap._heap[1] == ROUTINES[1]
+    assert ROUTINES[1][1] in pq._binheap._heap[1]
     assert len(pq) == len(pq) - 1
 
 
