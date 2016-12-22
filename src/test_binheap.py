@@ -130,3 +130,7 @@ def test_sink_to_the_right():
     from binheap import Binheap
     heap = Binheap(TEST_DICT[7])
     assert heap._sink_down(1) == [0, 3, 5, 10]
+
+
+def test_sink_a_empty_heap(empty_heap):
+    assert empty_heap._sink_down(1) == [0]
