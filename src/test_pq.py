@@ -82,3 +82,9 @@ def test_that_items_are_returned_in_correct_order(pq):
     assert "check_emails" in pq._binheap._heap[8]
     assert "wake_kids" in pq._binheap._heap[-1]
     assert len(pq) == cur_len + 1
+
+def test_that_insert_assigns_default_priority(pq):
+    """Test that a new item inserted which is not a tuple/does not have a priority gets a default prio assigned."""
+    pq.insert("retweet_cool_stuff")
+    assert "retweet_cool_stuff" in pq._binheap._heap[-1]
+    assert pq._binheap._heap[-1][0] == 99

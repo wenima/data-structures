@@ -31,7 +31,9 @@ class PriorityQueue(object):
                 raise TypeError("Not an iterable")
 
     def insert(self, item):
-        """Insert an item into the priority queue and order it by priority."""
+        """Insert an item into the priority queue and order it by priority. Setting default prio to 99 if none provided"""
+        if 'tuple' not in str(type(item)):
+            item = (item, 99)
         pq_set = (item[1], self._binheap._size, item[0])
         self._binheap.push(pq_set)
 
