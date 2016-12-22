@@ -17,13 +17,15 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 | Name                     | Stmts | Miss | Cover | Missing |
 | -----------------------  | ----- | ---- | ----- | ------- |
-| binheap.py               |  49   |  0   | 100%  |         |
+| binheap.py               |  51   |  0   | 100%  |         |
+| priorityq.py             |  24   |  0   | 100%  |         |
 | test_binheap.py          |  74   |  0   | 100%  |         |
+| test_pq.py               |  42   |  0   | 100%  |         |
 | -----------------------  |  ---  |  --  | ----  | ------- |
-| TOTAL                    |  123  |  0   | 100%  |         |
+| TOTAL                    |  191  |  0   | 100%  |         |
 
 
 # Comments about implementation:
 
-* still looking for ways to improve tests and make them more concise
-* fixed a bug in the implementation where the init method did not only reorganize once the passed in iterable was exhausted
+* we initialize the list with the first value set to 0 per the request of my partner.
+* we did not set a default value for priority yet as this assignment was changed later on. For now, it's referenced in GitHub: https://github.com/wenima/data-structures/issues/52
