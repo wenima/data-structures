@@ -149,4 +149,14 @@ def test_sink_to_the_right():
 
 
 def test_sink_a_empty_heap(empty_heap):
+    """Test that sinkin works on empty heap."""
     assert empty_heap._sink_down(1) == [0]
+
+
+def test_pushing_4_popping_4_works(empty_heap):
+    """Test that pushing in 4 items into an empty heap and popping until empty works."""
+    for i in range(4):
+        empty_heap.push(i)
+    for i in range(len(empty_heap)):
+        empty_heap.pop()
+    assert empty_heap._heap == [0]
