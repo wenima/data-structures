@@ -1,4 +1,12 @@
-"""Implementation of the binheap data structure."""
+"""Implementation of the binheap data structure.
+
+A binary heap is defined as a binary tree with two additional constraints:
+
+Shape property: a binary heap is a complete binary tree; that is, all levels of the tree, except possibly the last one (deepest) are fully filled, and, if the last level of the tree is not complete, the nodes of that level are filled from left to right.
+Heap property: the key stored in each node is either greater than or equal to or less than or equal to the keys in the node's children, according to some total order.
+
+Taken from: https://en.wikipedia.org/wiki/Binary_heap
+"""
 
 
 class Binheap(object):
@@ -7,14 +15,18 @@ class Binheap(object):
     def __init__(self, maybe_an_iterable=None):
         """Initialize an instance of the binheap."""
         self._heap = [0]
+        self._size = 0
         if maybe_an_iterable:
             try:
                 for value in maybe_an_iterable:
+                    value + 0
                     self._heap.append(value)
             except TypeError:
-                raise(TypeError)
+                return "Only an iterable of integers is an accepted input"
+            for item in reversed(maybe_an_iterable):
+                self._raise_up(self._heap.index(item))
         self._size = len(self._heap) - 1
-        print(self._heap)
+
 
     def push(self, value):
         """Push a new value to the heap."""
@@ -29,16 +41,15 @@ class Binheap(object):
         root = self._heap[1]
         self._heap[1] = self._heap[-1]
         del self._heap[-1]
-        # self._sink_down()
+        self._size -= 1
+        self._sink_down(1)
         return root
 
     def _raise_up(self, i):
         """Raise i into the tree until the tree structure is satisfied."""
         while i // 2 > 0:
             if self._heap[i] < self._heap[i // 2]:
-                tmp = self._heap[i // 2]
-                self._heap[i // 2] = self._heap[i]
-                self._heap[i] = tmp
+                self._heap[i], self._heap[i // 2] = self._heap[i // 2], self._heap[i]
             i = i // 2
         return self._heap
 
