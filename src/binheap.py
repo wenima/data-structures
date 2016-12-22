@@ -75,3 +75,7 @@ class Binheap(object):
             return i * 2 + 1
         else:
             return i * 2
+
+    def __len__(self):
+        """Return size of underlying binary heap."""
+        return self._size
