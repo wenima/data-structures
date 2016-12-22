@@ -22,7 +22,7 @@ class Binheap(object):
                     value + 0
                     self._heap.append(value)
             except TypeError:
-                return "Only an iterable of integers is an accepted input"
+                raise TypeError("Only an iterable of integers is an accepted input")
             for item in reversed(maybe_an_iterable):
                 self._raise_up(self._heap.index(item))
         self._size = len(self._heap) - 1
