@@ -1,10 +1,9 @@
 """Test dbl_linked_list data structures."""
 
 import pytest
-import random
 
 ROUTINES = [
-    ("get_up" , 1),
+    ("get_up", 1),
     ("make_coffee", 2),
     ("shower", 3),
     ("shave", 4),
@@ -18,40 +17,48 @@ ROUTINES = [
 
 @pytest.fixture
 def pq_empty():
+    """Fixture for empty pq."""
     from priorityq import PriorityQueue
     new_pq = PriorityQueue()
     return new_pq
 
+
 @pytest.fixture
 def pq():
+    """Fixture for pq filled with ROUTINES."""
     from priorityq import PriorityQueue
     new_pq = PriorityQueue(ROUTINES)
     return new_pq
+
 
 def test_create_empty_pq(pq_empty):
     """Test creation of empty PriorityQueue."""
     assert pq_empty._binheap._heap[0] == 0
     assert len(pq_empty) == 0
 
+
 def test_create_priority_queue_with_one_value():
-    """Test that a PriorityQueue cannot be created with one value and throws an error"""
+    """Test that a PriorityQueue cannot be created with one value and throws an error."""
     from priorityq import PriorityQueue
     with pytest.raises(TypeError):
-        new_pq = PriorityQueue(ROUTINES[-1])
+        PriorityQueue(ROUTINES[-1])
+
 
 def test_that_popping_and_peeking_gives_an_error_message(pq_empty):
-    """Test that popping and peeking on a queue with 1 element is Falsey"""
+    """Test that popping and peeking on a queue with 1 element is None."""
     pq_empty.insert(("sleep", 1))
     pq_empty.pop()
-    assert pq_empty.peek() is False
+    assert pq_empty.peek() is None
+
 
 def test_that_popping_on_an_empty_queue_raises_an_error(pq_empty):
-    """Test that popping on an empty queue raises an exception"""
+    """Test that popping on an empty queue raises an exception."""
     with pytest.raises(IndexError):
         pq_empty.pop()
 
+
 def test_peek_returns_item_of_highest_prio(pq):
-    """Test that peek returns item of highest prio but keeps it in the list"""
+    """Test that peek returns item of highest prio but keeps it in the list."""
     assert pq.peek() == ROUTINES[0][0]
     assert ROUTINES[0][0] in pq._binheap._heap[1]
 

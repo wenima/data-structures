@@ -55,14 +55,16 @@ class Binheap(object):
 
     def _sink_down(self, i):
         """Sink the input node down the tree until the tree structure is satisfied."""
-        parent = self._heap[i]
-        while i * 2 < len(self._heap):
-            child = self._heap[self._get_min_child(i)]
-            idx_child = self._get_min_child(i)
-            if parent > child:
-                self._heap[i], self._heap[idx_child] = self._heap[idx_child], self._heap[i]
-            parent = self._heap[idx_child]
-            i = idx_child
+        if self._size != 0:
+            parent = self._heap[i]
+            while i * 2 < len(self._heap):
+                child = self._heap[self._get_min_child(i)]
+                idx_child = self._get_min_child(i)
+                if parent > child:
+                    self._heap[i], self._heap[idx_child] = self._heap[idx_child], self._heap[i]
+                parent = self._heap[idx_child]
+                i = idx_child
+            return self._heap
         return self._heap
 
     def _get_min_child(self, i):
