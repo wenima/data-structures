@@ -28,5 +28,5 @@ For more information on the assignment, see here: https://codefellows.github.io/
 # Comments about implementation:
 
 * we initialize the list with the first value set to 0 per the request of my partner.
-* ~~ we did not set a default value for priority yet as this assignment was changed later on. For now, it's referenced in GitHub: https://github.com/wenima/data-structures/issues/52 ~~
+* ~~we did not set a default value for priority yet as this assignment was changed later on. For now, it's referenced in GitHub: https://github.com/wenima/data-structures/issues/52~~
 * after some discussion, we decided to go with my proposal of setting a the index inside the tuple in the list as a way to solve the case where 2 items have the same priority
