@@ -25,8 +25,8 @@ def test_create_empty_g(g_empty):
 def test_adding_node(g_empty):
     """Test adding a node to an empty Graph."""
     g_empty.add_node('A')
-    assert n in nodes.keys()
-    assert len(g_emp) == 1
+    assert n in g_empty._nodes.keys()
+    assert len(g_empty._nodes) == 1
 
 def test_adding_edge_to_empty_graph(g_empty):
     """Test that adding an edge to empty graph adds new nodes if they don't
@@ -34,8 +34,8 @@ def test_adding_edge_to_empty_graph(g_empty):
     new_nodes = ['A', 'B']
     g_empty.add_edge('A', 'B')
     for n in new_nodes:
-        assert n in g_empty.nodes()
-    assert len(g_empty) == 2
+        assert n in g_empty._nodes()
+    assert len(g_empty._nodes) == 2
 
 #parametrize the next tests into the one above
 
@@ -46,7 +46,7 @@ def test_adding_edge_to_graph_w_1_node(g1):
     g1.add_edge('A', 'B')
     for n in new_nodes:
         assert n in g1._nodes.keys()
-    assert len(g1) == 2
+    assert len(g1._nodes) == 2
     assert g1._nodes['A'] == ['B']
 
 def test_delete_node_raises_error_if_node_doesn_exist(g1):
@@ -68,4 +68,4 @@ def test_delete_edge_raises_error_if_not_exist(g1):
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
 
-#def test_has_node_returns
+def test_has_node_returns()
