@@ -39,9 +39,10 @@ def test_create_empty_g(g_empty):
     assert len(g_empty._nodes) == 0
 
 def test_adding_node(g_empty):
-    """Test adding a node to an empty Graph."""
+    """Test adding a node to an empty Graph and calling the node method of
+    class Graph."""
     g_empty.add_node('A')
-    assert 'A' in g_empty._nodes.keys()
+    assert 'A' in g_empty.nodes()
     assert len(g_empty._nodes) == 1
 
 def test_adding_edge_to_empty_graph(g_empty):
@@ -65,6 +66,12 @@ def test_adding_edge_to_graph_w_1_node(g1):
     assert len(g1._nodes) == 2
     assert g1._nodes['A'] == ['B']
 
+def test_egdges_returns_all_edges(g):
+    """Test that calling class method edges returns all edges."""
+    edges = g.edges()
+    assert ['A-B', 'A-C', 'C-D'] not in edges
+    assert 'B-A' not in edges
+
 def test_delete_node_raises_error_if_node_doesn_exist(g1):
     """Test that deleting a node which doesn't exist raises an error message of
     type KeyError."""
@@ -80,6 +87,14 @@ def test_delete_node_removed_from_graph(g1):
     assert g1._nodes['C'] == [] #! figure out why can't be is False
     assert g1.has_node('C')
     assert result == False
+
+def test_delete_node_removed_from_all_nodes(g):
+    """Test that deleting a node deletes it from all edges."""
+    g.del_node('C')
+    assert 'C' not in g._nodes['A']
+    assert 'C' not in g._nodes['B']
+    assert 'C' not in g._nodes['D']
+    assert 'C' not in g._nodes['F']
 
 
 
