@@ -2,15 +2,6 @@
 
 import pytest
 
-TEST_GRAPH_V_E = {
-                'A': ['B', 'C'],
-                'B': ['C', 'D'],
-                'C': ['D'],
-                'D': ['C'],
-                'E': ['F'],
-                'F': ['C']
-                }
-
 @pytest.fixture
 def g_empty():
     """Fixture for empty pq."""
@@ -31,7 +22,14 @@ def g():
     """Fixture for graph containing multiples nodes with multiples edges"""
     from simple_graph import Graph
     new_g = Graph()
-    new_g._nodes = TEST_GRAPH_V_E
+    new_g._nodes = {
+                    'A': ['B', 'C'],
+                    'B': ['C', 'D'],
+                    'C': ['D'],
+                    'D': ['C'],
+                    'E': ['F'],
+                    'F': ['C']
+                    }
     return new_g
 
 def test_create_empty_g(g_empty):
