@@ -45,7 +45,7 @@ def test_adding_edge_to_graph_w_1_node(g1):
     new_nodes = ['A', 'B']
     g1.add_edge('A', 'B')
     for n in new_nodes:
-        assert n in nodes.keys()
+        assert n in g1._nodes.keys()
     assert len(g1) == 2
     assert g1._nodes['A'] == ['B']
 
