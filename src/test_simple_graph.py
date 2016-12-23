@@ -52,6 +52,7 @@ def test_adding_edge_to_empty_graph(g_empty):
     for n in new_nodes:
         assert n in g_empty._nodes.keys()
     assert len(g_empty._nodes) == 2
+    assert g_empty._nodes['B'] == ['A']
 
 #parametrize the next tests into the one above
 
@@ -75,9 +76,13 @@ def test_delete_node_removed_from_graph(g1):
     """Test that deleting a node removes it from the graph structure."""
     g1.add_edge('A', 'C')
     g1.del_node('A')
+    result = 'A' in g1._nodes.keys()
     assert len(g1._nodes) == 1
     assert g1._nodes['C'] == [] #! figure out why can't be is False
     assert g1.has_node('C')
+    assert result == False
+
+
 
 def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
     """Test that deleting an edge raises a ValueError if the edge doesn't exist.
