@@ -20,7 +20,7 @@ def g1():
 def test_create_empty_g(g_empty):
     """Test creation of empty Graph."""
     assert g_empty._nodes
-    assert len(g_empty) == 0
+    assert len(g_empty._nodes) == 0
 
 def test_adding_node(g_empty):
     """Test adding a node to an empty Graph."""
@@ -59,11 +59,13 @@ def test_delete_node_removed_from_graph(g1):
     """Test that deleting a node removes it from the graph structure."""
     g1.add_edge('A', 'C')
     g1.del_node('A')
-    assert len(g1) == 1
-    assert g1._nodes['C'] is False
+    assert len(g1._nodes) == 1
+    assert g1._nodes['C'] == [] #! figure out why can't be is False
 
 def test_delete_edge_raises_error_if_not_exist(g1):
     """Test that deleting an edge raises a ValueError if the edge doesn't exist.
     """
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
+
+#def test_has_node_returns
