@@ -52,7 +52,6 @@ def test_adding_edge_to_empty_graph(g_empty):
     for n in new_nodes:
         assert n in g_empty._nodes.keys()
     assert len(g_empty._nodes) == 2
-    assert g_empty._nodes['B'] == ['A']
 
 #parametrize the next tests into the one above
 
@@ -90,7 +89,7 @@ def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
     g.del_edge('A', 'B')
     assert g._nodes['A'] == ['C']
     with pytest.raises(ValueError):
-        g1.del_edge('A', 'F')
+        g.del_edge('A', 'F')
 
 def test_neighbors_returns_correct_list(g):
     """Test that neighbors returns the correct list"""
