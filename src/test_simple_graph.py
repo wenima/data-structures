@@ -79,12 +79,27 @@ def test_delete_node_removed_from_graph(g1):
     assert g1._nodes['C'] == [] #! figure out why can't be is False
     assert g1.has_node('C')
 
-def test_delete_edge_raises_error_if_not_exist(g1):
+def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
     """Test that deleting an edge raises a ValueError if the edge doesn't exist.
     """
+    g.del_edge('A', 'B')
+    assert g._nodes['A'] == ['C']
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
 
 def test_neighbors_returns_correct_list(g):
     """Test that neighbors returns the correct list"""
     assert g.neighbors('B') == ['C', 'D']
+    with pytest.raises(KeyError):
+        g.neighbors('Z')
+
+# def test_neighbors_raises_error(g):
+#     """Test that calling neighbors when node does not exist returns an error"""
+#     with pytest_ra
+
+def test_adjacent(g):
+    """Test that adjacent returns correct value"""
+    assert g.adjacent('B', 'C') == True
+    assert g.adjacent('D', 'A') == False
+    with pytest.raises(KeyError):
+        g.adjacent('Z', 'A')
