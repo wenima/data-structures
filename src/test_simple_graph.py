@@ -67,11 +67,3 @@ def test_delete_edge_raises_error_if_not_exist(g1):
     """
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
-
-
-
-
-
-
-
-g.add_edge(n1, n2): adds a new edge to the graph connecting ‘n1’ and ‘n2’, if either n1 or n2 are not already present in the graph, they should be added.
