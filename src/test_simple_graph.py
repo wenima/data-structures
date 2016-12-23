@@ -2,6 +2,15 @@
 
 import pytest
 
+TEST_GRAPH_V_E = {
+                'A': ['B', 'C'],
+                'B': ['C', 'D'],
+                'C': ['D'],
+                'D': ['C'],
+                'E': ['F'],
+                'F': ['C']
+                }
+
 @pytest.fixture
 def g_empty():
     """Fixture for empty pq."""
@@ -17,15 +26,22 @@ def g1():
     new_g.add_node('A')
     return new_g
 
+@pytest.fixture
+def g():
+    """Fixture for graph containing multiples nodes with multiples edges"""
+    from simple_graph import Graph
+    new_g = Graph()
+    new_g._nodes = TEST_GRAPH_V_E
+    return new_g
+
 def test_create_empty_g(g_empty):
     """Test creation of empty Graph."""
-    assert g_empty._nodes
     assert len(g_empty._nodes) == 0
 
 def test_adding_node(g_empty):
     """Test adding a node to an empty Graph."""
     g_empty.add_node('A')
-    assert n in g_empty._nodes.keys()
+    assert 'A' in g_empty._nodes.keys()
     assert len(g_empty._nodes) == 1
 
 def test_adding_edge_to_empty_graph(g_empty):
@@ -34,7 +50,7 @@ def test_adding_edge_to_empty_graph(g_empty):
     new_nodes = ['A', 'B']
     g_empty.add_edge('A', 'B')
     for n in new_nodes:
-        assert n in g_empty._nodes()
+        assert n in g_empty._nodes.keys()
     assert len(g_empty._nodes) == 2
 
 #parametrize the next tests into the one above
@@ -61,6 +77,7 @@ def test_delete_node_removed_from_graph(g1):
     g1.del_node('A')
     assert len(g1._nodes) == 1
     assert g1._nodes['C'] == [] #! figure out why can't be is False
+    assert g1.has_node('C')
 
 def test_delete_edge_raises_error_if_not_exist(g1):
     """Test that deleting an edge raises a ValueError if the edge doesn't exist.
@@ -68,4 +85,6 @@ def test_delete_edge_raises_error_if_not_exist(g1):
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
 
-def test_has_node_returns()
+def test_neighbors_returns_correct_list(g):
+    """Test that neighbors returns the correct list"""
+    assert g.neighbors('B') == ['C', 'D']
