@@ -63,8 +63,8 @@ def test_delete_node_removed_from_graph(g1):
     assert g1._nodes['C'] is False
 
 def test_delete_edge_raises_error_if_not_exist(g1):
-    """Test that deleting an edge raises a ValueError if the edge doesn't exist
-    """.
+    """Test that deleting an edge raises a ValueError if the edge doesn't exist.
+    """
     with pytest.raises(ValueError):
         g1.del_edge('A', 'F')
 
