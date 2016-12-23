@@ -43,7 +43,8 @@ class Graph(object):
     def del_edge(self, n1, n2):
         if n2 in self._nodes[n1]:
             self._nodes[n1].remove(n2)
-        raise (ValueError)
+        else:
+            raise (ValueError)
 
     def has_node(self, n):
         if n in self._nodes:
