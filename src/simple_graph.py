@@ -34,12 +34,7 @@ class Graph(object):
 
     def edges(self):
         """Return list of edges."""
-        edges = []
-        for node in self._nodes:
-            for edge in self._nodes[node]:
-                edge = str(node) + '-' + str(edge)
-                edges.append(edge)
-        return edges
+        return list({key + '-' + c for key, val in self._nodes.items() for c in ''.join(val)})
 
     def add_node(self, n):
         """Add a node to the graph."""
@@ -48,20 +43,15 @@ class Graph(object):
 
     def add_edge(self, n1, n2):
         """Add edge to graph, if nodes not in graph, add them."""
-        if not self.has_node(n1):
-            self.add_node(n1)
-        if not self.has_node(n2):
-            self.add_node(n2)
-        self._nodes[n1].append(n2)
+        if self.has_node(n1):
+            self._nodes[n1].append(n2)
+        self._nodes.update({n1:[n2]})
+        self.add_node(n2)
 
     def del_node(self, n):
         """Delete node from list and remove any reference to it in other nodes."""
         if self.has_node(n):
-            del self._nodes[n]
-            for node in self._nodes:
-                for edge in self._nodes[node]:
-                    if edge == n:
-                        self._nodes[node].remove(n)
+            self._nodes = {key : list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
         else:
             raise(KeyError)
 
@@ -74,9 +64,7 @@ class Graph(object):
 
     def has_node(self, n):
         """.Check if node is in graph."""
-        if n in self._nodes:
-            return True
-        return False
+        return True if n in self._nodes else False
 
     def neighbors(self, n):
         """Return list of neighbors nodes to node n."""
@@ -86,6 +74,4 @@ class Graph(object):
         """Return True if n1 and n2 are adjacent to each other."""
         if not self.has_node(n1) or not self.has_node(n2):
             raise(KeyError)
-        if n2 in self._nodes[n1]:
-            return True
-        return False
+        return True if n2 in self._nodes[n1] else False
