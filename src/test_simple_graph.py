@@ -64,6 +64,11 @@ def test_adding_edge_to_graph_w_1_node(g1):
     assert len(g1._nodes) == 2
     assert g1._nodes['A'] == ['B']
 
+def test_adding_edge_is_only_appending(g):
+    """Test that adding an edge is not replacing the existing edges."""
+    g.add_edge('C', 'B')
+    assert g.neighbors('C') == ['D', 'B']
+
 def test_egdges_returns_all_edges(g):
     """Test that calling class method edges returns all edges."""
     edges = g.edges()

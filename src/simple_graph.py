@@ -45,7 +45,8 @@ class Graph(object):
         """Add edge to graph, if nodes not in graph, add them."""
         if self.has_node(n1):
             self._nodes[n1].append(n2)
-        self._nodes.update({n1:[n2]})
+        else:
+            self._nodes.update({n1:[n2]})
         self.add_node(n2)
 
     def del_node(self, n):
