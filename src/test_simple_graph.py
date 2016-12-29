@@ -3,6 +3,13 @@
 import pytest
 
 @pytest.fixture
+def new_empty_stack():
+    """Create an empty object of type Stack to be used in test functions."""
+    from stack import Stack
+    this_stack = Stack()
+    return this_stack
+
+@pytest.fixture
 def g_empty():
     """Fixture for empty pq."""
     from simple_graph import Graph
@@ -29,6 +36,20 @@ def g():
                     'D': ['C'],
                     'E': ['F'],
                     'F': ['C']
+                    }
+    return new_g
+
+@pytest.fixture
+def g_traverse():
+    """Fixture for graph containing multiples nodes with multiples edges"""
+    from simple_graph import Graph
+    new_g = Graph()
+    new_g._nodes = {
+                    'A': ['E', 'B', 'C'],
+                    'B': ['D', 'A'],
+                    'C': ['D', 'A'],
+                    'D': ['C', 'E', 'B'],
+                    'E': ['A', 'D']
                     }
     return new_g
 
@@ -105,7 +126,7 @@ def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
         g.del_edge('A', 'F')
 
 def test_neighbors_returns_correct_list(g):
-    """Test that neighbors returns the correct list"""
+    """Test that neighbors returns the correct list."""
     assert g.neighbors('B') == ['C', 'D']
     with pytest.raises(KeyError):
         g.neighbors('Z')
@@ -115,8 +136,13 @@ def test_neighbors_returns_correct_list(g):
 #     with pytest_ra
 
 def test_adjacent(g):
-    """Test that adjacent returns correct value"""
+    """Test that adjacent returns correct value."""
     assert g.adjacent('B', 'C') == True
     assert g.adjacent('D', 'A') == False
     with pytest.raises(KeyError):
         g.adjacent('Z', 'A')
+
+def test_all_nodes_are_visited_in_dfs(g_traverse):
+    """Test that all nodes show up in the visited list."""
+    g_traverse.depth_first_traversal('A')
+    assert g_traverse._nodes in g_traverse._visited

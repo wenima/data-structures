@@ -1,5 +1,6 @@
 """An implementation of a simple graph."""
 
+from stack import Stack
 
 class Graph(object):
     """A graph class.
@@ -22,11 +23,18 @@ class Graph(object):
 
     adjacent(n1, n2) - check if n1 and n2 are adjacent.
 
+    g.depth_first_traversal(start): Perform a full depth-first traversal of the graph
+    beginning at start. Return the full visited path when traversal is complete.
+
+    g.breadth_first_traversal(start): Perform a full breadth-first traversal of
+    the graph, beginning at start. Return the full visited path when traversal is complete.
+
     """
 
     def __init__(self):
         """Initialize a graph with a dict."""
         self._nodes = {}
+        self._visited = []
 
     def nodes(self):
         """Return list of nodes."""
@@ -45,7 +53,8 @@ class Graph(object):
         """Add edge to graph, if nodes not in graph, add them."""
         if self.has_node(n1):
             self._nodes[n1].append(n2)
-        self._nodes.update({n1:[n2]})
+        else:
+            self._nodes.update({n1:[n2]})
         self.add_node(n2)
 
     def del_node(self, n):
@@ -75,3 +84,22 @@ class Graph(object):
         if not self.has_node(n1) or not self.has_node(n2):
             raise(KeyError)
         return True if n2 in self._nodes[n1] else False
+
+    def depth_first_traversal(start):
+        """Launch a dfs search, exploring all nodes."""
+        s = Stack()
+        self._explore(start, s)
+        return self._visited
+
+    def _explore(self, node, stack):
+        """Explore a given node, updated visited and stack and calls itself
+        with a new unvisited node.
+        ToDo: once a dead end is encountered, restart explore with popped node
+        """
+        self._visited.append(node)
+        if not neighbors(node):
+            stack.push(node)
+            for node in neighbors(node):
+                if node not in self._visited:
+                    explore(node, stack)
+        return stack

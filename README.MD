@@ -1,20 +1,12 @@
 #Summary
 
-The assignment was to implement a [Simple Graph](https://www.python.org/doc/essays/graphs/)
-in Python containing 9 methods:
+The assignment was to implement a [Graph Traversal](https://en.wikipedia.org/wiki/Graph_traversal)
+in Python containing 2 new methods:
 
-* g.nodes(): return a list of all nodes in the graph
-* g.edges(): return a list of all edges in the graph
-* g.add_node(n): adds a new node ‘n’ to the graph
-* g.add_edge(n1, n2): adds a new edge to the graph connecting ‘n1’ and ‘n2’, if either n1 or n2 are not already present in the graph, they should be added.
-* g.del_node(n): deletes the node ‘n’ from the graph, raises an error if no such node exists
-* g.del_edge(n1, n2): deletes the edge connecting ‘n1’ and ‘n2’ from the graph, raises an error if no such edge exists
-* g.has_node(n): True if node ‘n’ is contained in the graph, False if not.
-* g.neighbors(n): returns the list of all nodes connected to ‘n’ by edges, raises an error if n is not in g
-* g.adjacent(n1, n2): returns True if there is an edge connecting n1 and n2, False if not, raises an error if either of the supplied nodes are not in g
+* g.depth_first_traversal(start): Perform a full depth-first traversal of the graph beginning at start. Return the full visited path when traversal is complete.
+* g.breadth_first_traversal(start): Perform a full breadth-first traversal of the graph, beginning at start. Return the full visited path when traversal is complete.
 
-
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_1.html
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_2_traversal.html
 
 
 # Coverage:
@@ -34,6 +26,6 @@ For more information on the assignment, see here: https://codefellows.github.io/
 | TOTAL                    |  439  |  6   | 99%   |         |
 
 
-# Thoughts on when to use a singly linked list vs a doubly_linked_list:
-
 # Comments about implementation:
+
+* since this implementation of graph using an adjacency list is used only for sparse graphs, recursion depth of DFS is not a concern.
