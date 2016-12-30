@@ -37,16 +37,9 @@ def test_create_empty_pq(pq_empty):
     assert len(pq_empty) == 0
 
 
-def test_create_priority_queue_with_one_value():
-    """Test that a PriorityQueue cannot be created with one value and throws an error."""
-    from priorityq import PriorityQueue
-    with pytest.raises(TypeError):
-        PriorityQueue(ROUTINES[-1])
-
-
 def test_that_popping_and_peeking_gives_an_error_message(pq_empty):
     """Test that popping and peeking on a queue with 1 element is None."""
-    pq_empty.insert(("sleep", 1))
+    pq_empty.insert("sleep", 1)
     pq_empty.pop()
     assert pq_empty.peek() is None
 
@@ -74,9 +67,9 @@ def test_pop_from_pq_returns_top_prio_item_and_removes_from_heap(pq):
 def test_that_items_are_returned_in_correct_order(pq):
     """Test that items are returned in the correct order."""
     cur_len = len(pq)
-    pq.insert(("wake_kids", 5))
-    pq.insert(("check_critical_news", 1))
-    pq.insert(("check_emails", 10))
+    pq.insert("wake_kids", 5)
+    pq.insert("check_critical_news", 1)
+    pq.insert("check_emails", 10)
     assert ROUTINES[0][0] in pq.pop()
     assert "check_critical_news" in pq.pop()
     assert "check_emails" in pq._binheap._heap[8]

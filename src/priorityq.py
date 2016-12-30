@@ -18,28 +18,27 @@ class PriorityQueue(object):
     """
 
     def __init__(self, iterable=None):
-        """Initialize a Priority Queue with an underlying binary heap data structure."""
-        self._binheap = Binheap()
-        if iterable:
-            i = 0
-            try:
-                for value in iterable:
-                    pq_set = (value[1], i, value[0])
-                    self._binheap.push(pq_set)
-                    i += 1
-            except:
-                raise TypeError("Not an iterable")
+            """Initialize a Priority Queue with an underlying binary heap data structure."""
+            self._binheap = Binheap()
+            if iterable:
+                try:
+                    for value in iterable:
+                        if 'tuple' not in str(type(value)):
+                            self.insert(value)
+                        else:
+                            self.insert(*value)
+                except:
+                    raise TypeError("Not an iterable")
 
-    def insert(self, item):
+    def insert(self, item, priority=99 ):
         """Insert an item into the priority queue and order it by priority. Setting default prio to 99 if none provided"""
-        if 'tuple' not in str(type(item)):
-            item = (item, 99)
+        item = (item, priority)
         pq_set = (item[1], self._binheap._size, item[0])
         self._binheap.push(pq_set)
 
     def pop(self):
         """Remove the top item from return its item."""
-        return self._binheap.pop()
+        return self._binheap.pop()[2]
 
     def peek(self):
         """Look at the item that is next on the priority queue."""
