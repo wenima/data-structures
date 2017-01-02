@@ -1,4 +1,4 @@
-"""Test the implementation of a simple graph"""
+"""Test the implementation of a simple graph."""
 
 import pytest
 
@@ -40,21 +40,6 @@ def g():
     return new_g
 
 @pytest.fixture
-def g_traverse():
-    """Fixture for graph containing multiples nodes with multiples edges"""
-    from simple_graph import Graph
-    new_g = Graph()
-    new_g._nodes = {
-                    'A': ['E', 'B', 'C'],
-                    'B': ['D', 'A'],
-                    'C': ['D', 'A'],
-                    'D': ['C', 'E', 'B'],
-                    'E': ['A', 'D']
-                    }
-    return new_g
-
-
-@pytest.fixture
 def dag():
     """Fixture for direct acyclic graph."""
     from simple_graph import Graph
@@ -67,11 +52,14 @@ def dag():
                     'F': ['G'],
                     'G': ['H'],
                     'H': [],
-                    'I': []
+                    'I': [],
+                    'X': ['Y'],
+                    'Y': ['Z'],
+                    'Z': ['X'],
                     }
     return new_g
 
-DEPTH_TABLE = [
+DEPTH_DAG_TABLE = [
     ('A', ['A', 'B', 'C', 'G', 'H', 'D', 'E', 'I', 'F']),
     ('B', ['B', 'C', 'G', 'H']),
     ('C', ['C']),
@@ -80,7 +68,25 @@ DEPTH_TABLE = [
     ('F', ['F', 'G', 'H']),
     ('G', ['G', 'H']),
     ('H', ['H']),
-    ('I', ['I'])
+    ('I', ['I']),
+    ('X', ['X', 'Y', 'Z']),
+    ('Y', ['Y', 'Z', 'X']),
+    ('Z', ['Z', 'X', 'Y']),
+]
+
+BREADTH_DAG_TABLE = [
+    ('A', ['A', 'B', 'D', 'C', 'G', 'E', 'F', 'I', 'H']),
+    ('B', ['B', 'C', 'G', 'H']),
+    ('C', ['C']),
+    ('D', ['D', 'E', 'F', 'I', 'H', 'G']),
+    ('E', ['E', 'H', 'I']),
+    ('F', ['F', 'G', 'H']),
+    ('G', ['G', 'H']),
+    ('H', ['H']),
+    ('I', ['I']),
+    ('X', ['X', 'Y', 'Z']),
+    ('Y', ['Y', 'Z', 'X']),
+    ('Z', ['Z', 'X', 'Y']),
 ]
 
 
@@ -176,16 +182,12 @@ def test_dfs_on_node_with_no_edges(g1):
     """Test that depth first search on node with no edges returns only node."""
     assert g1.depth_first_traversal('A') == ['A']
 
-@pytest.mark.parametrize('start, result', DEPTH_TABLE)
+@pytest.mark.parametrize('start, result', DEPTH_DAG_TABLE)
 def test_depth_first_on_dag(dag, start, result):
     assert dag.depth_first_traversal(start) == result
 
+@pytest.mark.parametrize('start, result', BREADTH_DAG_TABLE)
+def test_breadth_first_on_dag(dag, start, result):
+    assert dag.breadth_first_traversal(start) == result
 
 
-# #cyclic
-# {
-#     'A' : ['B'],
-#     'B' : ['C'],
-#     'C' : ['D'],
-#     'D' : ['A']
-# }
