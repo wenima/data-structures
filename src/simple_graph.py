@@ -1,6 +1,8 @@
 """An implementation of a simple graph."""
 
 from stack import Stack
+from queue import Queue
+import string
 
 class Graph(object):
     """A graph class.
@@ -85,7 +87,7 @@ class Graph(object):
             raise(KeyError)
         return True if n2 in self._nodes[n1] else False
 
-    def depth_first_traversal(start):
+    def depth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
         s = Stack()
         self._explore(start, s)
@@ -93,13 +95,65 @@ class Graph(object):
 
     def _explore(self, node, stack):
         """Explore a given node, updated visited and stack and calls itself
-        with a new unvisited node.
-        ToDo: once a dead end is encountered, restart explore with popped node
-        """
+        with a new unvisited node."""
         self._visited.append(node)
-        if not neighbors(node):
+        if self.neighbors(node):
             stack.push(node)
-            for node in neighbors(node):
+            for node in self.neighbors(node):
                 if node not in self._visited:
-                    explore(node, stack)
+                    self._explore(node, stack)
         return stack
+
+    def breadth_first_traversal(self, start):
+        """Launch a dfs search, exploring all nodes."""
+        q = Queue()
+        self._explore_bfs(start, q)
+        return self._visited
+
+    def _explore_bfs(self, node, queue):
+        if node not in self._visited:
+            self._visited.append(node)
+        if self.neighbors(node):
+            for neighbor in self.neighbors(node):
+                if neighbor not in self._visited:
+                    self._visited.append(neighbor)
+                    queue.enqueue(neighbor)
+            try:
+                self._explore_bfs(queue.dequeue(), queue)
+            except IndexError:
+                print("Queue exhausted")
+                return queue
+        return queue
+
+def create_list(keys):
+    new_keys = []
+    for i in range(len(keys) - 1):
+        new_keys.append(keys[i] + keys[i+1])
+    return new_keys
+
+def multiply_lists():
+    new_list = keys1
+    for i in range(4):
+        new_list += create_list(new_list)
+    return new_list
+
+if __name__ == '__main__':
+
+    nodes = {
+    'A' : 'B'
+    }
+
+    keys1 = list(string.ascii_uppercase)
+    new_list = keys1
+
+    multiply_lists()
+
+    for i in range(len(new_list) - 1):
+        nodes[new_list[i]] = new_list[i+1]
+
+    g = Graph()
+    g._nodes = nodes
+
+    print(g.nodes())
+
+    g.breadth_first_traversal('A')
