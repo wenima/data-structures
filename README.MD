@@ -24,16 +24,12 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 | Name                     | Stmts | Miss | Cover | Missing |
 | -----------------------  | ----- | ---- | ----- | ------- |
-| dbl_linked_list.py       |  75   |  0   | 100%  |         |
-| linked_list.py           |  50   |  0   |  96%  |  80-81  |
-| stack.py                 |   8   |  0   | 100%  |         |
-| test_dbl_linked_list.py  |  185  |  0   | 100%  |         |
-| test_linked_list.py      |  73   |  0   |  95%  |         |
-| test_stack.py            |  48   |  0   | 100%  | 106-109 |
+| simple_graph.py          |  31   |  0   | 100%  |         |
+| test_simple_graph.py     |  72   |  0   | 100%  |         |
 | -----------------------  |  ---  |  --  | ----  | ------- |
-| TOTAL                    |  439  |  6   | 99%   |         |
+| TOTAL                    |  103  |  0   | 100%  |         |
 
-
-# Thoughts on when to use a singly linked list vs a doubly_linked_list:
 
 # Comments about implementation:
+* We decided to implement using a [Adjacency List](https://en.wikipedia.org/wiki/Adjacency_list) as we assume a spare graph.
+* The implementation is for an unweighted, directed graph.
