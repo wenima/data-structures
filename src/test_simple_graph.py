@@ -53,6 +53,37 @@ def g_traverse():
                     }
     return new_g
 
+
+@pytest.fixture
+def dag():
+    """Fixture for direct acyclic graph."""
+    from simple_graph import Graph
+    new_g = Graph()
+    new_g._nodes = {'A': ['B', 'D'],
+                    'B': ['C', 'G'],
+                    'C': [],
+                    'D': ['E', 'F', 'I'],
+                    'E': ['H', 'I'],
+                    'F': ['G'],
+                    'G': ['H'],
+                    'H': [],
+                    'I': []
+                    }
+    return new_g
+
+DEPTH_TABLE = [
+    ('A', ['A', 'B', 'C', 'G', 'H', 'D', 'E', 'I', 'F']),
+    ('B', ['B', 'C', 'G', 'H']),
+    ('C', []),
+    ('D', ['D', 'E', 'H', 'I', 'F', 'G']),
+    ('E', ['E', 'H', 'I']),
+    ('F', ['F', 'G', 'H']),
+    ('G', ['G', 'H']),
+    ('H', []),
+    ('I', [])
+]
+
+
 def test_create_empty_g(g_empty):
     """Test creation of empty Graph."""
     assert len(g_empty._nodes) == 0
@@ -137,3 +168,24 @@ def test_adjacent(g):
     assert g.adjacent('D', 'A') == False
     with pytest.raises(KeyError):
         g.adjacent('Z', 'A')
+
+#Testing for Depth First Search
+
+
+def test_dfs_on_node_with_no_edges(g1):
+    """Test that depth first search on node with no edges returns only node."""
+    assert g.depth_first_traversal == ['A']
+
+@pytest.mark.parametrize('start, result', DEPTH_TABLE)
+def test_depth_first_on_dag(dag, start, result):
+    assert dag.depth_first_traversal(start) == result
+
+
+
+# #cyclic
+# {
+#     'A' : ['B'],
+#     'B' : ['C'],
+#     'C' : ['D'],
+#     'D' : ['A']
+# }
