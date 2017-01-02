@@ -174,7 +174,7 @@ def test_adjacent(g):
 
 def test_dfs_on_node_with_no_edges(g1):
     """Test that depth first search on node with no edges returns only node."""
-    assert g.depth_first_traversal == ['A']
+    assert g1.depth_first_traversal('A') == ['A']
 
 @pytest.mark.parametrize('start, result', DEPTH_TABLE)
 def test_depth_first_on_dag(dag, start, result):
