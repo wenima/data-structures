@@ -131,18 +131,9 @@ def test_neighbors_returns_correct_list(g):
     with pytest.raises(KeyError):
         g.neighbors('Z')
 
-# def test_neighbors_raises_error(g):
-#     """Test that calling neighbors when node does not exist returns an error"""
-#     with pytest_ra
-
 def test_adjacent(g):
     """Test that adjacent returns correct value."""
     assert g.adjacent('B', 'C') == True
     assert g.adjacent('D', 'A') == False
     with pytest.raises(KeyError):
         g.adjacent('Z', 'A')
-
-def test_all_nodes_are_visited_in_dfs(g_traverse):
-    """Test that all nodes show up in the visited list."""
-    g_traverse.depth_first_traversal('A')
-    assert g_traverse._nodes in g_traverse._visited
