@@ -36,7 +36,7 @@ class Graph(object):
 
     def nodes(self):
         """Return list of nodes."""
-        return self._nodes.keys()
+        return list(self._nodes.keys())
 
     def edges(self):
         """Return list of edges."""
@@ -103,6 +103,7 @@ class Graph(object):
     def depth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
         s = Stack()
+        self._visited = []
         self._explore(start, s)
         return self._visited
 
@@ -120,6 +121,7 @@ class Graph(object):
     def breadth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
         q = Queue()
+        self._visited = []
         self._explore_bfs(start, q)
         return self._visited
 
