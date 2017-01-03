@@ -3,6 +3,8 @@
 from stack import Stack
 from queue import Queue
 import string
+import timeit
+from random import randint
 
 class Graph(object):
     """A graph class.
@@ -44,7 +46,7 @@ class Graph(object):
 
     def edges(self):
         """Return list of edges."""
-        return list({key + '-' + c for key, val in self._nodes.items() for c in ''.join(val)})
+        return list({str(key) + '-' + str(c) for key, val in self._nodes.items() for c in ''.join(val)})
 
     def add_node(self, n):
         """Add a node to the graph."""
@@ -56,13 +58,13 @@ class Graph(object):
         if self.has_node(n1):
             self._nodes[n1].append(n2)
         else:
-            self._nodes.update({n1:[n2]})
+            self._nodes.update({n1: [n2]})
         self.add_node(n2)
 
     def del_node(self, n):
         """Delete node from list and remove any reference to it in other nodes."""
         if self.has_node(n):
-            self._nodes = {key : list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
+            self._nodes = {key: list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
         else:
             raise(KeyError)
 
@@ -121,39 +123,37 @@ class Graph(object):
             try:
                 self._explore_bfs(queue.dequeue(), queue)
             except IndexError:
-                print("Queue exhausted")
                 return queue
         return queue
 
-def create_list(keys):
-    new_keys = []
-    for i in range(len(keys) - 1):
-        new_keys.append(keys[i] + keys[i+1])
-    return new_keys
+# Make Random Graph
+def make_random_graph():
+    g = Graph()
+    random = 0
+    for i in range(1, 100):
+        g.add_node(i)
+        for j in range(randint(0, 10)):
+            random = randint(1, 100)
+            if random != i:
+                g.add_edge(i, random)
+    return g
 
-def multiply_lists():
-    new_list = keys1
-    for i in range(4):
-        new_list += create_list(new_list)
-    return new_list
+g = make_random_graph()
+
+
+def depth_test(g):
+    """Depth Test for timing."""
+    return g.depth_first_traversal(1)
+
+
+def breadth_test(g):
+    """Breadth Test for timing."""
+    return g.breadth_first_traversal(1)
 
 if __name__ == '__main__':
 
-    nodes = {
-    'A' : 'B'
-    }
+    print("Depth First Traversal - 100 node graph - between 0 and 10 edges:")
+    print(timeit.repeat(stmt="depth_test(g)", setup="from simple_graph import depth_test, g", number=10000))
 
-    keys1 = list(string.ascii_uppercase)
-    new_list = keys1
-
-    multiply_lists()
-
-    for i in range(len(new_list) - 1):
-        nodes[new_list[i]] = new_list[i+1]
-
-    g = Graph()
-    g._nodes = nodes
-
-    print(g.nodes())
-
-    g.breadth_first_traversal('A')
+    print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
+    print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
