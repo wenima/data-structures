@@ -2,9 +2,9 @@
 
 from stack import Stack
 from queue import Queue
-import string
 import timeit
 from random import randint
+
 
 class Graph(object):
     """A graph class.
@@ -27,12 +27,6 @@ class Graph(object):
 
     adjacent(n1, n2) - check if n1 and n2 are adjacent.
 
-    g.depth_first_traversal(start): Perform a full depth-first traversal of the graph
-    beginning at start. Return the full visited path when traversal is complete.
-
-    g.breadth_first_traversal(start): Perform a full breadth-first traversal of
-    the graph, beginning at start. Return the full visited path when traversal is complete.
-
     """
 
     def __init__(self):
@@ -46,32 +40,43 @@ class Graph(object):
 
     def edges(self):
         """Return list of edges."""
-        return list({str(key) + '-' + str(c) for key, val in self._nodes.items() for c in ''.join(val)})
+        edges = []
+        for node in self._nodes:
+            for edge in self._nodes[node]:
+                edge = str(node) + '-' + str(edge[0]) + ':' + str(edge[1])
+                edges.append(edge)
+        return edges
 
     def add_node(self, n):
         """Add a node to the graph."""
         if not self.has_node(n):
             self._nodes[n] = []
 
-    def add_edge(self, n1, n2):
+    def add_edge(self, n1, n2, weight=0):
         """Add edge to graph, if nodes not in graph, add them."""
         if self.has_node(n1):
-            self._nodes[n1].append(n2)
+            self._nodes[n1].append((n2, weight))
         else:
-            self._nodes.update({n1: [n2]})
+            self._nodes.update({n1: [(n2, weight)]})
         self.add_node(n2)
 
     def del_node(self, n):
         """Delete node from list and remove any reference to it in other nodes."""
         if self.has_node(n):
-            self._nodes = {key: list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
+            del self._nodes[n]
+            for node in self._nodes:
+                for edge in self._nodes[node]:
+                    if edge[0] == n:
+                        self._nodes[node].remove(edge)
         else:
             raise(KeyError)
 
     def del_edge(self, n1, n2):
         """Remove edge from list."""
-        if n2 in self._nodes[n1]:
-            self._nodes[n1].remove(n2)
+        for edge in self._nodes[n1]:
+            if n2 in edge:
+                self._nodes[n1].remove(edge)
+                break
         else:
             raise (ValueError)
 
@@ -81,13 +86,19 @@ class Graph(object):
 
     def neighbors(self, n):
         """Return list of neighbors nodes to node n."""
-        return self._nodes[n]
+        neighbors_list = []
+        for edge in self._nodes[n]:
+            neighbors_list.append(edge[0])
+        return neighbors_list
 
     def adjacent(self, n1, n2):
         """Return True if n1 and n2 are adjacent to each other."""
         if not self.has_node(n1) or not self.has_node(n2):
             raise(KeyError)
-        return True if n2 in self._nodes[n1] else False
+        for edge in self._nodes[n1]:
+            if n2 in edge[0]:
+                return True
+        return False
 
     def depth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
@@ -96,8 +107,8 @@ class Graph(object):
         return self._visited
 
     def _explore(self, node, stack):
-        """Explore a given node, updated visited and stack and calls itself
-        with a new unvisited node."""
+        """Explore a given node, updated visited and stack and calls itself with a new unvisited node."""
+        # import pdb; pdb.set_trace()
         self._visited.append(node)
         if self.neighbors(node):
             stack.push(node)
@@ -128,7 +139,10 @@ class Graph(object):
         return queue
 
 # Make Random Graph
+
+
 def make_random_graph():
+    """Make a random graph."""
     g = Graph()
     random = 0
     for i in range(1, 100):
@@ -158,4 +172,3 @@ if __name__ == '__main__':
 
     print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
     print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
-
