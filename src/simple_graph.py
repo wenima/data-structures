@@ -120,10 +120,11 @@ class Graph(object):
                 if neighbor not in self._visited:
                     self._visited.append(neighbor)
                     queue.enqueue(neighbor)
-            try:
-                self._explore_bfs(queue.dequeue(), queue)
-            except IndexError:
-                return queue
+            while len(queue):
+                try:
+                    self._explore_bfs(queue.dequeue(), queue)
+                except IndexError:
+                    return queue
         return queue
 
 # Make Random Graph
@@ -157,3 +158,4 @@ if __name__ == '__main__':
 
     print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
     print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
+
