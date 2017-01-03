@@ -118,11 +118,11 @@ class Graph(object):
                 if neighbor not in self._visited:
                     self._visited.append(neighbor)
                     queue.enqueue(neighbor)
-            try:
-                self._explore_bfs(queue.dequeue(), queue)
-            except IndexError:
-                print("Queue exhausted")
-                return queue
+            while len(queue):
+                try:
+                    self._explore_bfs(queue.dequeue(), queue)
+                except IndexError:
+                    print("Queue exhausted")
         return queue
 
 def create_list(keys):
@@ -154,6 +154,7 @@ if __name__ == '__main__':
     g = Graph()
     g._nodes = nodes
 
-    print(g.nodes())
-
-    g.breadth_first_traversal('A')
+    # print(g.nodes())
+    # print(g.breadth_first_traversal('A'))
+    for node in keys1:
+        print(g.neighbors(node))
