@@ -44,6 +44,8 @@ def g():
     return new_g
 
 
+
+
 @pytest.fixture
 def dag():
     """Fixture for direct acyclic graph."""
