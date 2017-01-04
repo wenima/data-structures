@@ -1,12 +1,15 @@
 #Summary
 
-The assignment was to implement a [Graph Traversal](https://en.wikipedia.org/wiki/Graph_traversal)
-in Python containing 2 new methods:
+The assignment was to implement a [weighted Graph](https://en.wikipedia.org/wiki/Graph_traversal)
 
-* g.depth_first_traversal(start): Perform a full depth-first traversal of the graph beginning at start. Return the full visited path when traversal is complete.
-* g.breadth_first_traversal(start): Perform a full breadth-first traversal of the graph, beginning at start. Return the full visited path when traversal is complete.
+No additional functions have been added but many functions have been modified.
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_2_traversal.html
+#Definition:
+An edge-weighted graph is a pair (G,w) where G = (V,E) is a graph and w : E → IR is a weight function.
+
+The assignment has a longer definition of an edge weighted graph, combined with a possible approach.
+
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_3_weighted.html
 
 
 # Coverage:
@@ -14,18 +17,14 @@ For more information on the assignment, see here: https://codefellows.github.io/
 ---------- coverage: platform darwin, python 3.5.2-final-0 -----------
 
 
-| Name                     | Stmts | Miss | Cover | Missing |
-| -----------------------  | ----- | ---- | ----- | ------- |
-| dbl_linked_list.py       |  75   |  0   | 100%  |         |
-| linked_list.py           |  50   |  0   |  96%  |  80-81  |
-| stack.py                 |   8   |  0   | 100%  |         |
-| test_dbl_linked_list.py  |  185  |  0   | 100%  |         |
-| test_linked_list.py      |  73   |  0   |  95%  |         |
-| test_stack.py            |  48   |  0   | 100%  | 106-109 |
-| -----------------------  |  ---  |  --  | ----  | ------- |
-| TOTAL                    |  439  |  6   | 99%   |         |
+| Name                     | Stmts | Miss | Cover | Missing                         |
+| -----------------------  | ----- | ---- | ----- | ------------------------------- |
+| test_simple_graph.py     |  123  |  5   |  91%  |  75-76, 247-249                 |
+| simple_graph.py          |  95   |  9   |  96%  |  53, 143-144, 152, 157, 161-165 |
+| -----------------------  |  ---  |  --  | ----  | ------------------------------- |
+| TOTAL                    |  118  |  14  |  93%  |                                 |
 
 
 # Comments about implementation:
 
-* since this implementation of graph using an adjacency list is used only for sparse graphs, recursion depth of DFS is not a concern.
+* With the introduction of larger graphs, we probably need to implement an adjency matrix soon rather than relying on a list to hold the nodes
