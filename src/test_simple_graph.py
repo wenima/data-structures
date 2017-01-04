@@ -1,70 +1,32 @@
 """Test the implementation of a simple graph."""
 
 import pytest
+import string
+import random
 
+simple_graph_scaffold = {
+                        'A': ['B', 'C'],
+                        'B': ['C', 'D'],
+                        'C': ['D'],
+                        'D': ['C'],
+                        'E': ['F'],
+                        'F': ['C']
+                        }
 
-@pytest.fixture
-def new_empty_stack():
-    """Create an empty object of type Stack to be used in test functions."""
-    from stack import Stack
-    this_stack = Stack()
-    return this_stack
-
-
-@pytest.fixture
-def g_empty():
-    """Fixture for empty pq."""
-    from simple_graph import Graph
-    new_g = Graph()
-    return new_g
-
-
-@pytest.fixture
-def g1():
-    """Fixture for graph containing a single element, no edges."""
-    from simple_graph import Graph
-    new_g = Graph()
-    new_g.add_node('A')
-    return new_g
-
-
-@pytest.fixture
-def g():
-    """Fixture for graph containing multiples nodes with multiples edges."""
-    from simple_graph import Graph
-    new_g = Graph()
-    new_g._nodes = {
-                    'A': ['B', 'C'],
-                    'B': ['C', 'D'],
-                    'C': ['D'],
-                    'D': ['C'],
-                    'E': ['F'],
-                    'F': ['C']
-                    }
-    return new_g
-
-
-
-
-@pytest.fixture
-def dag():
-    """Fixture for direct acyclic graph."""
-    from simple_graph import Graph
-    new_g = Graph()
-    new_g._nodes = {'A': ['B', 'D'],
-                    'B': ['C', 'G'],
-                    'C': [],
-                    'D': ['E', 'F', 'I'],
-                    'E': ['H', 'I'],
-                    'F': ['G'],
-                    'G': ['H'],
-                    'H': [],
-                    'I': [],
-                    'X': ['Y'],
-                    'Y': ['Z'],
-                    'Z': ['X'],
-                    }
-    return new_g
+nodes_scaffold_dag = {
+                'A': ['B', 'D'],
+                'B': ['C', 'G'],
+                'C': [],
+                'D': ['E', 'F', 'I'],
+                'E': ['H', 'I'],
+                'F': ['G'],
+                'G': ['H'],
+                'H': [],
+                'I': [],
+                'X': ['Y'],
+                'Y': ['Z'],
+                'Z': ['X'],
+                }
 
 DEPTH_TABLE = [
     ('A', ['A', 'B', 'C', 'G', 'H', 'D', 'E', 'I', 'F']),
@@ -96,6 +58,77 @@ BREADTH_TABLE = [
     ('Z', ['Z', 'X', 'Y']),
 ]
 
+def build_graph(d, weight=0):
+    from simple_graph import Graph
+    weighted_g = Graph()
+    for k, v in d.items():
+        for edge in v:
+            weighted_g.add_edge(k, edge, weight)
+    return weighted_g
+
+def make_random_graph():
+    from simple_graph import Graph
+    rnd_g = Graph()
+    for i in range(1, random.randint(1, 100)):
+        try:
+            rnd_g.add_edge(i, random.randint(1, 100))
+        except ValueError:
+            pass
+    return rnd_g
+
+
+@pytest.fixture
+def new_empty_stack():
+    """Create an empty object of type Stack to be used in test functions."""
+    from stack import Stack
+    this_stack = Stack()
+    return this_stack
+
+
+@pytest.fixture
+def g_empty():
+    """Fixture for empty pq."""
+    from simple_graph import Graph
+    new_g = Graph()
+    return new_g
+
+
+@pytest.fixture
+def g1():
+    """Fixture for graph containing a single element, no edges."""
+    from simple_graph import Graph
+    new_g = Graph()
+    new_g.add_node('A')
+    return new_g
+
+
+@pytest.fixture
+def g():
+    """Fixture for graph containing multiples nodes with multiples edges."""
+    from simple_graph import Graph
+    new_g = build_graph(simple_graph_scaffold)
+    return new_g
+
+
+@pytest.fixture
+def dag():
+    """Fixture for direct acyclic graph."""
+    from simple_graph import Graph
+    new_g = build_graph(nodes_scaffold_dag)
+    return new_g
+
+@pytest.fixture
+def weighted_dag():
+    """Fixture for direct acyclic graph with all weights set to a value."""
+    from simple_graph import Graph
+    new_g = build_graph(nodes_scaffold_dag, 1)
+    return new_g
+
+@pytest.fixture
+def random_graph():
+    """Fixture to provide a randomly created graph."""
+    new_g = make_random_graph()
+    return new_g
 
 def test_create_empty_g(g_empty):
     """Test creation of empty Graph."""
@@ -126,8 +159,9 @@ def test_adding_edge_to_graph_w_1_node(g1):
     g1.add_edge('A', 'B')
     for n in new_nodes:
         assert n in g1._nodes.keys()
+    node, weight = g1._nodes['A'][0]
     assert len(g1._nodes) == 2
-    assert g1._nodes['A'] == ['B']
+    assert node == 'B'
 
 
 def test_egdges_returns_all_edges(g):
@@ -157,16 +191,20 @@ def test_delete_node_removed_from_graph(g1):
 def test_delete_node_removed_from_all_nodes(g):
     """Test that deleting a node deletes it from all edges."""
     g.del_node('C')
-    assert 'C' not in g._nodes['A']
-    assert 'C' not in g._nodes['B']
-    assert 'C' not in g._nodes['D']
-    assert 'C' not in g._nodes['F']
+    assert 'C' not in g.nodes()
+
+def test_delete_node_removed_from_all_nodes_in_random_graph(random_graph):
+    """Test that deleting a node deletes it from all edges."""
+    if random_graph.neighbors(1):
+        random_graph.del_node(1)
+    assert 1 not in random_graph.nodes()
 
 
 def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
     """Test that deleting an edge raises a ValueError if the edge doesn't exist."""
     g.del_edge('A', 'B')
-    assert g._nodes['A'] == ['C']
+    node, weight = g._nodes['A'][0]
+    assert node == 'C'
     with pytest.raises(ValueError):
         g.del_edge('A', 'F')
 
@@ -204,3 +242,18 @@ def test_depth_first_on_dag(dag, start, result):
 def test_breadth_first_on_dag(dag, start, result):
     """Test on breadth first search on directed acyclic and cyclic graphs."""
     assert dag.breadth_first_traversal(start) == result
+
+def test_edges_have_weights(weighted_dag):
+    """Test that every edge has a weight assigned."""
+    error = False
+    all_weights = []
+    sum_weight = 0
+    for we in weighted_dag.edges():
+        try:
+            all_weights.append(we[-1])
+            sum_weight += float(we[-1])
+        except ValueError:
+            error = True
+            raise ValueError('Missing weight')
+    assert sum_weight == len(all_weights)
+    assert error == False
