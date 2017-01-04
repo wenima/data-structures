@@ -128,10 +128,7 @@ class Graph(object):
                     self._visited.append(neighbor)
                     queue.enqueue(neighbor)
             while len(queue):
-                try:
-                    self._explore_bfs(queue.dequeue(), queue)
-                except IndexError:
-                    return queue
+                self._explore_bfs(queue.dequeue(), queue)
         return queue
 
 # Make Random Graph
@@ -140,9 +137,9 @@ class Graph(object):
 def make_random_graph():
     from simple_graph import Graph
     rnd_g = Graph()
-    for i in range(1, random.randint(1, 100)):
+    for i in range(1, randint(1, 100)):
         try:
-            rnd_g.add_edge(i, random.randint(1, 100))
+            rnd_g.add_edge(i, randint(1, 100))
         except ValueError:
             pass
     return rnd_g

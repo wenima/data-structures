@@ -78,14 +78,6 @@ def make_random_graph():
 
 
 @pytest.fixture
-def new_empty_stack():
-    """Create an empty object of type Stack to be used in test functions."""
-    from stack import Stack
-    this_stack = Stack()
-    return this_stack
-
-
-@pytest.fixture
 def g_empty():
     """Fixture for empty pq."""
     from simple_graph import Graph
