@@ -40,12 +40,7 @@ class Graph(object):
 
     def edges(self):
         """Return list of edges."""
-        edges = []
-        for node in self._nodes:
-            for edge in self._nodes[node]:
-                edge = str(node) + '-' + str(edge[0]) + ':' + str(edge[1])
-                edges.append(edge)
-        return edges
+        return list({key + '-' + c + ':' + str(w) for key, val in self._nodes.items() for c, w in val})
 
     def add_node(self, n):
         """Add a node to the graph."""
@@ -84,14 +79,11 @@ class Graph(object):
 
     def has_node(self, n):
         """.Check if node is in graph."""
-        return True if n in self._nodes else False
+        return n in self._nodes
 
     def neighbors(self, n):
         """Return list of neighbors nodes to node n."""
-        neighbors_list = []
-        for edge in self._nodes[n]:
-            neighbors_list.append(edge[0])
-        return neighbors_list
+        return [edge[0] for edge in self._nodes[n]]
 
     def adjacent(self, n1, n2):
         """Return True if n1 and n2 are adjacent to each other."""
