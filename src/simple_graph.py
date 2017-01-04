@@ -54,6 +54,8 @@ class Graph(object):
 
     def add_edge(self, n1, n2, weight=0):
         """Add edge to graph, if nodes not in graph, add them."""
+        if n1 == n2:
+            raise ValueError("Node cannot add an edge to itself.")
         if self.has_node(n1):
             self._nodes[n1].append((n2, weight))
         else:
