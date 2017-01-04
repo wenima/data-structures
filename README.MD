@@ -1,6 +1,6 @@
 #Summary
 
-The assignment was to implement a [weighted Graph](https://en.wikipedia.org/wiki/Graph_traversal)
+The assignment was to implement a [weighted Graph](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weighted_graph)
 
 No additional functions have been added but many functions have been modified.
 
