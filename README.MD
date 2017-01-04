@@ -1,15 +1,14 @@
 #Summary
 
-The assignment was to implement a [weighted Graph](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weighted_graph)
+The assignment was to implement 2 solutions to the [shortest-path problem](https://en.wikipedia.org/wiki/Shortest_path_problem)
 
 No additional functions have been added but many functions have been modified.
 
 #Definition:
-An edge-weighted graph is a pair (G,w) where G = (V,E) is a graph and w : E → IR is a weight function.
+In graph theory, the shortest path problem is the problem of finding a path between two vertices (or nodes) in a graph such that the sum of the weights of its constituent edges is minimized.
 
-The assignment has a longer definition of an edge weighted graph, combined with a possible approach.
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_3_weighted.html
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/graph_4_shortest_path.html
 
 
 # Coverage:
@@ -27,4 +26,4 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 # Comments about implementation:
 
-* With the introduction of larger graphs, we probably need to implement an adjency matrix soon rather than relying on a list to hold the nodes
+## 2 algorithms are implemented to to solve the Shortest_path_problem with [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra's_algorithm) being mandatory
