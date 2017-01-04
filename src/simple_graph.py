@@ -138,16 +138,14 @@ class Graph(object):
 
 
 def make_random_graph():
-    """Make a random graph."""
-    g = Graph()
-    random = 0
-    for i in range(1, 100):
-        g.add_node(i)
-        for j in range(randint(0, 10)):
-            random = randint(1, 100)
-            if random != i:
-                g.add_edge(i, random)
-    return g
+    from simple_graph import Graph
+    rnd_g = Graph()
+    for i in range(1, random.randint(1, 100)):
+        try:
+            rnd_g.add_edge(i, random.randint(1, 100))
+        except ValueError:
+            pass
+    return rnd_g
 
 g = make_random_graph()
 
