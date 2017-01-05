@@ -4,6 +4,7 @@ from stack import Stack
 from queue import Queue
 import timeit
 from random import randint
+from math import inf
 
 
 class Graph(object):
@@ -131,10 +132,43 @@ class Graph(object):
                 self._explore_bfs(queue.dequeue(), queue)
         return queue
 
+    def dijkstras(self, start, end):
+        """Implementation of dykstras shortest path algorithm."""
+        if start not in self.nodes():
+            raise TypeError('the start node is not in the graph')
+        if end not in self.nodes():
+            raise TypeError('the end node is not in the graph')
+        previous = {}
+        distances = {}
+        for node in self.nodes():
+            distances[node] = inf
+        distances[start] = 0
+        current = start
+        while distances:
+            for edge in self._nodes[current]:
+                edge_node, edge_weight = edge
+                if edge_node in distances:
+                    new_dist = edge_weight + distances[current]
+                    if new_dist < distances[edge_node]:
+                        distances[edge_node] = new_dist
+                        previous[edge_node] = [new_dist, current]
+            del distances[current]
+            if distances:
+                current = min(distances, key=distances.get)
+        path = [end]
+        length = previous[end][0]
+        while start not in path:
+            step = previous[end][1]
+            path.append(step)
+            end = step
+        path.reverse()
+        return length, path
+
 # Make Random Graph
 
 
 def make_random_graph():
+    """Make a random graph."""
     from simple_graph import Graph
     rnd_g = Graph()
     for i in range(1, randint(1, 100)):
@@ -163,3 +197,4 @@ if __name__ == '__main__':
 
     print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
     print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
+
