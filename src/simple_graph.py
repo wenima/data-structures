@@ -54,14 +54,14 @@ class Graph(object):
         if self.has_node(n):
             self._nodes = {key : list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
         else:
-            raise(KeyError)
+            raise KeyError
 
     def del_edge(self, n1, n2):
         """Remove edge from list."""
         if n2 in self._nodes[n1]:
             self._nodes[n1].remove(n2)
         else:
-            raise (ValueError)
+            raise ValueError
 
     def has_node(self, n):
         """.Check if node is in graph."""
@@ -74,5 +74,5 @@ class Graph(object):
     def adjacent(self, n1, n2):
         """Return True if n1 and n2 are adjacent to each other."""
         if not self.has_node(n1) or not self.has_node(n2):
-            raise(KeyError)
+            raise KeyError
         return True if n2 in self._nodes[n1] else False
