@@ -42,7 +42,7 @@ class Graph(object):
 
     def nodes(self):
         """Return list of nodes."""
-        return self._nodes.keys()
+        return list(self._nodes.keys())
 
     def edges(self):
         """Return list of edges."""
@@ -64,20 +64,24 @@ class Graph(object):
     def del_node(self, n):
         """Delete node from list and remove any reference to it in other nodes."""
         if self.has_node(n):
-            self._nodes = {key: list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
+            del self._nodes[n]
+            for node in self._nodes:
+                for edge in self._nodes[node]:
+                    if edge == n:
+                        self._nodes[node].remove(edge)
         else:
-            raise(KeyError)
+            raise KeyError
 
     def del_edge(self, n1, n2):
         """Remove edge from list."""
         if n2 in self._nodes[n1]:
             self._nodes[n1].remove(n2)
         else:
-            raise (ValueError)
+            raise ValueError
 
     def has_node(self, n):
         """.Check if node is in graph."""
-        return True if n in self._nodes else False
+        return n in self._nodes
 
     def neighbors(self, n):
         """Return list of neighbors nodes to node n."""
@@ -86,8 +90,8 @@ class Graph(object):
     def adjacent(self, n1, n2):
         """Return True if n1 and n2 are adjacent to each other."""
         if not self.has_node(n1) or not self.has_node(n2):
-            raise(KeyError)
-        return True if n2 in self._nodes[n1] else False
+            raise KeyError
+        return n2 in self._nodes[n1]
 
     def depth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
@@ -104,7 +108,6 @@ class Graph(object):
             for node in self.neighbors(node):
                 if node not in self._visited:
                     self._explore(node, stack)
-        return stack
 
     def breadth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
@@ -124,8 +127,7 @@ class Graph(object):
                 try:
                     self._explore_bfs(queue.dequeue(), queue)
                 except IndexError:
-                    return queue
-        return queue
+                    return
 
 # Make Random Graph
 def make_random_graph():
@@ -158,4 +160,3 @@ if __name__ == '__main__':
 
     print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
     print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
-
