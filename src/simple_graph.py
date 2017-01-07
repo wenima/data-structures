@@ -30,7 +30,7 @@ class Graph(object):
 
     def nodes(self):
         """Return list of nodes."""
-        return self._nodes.keys()
+        return list(self._nodes.keys())
 
     def edges(self):
         """Return list of edges."""
