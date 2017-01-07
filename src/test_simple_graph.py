@@ -94,11 +94,18 @@ def test_delete_node_removed_from_graph(g1):
 def test_delete_node_removed_from_all_nodes(g):
     """Test that deleting a node deletes it from all edges."""
     g.del_node('C')
+    g.add_node(2)
+    g.add_node(1001)
+    g.add_edge('A', 2)
+    g.add_edge('A', 1001)
+    g.del_node(2)
+    g.del_node(1001)
     assert 'C' not in g._nodes['A']
     assert 'C' not in g._nodes['B']
     assert 'C' not in g._nodes['D']
     assert 'C' not in g._nodes['F']
-
+    assert 2 not in g._nodes['A']
+    assert 1001 not in g._nodes['A']
 
 
 def test_delete_edge_deletes_edge_or_raises_error_if_not_exist(g):
@@ -114,10 +121,6 @@ def test_neighbors_returns_correct_list(g):
     assert g.neighbors('B') == ['C', 'D']
     with pytest.raises(KeyError):
         g.neighbors('Z')
-
-# def test_neighbors_raises_error(g):
-#     """Test that calling neighbors when node does not exist returns an error"""
-#     with pytest_ra
 
 def test_adjacent(g):
     """Test that adjacent returns correct value"""
