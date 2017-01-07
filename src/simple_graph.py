@@ -131,18 +131,15 @@ class Graph(object):
 
 # Make Random Graph
 def make_random_graph():
-    g = Graph()
-    random = 0
-    for i in range(1, 100):
-        g.add_node(i)
-        for j in range(randint(0, 10)):
-            random = randint(1, 100)
-            if random != i:
-                g.add_edge(i, random)
-    return g
+    rnd_g = Graph()
+    for i in range(1, randint(1, 100)):
+        try:
+            rnd_g.add_edge(i, randint(1, 100))
+        except ValueError:
+            pass
+    return rnd_g
 
 g = make_random_graph()
-
 
 def depth_test(g):
     """Depth Test for timing."""
