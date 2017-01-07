@@ -65,7 +65,7 @@ class Graph(object):
 
     def has_node(self, n):
         """.Check if node is in graph."""
-        return True if n in self._nodes else False
+        return n in self._nodes
 
     def neighbors(self, n):
         """Return list of neighbors nodes to node n."""
