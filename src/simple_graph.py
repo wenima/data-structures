@@ -52,7 +52,11 @@ class Graph(object):
     def del_node(self, n):
         """Delete node from list and remove any reference to it in other nodes."""
         if self.has_node(n):
-            self._nodes = {key : list(''.join(val).replace(n, '')) for key, val in self._nodes.items() if key != n}
+            del self._nodes[n]
+            for node in self._nodes:
+                for edge in self._nodes[node]:
+                    if edge == n:
+                        self._nodes[node].remove(edge)
         else:
             raise KeyError
 
