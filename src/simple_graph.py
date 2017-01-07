@@ -79,4 +79,4 @@ class Graph(object):
         """Return True if n1 and n2 are adjacent to each other."""
         if not self.has_node(n1) or not self.has_node(n2):
             raise KeyError
-        return True if n2 in self._nodes[n1] else False
+        return n2 in self._nodes[n1]
