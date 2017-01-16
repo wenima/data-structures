@@ -25,15 +25,17 @@ class TreeNode(object):
         return self.right and self.left
 
     def children(self):
+        """Return non-none children of node."""
         return [n for n in [self.left, self.right] if n is not None]
 
     def left_or_right(self, val):
-        """."""
+        """Compare node to a value and return which path to take."""
         if val < self.val:
             return self.left
         return self.right
 
     def depth(self, root):
+        """Return the depth of a node, found recusively."""
         if self is root:
             return 1
         return 1 + self.parent.depth(root)
@@ -94,7 +96,7 @@ class BST(object):
         """Return whether val in bst."""
         return bool(self.search(val))
 
-    def depth(self, start='root'):
+    def depth_bad(self, start='root'):
         """Return the max depth of the bst."""
         if start == 'root':
             start = self.root
@@ -113,3 +115,39 @@ class BST(object):
                     for child in cur.children():
                         stack.push(child)
         return max_depth
+
+    def depth(self, start='root'):
+        """Totally came up with this myself."""
+        if start == 'root':
+            start = self.root
+        if start is None:
+            return 0
+        return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
+
+    def balance(self, start='root'):
+        """Return left vs right balance from a node on the bst."""
+        if start == 'root':
+            start = self.root
+        if start is None:
+            return 0
+        return self.depth(start=start.right) - self.depth(start=start.left)
+
+if __name__ == '__main__':
+    import timeit
+    import random
+
+    bst = BST()
+    for i in range(100):
+        bst.insert(random.randint(0, 100))
+
+    depth = timeit.timeit(
+        stmt="bst.depth()",
+        setup="from __main__ import bst",
+        number=10000,
+    )
+    depthbad = timeit.timeit(
+        stmt="bst.depth_bad()",
+        setup="from __main__ import bst",
+        number=10000,
+    )
+    print(depth, depthbad)
