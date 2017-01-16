@@ -12,12 +12,11 @@ in Python containing 6 methods:
 * balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
 
 #Definition:
-A binary tree is made of nodes, where each node contains a "left" reference, a "right" reference, and a data element. The topmost node in the tree is called the root.
-
-Every node (excluding a root) in a tree is connected by a directed edge from exactly one other node. This node is called a parent. On the other hand, each node can be connected to arbitrary number of nodes, called children. Nodes with no children are called leaves, or external nodes. Nodes which are not leaves are called internal nodes. Nodes with the same parent are called siblings.
-
-A full binary tree is a binary tree in which each node has exactly zero or two children.
-A complete binary tree is a binary tree, which is completely filled, with the possible exception of the bottom level, which is filled from left to right.
+A BST is a binary tree where nodes are ordered in the following way:
+each node contains one key (also known as data)
+the keys in the left subtree are less then the key in its parent node, in short L < P;
+the keys in the right subtree are greater the key in its parent node, in short P < R;
+duplicate keys are not allowed.
 
 
 For more information on the assignment, see here: https://en.wikipedia.org/wiki/Binary_search_tree

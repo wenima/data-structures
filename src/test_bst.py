@@ -81,4 +81,4 @@ def test_contains_returns_false(empty_bst):
 def test_depth_returns_correct_value(bst):
     """Test depth returns correct value in a full tree."""
     bst.insert(n)
-    assert bst.depth() == result
+    assert bst.depth() = 

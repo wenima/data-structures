@@ -28,6 +28,3 @@ class bst:
 
     def __len__(self):
         return self.size
-
-    def __iter__(self):
-        return self.root.__iter__()
