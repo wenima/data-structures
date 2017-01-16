@@ -37,7 +37,7 @@ class TreeNode(object):
     def depth(self, root):
         """Return the depth of a node, found recusively."""
         if self is root:
-            return 1
+            return 0
         return 1 + self.parent.depth(root)
 
 
@@ -120,7 +120,7 @@ class BST(object):
         """Totally came up with this myself."""
         if start == 'root':
             start = self.root
-        if start is None:
+        if start is None or start.is_leaf():
             return 0
         return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
 
@@ -136,18 +136,26 @@ if __name__ == '__main__':
     import timeit
     import random
 
-    bst = BST()
-    for i in range(100):
-        bst.insert(random.randint(0, 100))
+    balanced_bst = BST()
+    degenerate_bst = BST()
+    for i in range(1000):
+        balanced_bst.insert(random.randint(0, 1000))
+        degenerate_bst.insert(i)
 
-    depth = timeit.timeit(
-        stmt="bst.depth()",
-        setup="from __main__ import bst",
-        number=10000,
-    )
-    depthbad = timeit.timeit(
-        stmt="bst.depth_bad()",
-        setup="from __main__ import bst",
-        number=10000,
-    )
-    print(depth, depthbad)
+    cur = balanced_bst.root
+    while cur:
+        if cur.right:
+            cur = cur.right
+        else:
+            break
+    biggest = cur.val
+
+    best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
+                              setup='from __main__ import balanced_bst, biggest',
+                              number=10000)
+    worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
+                               setup='from __main__ import degenerate_bst',
+                               number=10000)
+
+    print('Search balanced BST: ' + str(best_case),
+          '\nSearch degenerate BST: ' + str(worst_case))
