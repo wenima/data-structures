@@ -1,4 +1,5 @@
 """Module to implement a Binary Search Tree."""
+from stack2 import Stack
 
 
 class TreeNode(object):
@@ -23,11 +24,19 @@ class TreeNode(object):
         """."""
         return self.right and self.left
 
+    def children(self):
+        return [n for n in [self.left, self.right] if n is not None]
+
     def left_or_right(self, val):
         """."""
         if val < self.val:
             return self.left
         return self.right
+
+    def depth(self, root):
+        if self is root:
+            return 1
+        return 1 + self.parent.depth(root)
 
 
 class BST(object):
@@ -44,7 +53,7 @@ class BST(object):
             except TypeError:
                 self.insert(iterable)
 
-    def length(self):
+    def size(self):
         """Return number of nodes in bst.."""
         return self.size
 
@@ -83,4 +92,24 @@ class BST(object):
 
     def contains(self, val):
         """Return whether val in bst."""
-        return self.search(val) and True
+        return bool(self.search(val))
+
+    def depth(self, start='root'):
+        """Return the max depth of the bst."""
+        if start == 'root':
+            start = self.root
+        stack = Stack([start])
+        visited = set()
+        max_depth = 0
+        while stack.top:
+            cur = stack.pop()
+            if cur not in visited:
+                visited.add(cur)
+                if cur.is_leaf():
+                    cur_depth = cur.depth(start)
+                    if cur_depth > max_depth:
+                        max_depth = cur_depth
+                else:
+                    for child in cur.children():
+                        stack.push(child)
+        return max_depth
