@@ -26,4 +26,5 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 # Comments about implementation:
 
-## 2 algorithms are implemented to to solve the Shortest_path_problem with [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra's_algorithm) being mandatory
+* 2 algorithms are implemented to to solve the Shortest_path_problem with [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra's_algorithm) being mandatory
+* the 2nd algo we implemented was the [bellman-ford-moore algorithm](https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm) which has the benefit of being able to solve for the shortest path when negative weights are present
