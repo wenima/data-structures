@@ -1,4 +1,5 @@
 """Module to implement a Binary Search Tree."""
+from stack2 import Stack
 
 
 class TreeNode(object):
@@ -23,11 +24,21 @@ class TreeNode(object):
         """."""
         return self.right and self.left
 
+    def children(self):
+        """Return non-none children of node."""
+        return [n for n in [self.left, self.right] if n is not None]
+
     def left_or_right(self, val):
-        """."""
+        """Compare node to a value and return which path to take."""
         if val < self.val:
             return self.left
         return self.right
+
+    def depth(self, root):
+        """Return the depth of a node, found recusively."""
+        if self is root:
+            return 0
+        return 1 + self.parent.depth(root)
 
 
 class BST(object):
@@ -44,7 +55,7 @@ class BST(object):
             except TypeError:
                 self.insert(iterable)
 
-    def length(self):
+    def size(self):
         """Return number of nodes in bst.."""
         return self.size
 
@@ -83,4 +94,68 @@ class BST(object):
 
     def contains(self, val):
         """Return whether val in bst."""
-        return self.search(val) and True
+        return bool(self.search(val))
+
+    def depth_bad(self, start='root'):
+        """Return the max depth of the bst."""
+        if start == 'root':
+            start = self.root
+        stack = Stack([start])
+        visited = set()
+        max_depth = 0
+        while stack.top:
+            cur = stack.pop()
+            if cur not in visited:
+                visited.add(cur)
+                if cur.is_leaf():
+                    cur_depth = cur.depth(start)
+                    if cur_depth > max_depth:
+                        max_depth = cur_depth
+                else:
+                    for child in cur.children():
+                        stack.push(child)
+        return max_depth
+
+    def depth(self, start='root'):
+        """Totally came up with this myself."""
+        if start == 'root':
+            start = self.root
+        if start is None or start.is_leaf():
+            return 0
+        return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
+
+    def balance(self, start='root'):
+        """Return left vs right balance from a node on the bst."""
+        if start == 'root':
+            start = self.root
+        if start is None:
+            return 0
+        return self.depth(start=start.right) - self.depth(start=start.left)
+
+if __name__ == '__main__':
+    import timeit
+    import random
+
+    balanced_bst = BST()
+    degenerate_bst = BST()
+    for i in range(1000):
+        balanced_bst.insert(random.randint(0, 1000))
+        degenerate_bst.insert(i)
+
+    cur = balanced_bst.root
+    while cur:
+        if cur.right:
+            cur = cur.right
+        else:
+            break
+    biggest = cur.val
+
+    best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
+                              setup='from __main__ import balanced_bst, biggest',
+                              number=10000)
+    worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
+                               setup='from __main__ import degenerate_bst',
+                               number=10000)
+
+    print('Search balanced BST: ' + str(best_case),
+          '\nSearch degenerate BST: ' + str(worst_case))
