@@ -45,7 +45,6 @@ class TreeNode(object):
         return 1 + self.parent.depth(root)
 
     def __iter__(self):
-        result = []
         if self:
             if self.hasLeftChild():
                 for n in self.left:
@@ -83,8 +82,9 @@ class BST(object):
         return self.root.__iter__()
 
     def in_order(self):
-        """Return a generator for in_order traversal of a bst."""
-        return self.root.__iter__()
+        if self.root:
+            return self.root.__iter__()
+        yield None
 
     def insert(self, val):
         """Insert a new node into the bst."""
