@@ -20,10 +20,6 @@ class TreeNode(object):
         """."""
         return not (self.right or self.left)
 
-    def has_both_children(self):
-        """."""
-        return self.right and self.left
-
     def children(self):
         """Return non-none children of node."""
         return [n for n in [self.left, self.right] if n is not None]
