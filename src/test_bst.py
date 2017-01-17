@@ -1,4 +1,4 @@
-"""Test dbl_linked_list data structures."""
+"""Test bst data structure."""
 
 import pytest
 

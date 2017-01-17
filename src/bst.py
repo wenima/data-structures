@@ -135,6 +135,17 @@ class BST(object):
             return 0
         return self.depth(start=start.right) - self.depth(start=start.left)
 
+    def pre_order(self, root='root'):
+        """."""
+        if root == 'root':
+            root = self.root
+        if root:
+            yield root
+            for node in root.children():
+                for rnode in self.pre_order(root=node):
+                    yield rnode
+
+
 if __name__ == '__main__':
     import timeit
     import random
