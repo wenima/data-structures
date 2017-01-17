@@ -12,6 +12,14 @@ class TreeNode(object):
         self.right = right
         self.parent = parent
 
+    def hasLeftChild(self):
+        """Returns a bool indicating wether this node as a child smaller in value."""
+        return self.left
+
+    def hasRightChild(self):
+        """Returns a bool indicating wether this node as a child larger in value."""
+        return self.right
+
     def is_root(self):
         """."""
         return not self.parent
@@ -36,6 +44,18 @@ class TreeNode(object):
             return 0
         return 1 + self.parent.depth(root)
 
+    def __iter__(self):
+        result = []
+        if self:
+            if self.hasLeftChild():
+                for n in self.left:
+                    yield n
+            yield self.val
+            result.append(self.val)
+            if self.hasRightChild():
+                for n in self.right:
+                    yield n
+
 
 class BST(object):
     """Binary search tree."""
@@ -58,6 +78,13 @@ class BST(object):
     def __len__(self):
         """Return number of nodes in bst."""
         return self.size
+
+    def __iter__(self):
+        return self.root.__iter__()
+
+    def in_order(self):
+        """Return a generator for in_order traversal of a bst."""
+        return self.root.__iter__()
 
     def insert(self, val):
         """Insert a new node into the bst."""
@@ -91,26 +118,6 @@ class BST(object):
     def contains(self, val):
         """Return whether val in bst."""
         return bool(self.search(val))
-
-    def depth_bad(self, start='root'):
-        """Return the max depth of the bst."""
-        if start == 'root':
-            start = self.root
-        stack = Stack([start])
-        visited = set()
-        max_depth = 0
-        while stack.top:
-            cur = stack.pop()
-            if cur not in visited:
-                visited.add(cur)
-                if cur.is_leaf():
-                    cur_depth = cur.depth(start)
-                    if cur_depth > max_depth:
-                        max_depth = cur_depth
-                else:
-                    for child in cur.children():
-                        stack.push(child)
-        return max_depth
 
     def depth(self, start='root'):
         """Totally came up with this myself."""
