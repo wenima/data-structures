@@ -142,8 +142,16 @@ class BST(object):
         if root:
             yield root
             for node in root.children():
-                for rnode in self.pre_order(root=node):
-                    yield rnode
+                yield from self.pre_order(root=node)
+
+    def post_order(self, root='root'):
+        """."""
+        if root == 'root':
+            root = self.root
+        if root:
+            for node in root.children():
+                yield from self.post_order(root=node)
+            yield root
 
 
 if __name__ == '__main__':

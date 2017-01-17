@@ -88,22 +88,22 @@ def test_in_order_bst2(bst2):
 
 def test_pre_order_bst1(bst1):
     """Test pre order traversal does a depth first traversal."""
-    assert list(bst1.pre_order()) == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert [n.val for n in bst1.pre_order()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
 
 
 def test_pre_order_bst2(bst2):
     """Test pre order traversal does a depth first traversal on complex bst."""
-    assert list(bst2.pre_order()) == [11, 6, 4, 5, 8, 19, 12, 17, 43, 31, 49]
+    assert [n.val for n in bst2.pre_order()] == [11, 6, 4, 5, 8, 19, 12, 17, 43, 31, 49]
 
 
 def test_post_order_bst1(bst1):
     """Test post order traversal does its thang."""
-    assert list(bst1.post_order()) == [1, 4, 8, 11, 12, 9, 5, 3, 2]
+    assert [n.val for n in bst1.post_order()] == [1, 4, 8, 11, 12, 9, 5, 3, 2]
 
 
 def test_post_order_bst2(bst2):
     """Test post order on more complex bst."""
-    assert list(bst2.post_order()) == [5, 4, 8, 6, 17, 12, 31, 49, 43, 19, 11]
+    assert [n.val for n in bst2.post_order()] == [5, 4, 8, 6, 17, 12, 31, 49, 43, 19, 11]
 
 
 def test_breadth_first_bst1(bst1):
