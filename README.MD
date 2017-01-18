@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=master)](https://travis-ci.org/wenima/data-structures)
+
 #Summary
 
 The assignment was to implement deletion for a[binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree)
