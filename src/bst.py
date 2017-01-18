@@ -1,6 +1,6 @@
 """Module to implement a Binary Search Tree."""
 from stack2 import Stack
-
+from queue import Queue
 
 class TreeNode(object):
     """TreeNode is the root of the tree."""
@@ -215,6 +215,26 @@ class BST(object):
                 lmost.parent = to_d.parent
         if to_d.is_root():
             self.root = replacement
+
+
+    def breadth_first_traversal(self, start):
+        """Launch a dfs search, exploring all nodes."""
+        q = Queue()
+        visited = []
+        self._explore_bfs(start, q, visited)
+        return visited
+
+    def _explore_bfs(self, node, queue, visited):
+        if node not in visited:
+            visited.append(node)
+        if node.children():
+            for c in node.children():
+                if c not in visited:
+                    visited.append(c)
+                    queue.enqueue(c)
+            while len(queue):
+                self._explore_bfs(queue.dequeue(), queue, visited)
+        return visited
 
 if __name__ == '__main__':
     import sys
