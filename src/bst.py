@@ -12,11 +12,11 @@ class TreeNode(object):
         self.right = right
         self.parent = parent
 
-    def hasLeftChild(self):
+    def has_left(self):
         """Returns a bool indicating wether this node as a child smaller in value."""
         return self.left
 
-    def hasRightChild(self):
+    def has_right(self):
         """Returns a bool indicating wether this node as a child larger in value."""
         return self.right
 
@@ -152,6 +152,26 @@ class BST(object):
             for node in root.children():
                 yield from self.post_order(root=node)
             yield root
+
+    def delete(self, val):
+        d = self.search(val)
+        #delete a leaf
+        if d.is_leaf():
+            d.parent.left = None
+        elif len(d.children()) > 1:
+            #do something more fancy
+            pass
+        elif d.has_left():
+            #delete a node with only one child on the left
+            d.parent.left = d.left
+        else:
+            #delete a left child with a tree under it to the right
+            #check if d is left or right of parent
+            if d.parent.left == d:
+                d.parent.left = d.right
+            #delete a node with at least one child on the right
+            else:
+                d.parent.right = d.right
 
 
 if __name__ == '__main__':
