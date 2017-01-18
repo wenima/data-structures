@@ -153,6 +153,25 @@ class BST(object):
                 yield from self.post_order(root=node)
             yield root
 
+    def breadth_first_traversal(self, start):
+        """Launch a dfs search, exploring all nodes."""
+        q = Queue()
+        visited = []
+        self._explore_bfs(start, q, visited)
+        return visited
+
+    def _explore_bfs(self, node, queue, visited):
+        if node not in visited:
+            visited.append(node)
+        if node.children():
+            for c in node.children():
+                if c not in visited:
+                    visited.append(c)
+                    queue.enqueue(c)
+            while len(queue):
+                self._explore_bfs(queue.dequeue(), queue, visited)
+        return visited
+
 
 if __name__ == '__main__':
     import timeit
