@@ -153,6 +153,15 @@ class BST(object):
                 yield from self.post_order(root=node)
             yield root
 
+    def on_order(self, root='root'):
+        """."""
+        if root == 'root':
+            root = self.root
+        if root:
+            yield from self.on_order(root=root.left)
+            yield root
+            yield from self.on_order(root=root.right)
+
 
 if __name__ == '__main__':
     import timeit
