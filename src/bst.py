@@ -181,29 +181,30 @@ class BST(object):
 
     def delete(self, val):
         """Delete a node and reorganize tree as needed."""
-        d = self.search(val)
-        if d.is_leaf():
-            d.set_parents_child(None)
-        elif len(d.children()) > 1:
-            lmost = self._get_leftmost(d)
+        to_d = self.search(val)
+        if to_d.is_leaf():
+            to_d.set_parents_child(None)
+        elif len(to_d.children()) > 1:
+            lmost = self._get_leftmost(to_d)
             if lmost.has_right():
                 lmost.right.parent = lmost.parent
                 lmost.set_parents_child(lmost.right)
             else:
                 lmost.set_parents_child(None)
-            lmost.left = d.left
-            lmost.right = d.right
-            d.right.parent = lmost
-            d.left.parent = lmost
-            d.set_parents_child(lmost)
-            lmost.parent = d.parent
-        elif d.has_left():
-            d.left.parent = d.parent
-            d.set_parents_child(d.left)
+            lmost.left = to_d.left
+            to_d.left.parent = lmost
+            if to_d.right:
+                lmost.right = to_d.right
+                to_d.right.parent = lmost
+            to_d.set_parents_child(lmost)
+            lmost.parent = to_d.parent
+        elif to_d.has_left():
+            to_d.left.parent = to_d.parent
+            to_d.set_parents_child(to_d.left)
         else:
-            d.right.parent = d.parent
-            d.set_parents_child(d.right)
-        if d.is_root():
+            to_d.right.parent = to_d.parent
+            to_d.set_parents_child(to_d.right)
+        if to_d.is_root():
             self.root = lmost
 
 if __name__ == '__main__':
