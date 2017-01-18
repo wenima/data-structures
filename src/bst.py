@@ -50,7 +50,6 @@ class TreeNode(object):
                 for n in self.left:
                     yield n
             yield self.val
-            result.append(self.val)
             if self.hasRightChild():
                 for n in self.right:
                     yield n
@@ -152,6 +151,15 @@ class BST(object):
             for node in root.children():
                 yield from self.post_order(root=node)
             yield root
+
+    def on_order(self, root='root'):
+        """."""
+        if root == 'root':
+            root = self.root
+        if root:
+            yield from self.on_order(root=root.left)
+            yield root
+            yield from self.on_order(root=root.right)
 
     def delete(self, val):
         d = self.search(val)

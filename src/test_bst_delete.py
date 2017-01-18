@@ -17,17 +17,9 @@ TEST_BST_DELETE = [
     #delete a node with a tree under it on the right side
     (32, 40, [34]),
     # #delete a node with 2 children under it
-    # (70, 75, [60, 80]),
-    # #delete root
-    # (50, 60, [30, 70]).
+    (70, 50, [30, 75]),
+    (80, 70, [60, 85])
 ]
-
-
-@pytest.fixture
-def empty_bst():
-    from bst import BST
-    empty_bst = BST()
-    return empty_bst
 
 
 @pytest.fixture
@@ -45,10 +37,10 @@ def bst1():
 
 
 @pytest.fixture
-def bst2():
-    from bst import BST
-    new_bst = BST(TEST_BST2)
-    return new_bst
+def bst2(bst1):
+    bst1.insert(31)
+    bst1.insert(31.5)
+    return bst1
 
 
 @pytest.mark.parametrize('d, n, result', TEST_BST_DELETE)
