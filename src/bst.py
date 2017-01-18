@@ -44,6 +44,13 @@ class TreeNode(object):
             return 0
         return 1 + self.parent.depth(root)
 
+    def set_parents_child(self, new_child):
+        if self.parent:
+            if self.parent.left is self:
+                self.parent.left = new_child
+            else:
+                self.parent.right = new_child
+
     def __iter__(self):
         if self:
             if self.hasLeftChild():
@@ -85,6 +92,17 @@ class BST(object):
             return self.root.__iter__()
         yield None
 
+    def _iterate_from(self, node):
+        """Return a generator of all the children on the left of starting node"""
+        while node is not None:
+            yield node
+            node = node.left
+
+    def _get_leftmost(self, node_to_delete):
+        """Return the leftmost child of the right branch of the target node."""
+        left_children = [node for node in self._iterate_from(self.search(node_to_delete.val).right)]
+        return left_children[-1]
+
     def insert(self, val):
         """Insert a new node into the bst."""
         cur = self.root
@@ -108,9 +126,9 @@ class BST(object):
         """Return node with value val if it exists, otherwise None."""
         if start == 'root':
             return self.search(val, start=self.root)
-        elif start is None:
+        if start is None:
             return None
-        elif val == start.val:
+        if val == start.val:
             return start
         return self.search(val, start=start.left_or_right(val))
 
@@ -162,25 +180,31 @@ class BST(object):
             yield from self.on_order(root=root.right)
 
     def delete(self, val):
+        """Delete a node and reorganize tree as needed."""
         d = self.search(val)
-        #delete a leaf
         if d.is_leaf():
-            d.parent.left = None
+            d.set_parents_child(None)
         elif len(d.children()) > 1:
-            #do something more fancy
-            pass
-        elif d.has_left():
-            #delete a node with only one child on the left
-            d.parent.left = d.left
-        else:
-            #delete a left child with a tree under it to the right
-            #check if d is left or right of parent
-            if d.parent.left == d:
-                d.parent.left = d.right
-            #delete a node with at least one child on the right
+            lmost = self._get_leftmost(d)
+            if lmost.has_right():
+                lmost.right.parent = lmost.parent
+                lmost.set_parents_child(lmost.right)
             else:
-                d.parent.right = d.right
-
+                lmost.set_parents_child(None)
+            lmost.left = d.left
+            lmost.right = d.right
+            d.right.parent = lmost
+            d.left.parent = lmost
+            d.set_parents_child(lmost)
+            lmost.parent = d.parent
+        elif d.has_left():
+            d.left.parent = d.parent
+            d.set_parents_child(d.left)
+        else:
+            d.right.parent = d.parent
+            d.set_parents_child(d.right)
+        if d.is_root():
+            self.root = lmost
 
 if __name__ == '__main__':
     import timeit
