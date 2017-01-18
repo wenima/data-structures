@@ -53,11 +53,11 @@ class TreeNode(object):
 
     def __iter__(self):
         if self:
-            if self.hasLeftChild():
+            if self.has_left():
                 for n in self.left:
                     yield n
             yield self.val
-            if self.hasRightChild():
+            if self.has_right():
                 for n in self.right:
                     yield n
 
@@ -87,10 +87,10 @@ class BST(object):
     def __iter__(self):
         return self.root.__iter__()
 
-    def in_order(self):
-        if self.root:
-            return self.root.__iter__()
-        yield None
+    # def in_order(self):
+    #     if self.root:
+    #         return self.root.__iter__()
+    #     yield None
 
     def _iterate_from(self, node):
         """Return a generator of all the children on the left of starting node"""
@@ -159,7 +159,8 @@ class BST(object):
         if root:
             yield root
             for node in root.children():
-                yield from self.pre_order(root=node)
+                for child in self.pre_order(root=node):
+                    yield child
 
     def post_order(self, root='root'):
         """."""
@@ -167,70 +168,80 @@ class BST(object):
             root = self.root
         if root:
             for node in root.children():
-                yield from self.post_order(root=node)
+                for child in self.post_order(root=node):
+                    yield child
             yield root
 
-    def on_order(self, root='root'):
+    def in_order(self, root='root'):
         """."""
         if root == 'root':
             root = self.root
         if root:
-            yield from self.on_order(root=root.left)
+            for child in self.in_order(root=root.left):
+                yield child
             yield root
-            yield from self.on_order(root=root.right)
+            for child in self.in_order(root=root.right):
+                yield child
 
     def delete(self, val):
         """Delete a node and reorganize tree as needed."""
         to_d = self.search(val)
+        replacement = None
         if to_d.is_leaf():
             to_d.set_parents_child(None)
-        elif len(to_d.children()) > 1:
-            lmost = self._get_leftmost(to_d)
-            if lmost.has_right():
-                lmost.right.parent = lmost.parent
-                lmost.set_parents_child(lmost.right)
-            else:
-                lmost.set_parents_child(None)
-            lmost.left = to_d.left
-            to_d.left.parent = lmost
-            if to_d.right:
-                lmost.right = to_d.right
-                to_d.right.parent = lmost
-            to_d.set_parents_child(lmost)
-            lmost.parent = to_d.parent
-        elif to_d.has_left():
-            to_d.left.parent = to_d.parent
-            to_d.set_parents_child(to_d.left)
         else:
-            to_d.right.parent = to_d.parent
-            to_d.set_parents_child(to_d.right)
+            children = to_d.children()
+            if len(children) == 1:
+                child = children[0]
+                child.parent = to_d.parent
+                to_d.set_parents_child(child)
+                replacement = child
+            else:
+                lmost = self._get_leftmost(to_d)
+                replacement = lmost
+                if lmost.has_right():
+                    lmost.right.parent = lmost.parent
+                    lmost.set_parents_child(lmost.right)
+                else:
+                    lmost.set_parents_child(None)
+
+                if to_d.right:
+                    lmost.right = to_d.right
+                    to_d.right.parent = lmost
+                lmost.left = to_d.left
+                to_d.left.parent = lmost
+
+                to_d.set_parents_child(lmost)
+                lmost.parent = to_d.parent
         if to_d.is_root():
-            self.root = lmost
+            self.root = replacement
 
 if __name__ == '__main__':
-    import timeit
-    import random
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == 'timeit':
+        import timeit
+        import random
 
-    balanced_bst = BST()
-    degenerate_bst = BST()
-    for i in range(1000):
-        balanced_bst.insert(random.randint(0, 1000))
-        degenerate_bst.insert(i)
+        balanced_bst = BST()
+        degenerate_bst = BST()
+        for i in range(1000):
+            balanced_bst.insert(random.randint(0, 1000))
+            degenerate_bst.insert(i)
 
-    cur = balanced_bst.root
-    while cur:
-        if cur.right:
-            cur = cur.right
-        else:
-            break
-    biggest = cur.val
+        cur = balanced_bst.root
+        while cur:
+            if cur.right:
+                cur = cur.right
+            else:
+                break
+        biggest = cur.val
 
-    best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
-                              setup='from __main__ import balanced_bst, biggest',
-                              number=10000)
-    worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
-                               setup='from __main__ import degenerate_bst',
-                               number=10000)
+        good_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
+                                  setup='from __main__ import balanced_bst, biggest',
+                                  number=10000)
+        worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
+                                   setup='from __main__ import degenerate_bst',
+                                   number=10000)
 
-    print('Search balanced BST: ' + str(best_case),
-          '\nSearch degenerate BST: ' + str(worst_case))
+        print('Search balanced BST: ' + str(good_case),
+              '\nSearch degenerate BST: ' + str(worst_case))
