@@ -14,6 +14,7 @@ TEST_BST_DELETE = [
     (20, 30, [10, 40]),
     #child on the right
     (34, 32, [36]),
+    (60, 70, [65, 80]),
     #delete a node with a tree under it on the right side
     (32, 40, [34]),
     # #delete a node with 2 children under it
@@ -64,4 +65,10 @@ def test_delete_returns_correct_children(d, n, result, bst1):
     children = [c.val for c in bst1.search(n).children()]
     assert children == result
 
-    
+def delete_all_nodes(bst1):
+    """Test that deleting all nodes leaves an empty tree."""
+    #get all nodes via breadth_first
+    all_nodes = b.breadth_first_traversal(bst1.root)
+    for n in all_nodes:
+        bst1.delete(n)
+    assert len(bst1) == 0
