@@ -86,6 +86,17 @@ class BST(object):
             return self.root.__iter__()
         yield None
 
+    def _iterate_from(self, list_item):
+        """Return a generator of all the children on the left of starting node"""
+        while list_item is not None:
+            yield list_item
+            list_item = list_item.left
+
+    def _get_leftmost(self, node_to_delete):
+        """Return the leftmost child of the right branch of the target node."""
+        left_children = [node for node in self._iterate_from(b.search(node_to_delete).right)]
+        return left_children[-1]
+
     def insert(self, val):
         """Insert a new node into the bst."""
         cur = self.root
@@ -172,7 +183,6 @@ class BST(object):
             #delete a node with at least one child on the right
             else:
                 d.parent.right = d.right
-
 
 if __name__ == '__main__':
     import timeit
