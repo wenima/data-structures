@@ -1,7 +1,6 @@
 """Module to show the implemenation of an AVL tree."""
 
 from bst import BST
-from bst import TreeNode
 
 
 class AVL(BST):
