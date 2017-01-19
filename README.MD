@@ -2,18 +2,18 @@
 
 #Summary
 
-The assignment was to implement deletion for a[binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree)
+The assignment was to implement a self-balancing tree in Python. We chose to
+implement an AVL tree. A new module has been created called avl.py containing
+new methods.
 
-in Python containing 1 new method:
-
-* delete(self, val): remove val from the tree if present, if not present this method is a no-op. Return None in all cases.
+*
 
 #Definition:
-* The node is a leaf (has no descendants)
-* The node has one descendant (either left or right)
-* The node has two descendants (both left and right)
+*
+*
+*
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/bst_3_delete.html
+For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/bst_4_balancing.html
 
 
 # Coverage:
@@ -30,4 +30,4 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 
 # Comments about implementation:
-stretch goal: Euler walk
+stretch goal: implement one other solution of a self-balancing tree
