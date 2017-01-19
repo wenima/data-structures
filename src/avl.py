@@ -21,8 +21,8 @@ class AVL(BST):
         """insert and calls check method to see if we need to balance."""
         node = super(AVL, self).insert(val)
         r_root = self.check_balance(node)
-        if r_root:
-            self.rebalance(r_root)
+        # if r_root:
+        #     self.rebalance(r_root)
 
     def check_balance(self, node):
         """Bubble up from a node and check for unbalanced trees."""
@@ -47,16 +47,13 @@ class AVL(BST):
         #   if left child is right heavy, do a LR on the left child,
         #   followed by RR.
         if self.balance(n) > 0:
-            if self.balance(n.right) < 0:
-                # self.rr(n.right)
-                # self.lr(n)
-                self.single_rotation(n, n.right)
-            else:
+            if self.balance(n.right) > 0:
                 self.lr(n)
+            # else:
+                # self.lr(n)
         elif self.balance(n) < 0:
-            if self.balance(n.left) > 0:
-                self.lr(n.left)
-                # self.rr(n)
+            if self.balance(n.left) < 0:
+                self.rr(n)
             # else:
                 # self.rr(n)
 
@@ -73,15 +70,35 @@ class AVL(BST):
         #3. b makes a it's left child
         n_root = r_root.right
         r_root.right = n_root.left
-        if n_root.left != None:
+        if n_root.left is not None:
             n_root.left.parent = r_root
             n_root.parent = r_root.parent
         if r_root.is_root():
             self.root = n_root
         else:
-            if r_root.is_left():
-                r_root.parent.left = n_root
-            else:
-                r_root.parent.right = n_root
+            r_root.set_parents_child(n_root)
         n_root.left = r_root
+        r_root.parent = n_root
+
+    def rr(self, r_root):
+        """Perform a right rotation (rl) around the rotation_root (r_root)."""
+        #assume:
+        #           c
+        #          /
+        #         b
+        #        /
+        #       a
+        #1. b becomes new root
+        #2. c takes responsibility of b's right child as it's left child
+        #3. b takes responsibility of c as it's right child
+        n_root = r_root.left
+        r_root.left = n_root.right
+        if n_root.right is not None:
+            n_root.right.parent = r_root
+            n_root.parent = r_root.parent
+        if r_root.is_root():
+            self.root = n_root
+        else:
+            r_root.set_parents_child(n_root)
+        n_root.right = r_root
         r_root.parent = n_root
