@@ -66,5 +66,5 @@ def test_delete_all_nodes(bst1):
     #get all nodes via breadth_first
     all_nodes = bst1.breadth_first_traversal(bst1.root)
     for n in all_nodes:
-        bst1.delete(n)
+        bst1.delete(n.val)
     assert len(bst1) == 0
