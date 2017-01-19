@@ -56,7 +56,7 @@ class TreeNode(object):
             if self.has_left():
                 for n in self.left:
                     yield n
-            yield self.val
+            yield self
             if self.has_right():
                 for n in self.right:
                     yield n
@@ -108,6 +108,7 @@ class BST(object):
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
+            return self.root
         else:
             while True:
                 if val == cur.val:
@@ -116,9 +117,10 @@ class BST(object):
                 if which is None:
                     if val < cur.val:
                         cur.left = TreeNode(val, parent=cur)
+                        return cur.left
                     else:
                         cur.right = TreeNode(val, parent=cur)
-                    break
+                        return cur.right
                 else:
                     cur = which
 
@@ -140,7 +142,7 @@ class BST(object):
         """Totally came up with this myself."""
         if start == 'root':
             start = self.root
-        if start is None or start.is_leaf():
+        if start is None:
             return 0
         return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
 
