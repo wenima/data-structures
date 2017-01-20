@@ -2,6 +2,7 @@
 from stack2 import Stack
 from queue import Queue
 
+
 class TreeNode(object):
     """TreeNode is the root of the tree."""
 

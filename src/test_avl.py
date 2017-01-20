@@ -2,20 +2,11 @@
 import pytest
 
 
-UNBALANCED = [50, 30, 70, 20, 40, 80, 60, 65, 75, 85, 34, 33, 36, 35]
 BALANCED = [50, 30, 70, 20, 40, 80, 60, 65, 75, 85, 34, 33, 36, 29, 41]
 
 
 @pytest.fixture
-def unbalanced_avl():
-    """Return unbalanced avl."""
-    from avl import AVL
-    new_avl = AVL(UNBALANCED)
-    return new_avl
-
-
-@pytest.fixture
-def balanced_avl(unbalanced_avl):
+def balanced_avl():
     """Return balanced avl."""
     from avl import AVL
     new_avl = AVL(BALANCED)
@@ -28,12 +19,13 @@ def test_check_balance_balanced_returns_none(balanced_avl):
         assert balanced_avl.check_balance(node) is None
 
 
-def test_check_balance_unbalanced_returns_unbalanced_subtree_root(unbalanced_avl):
+def test_check_balance_unbalanced_returns_unbalanced_subtree_root(balanced_avl):
     """Check balance should return root of unbalanced subtree."""
-    a_node = unbalanced_avl.search(35)
-    another_node = unbalanced_avl.search(20)
-    assert unbalanced_avl.check_balance(a_node).val == 40
-    assert unbalanced_avl.check_balance(another_node).val == 30
+    from bst import TreeNode
+    node = balanced_avl.search(36)
+    node.left = TreeNode(35, parent=node)
+    node.left.left = TreeNode(34.4, parent=node.left)
+    assert balanced_avl.check_balance(node.left.left).val == 36
 
 
 def test_rebalance_left_rotation():
@@ -82,3 +74,15 @@ def test_rebalance_left_right_rotation():
     assert [c.val for c in children] == [1, 8]
     for child in children:
         assert child.parent is lighty.root
+
+
+def test_auto_balance_on_insertion():
+    import random
+    from avl import AVL
+    rando_avl = AVL()
+    for i in range(100):
+        rando_avl.insert(random.randint(0, 1000))
+    for node in rando_avl:
+        if rando_avl.check_balance(node):
+            import pdb; pdb.set_trace()
+        assert rando_avl.check_balance(node) is None

@@ -20,9 +20,10 @@ class AVL(BST):
     def insert(self, val):
         """insert and calls check method to see if we need to balance."""
         node = super(AVL, self).insert(val)
-        r_root = self.check_balance(node)
-        # if r_root:
-        #     self.rebalance(r_root)
+        if node:
+            r_root = self.check_balance(node)
+            if r_root:
+                self.rebalance(r_root)
 
     def check_balance(self, node):
         """Bubble up from a node and check for unbalanced trees."""
@@ -49,13 +50,13 @@ class AVL(BST):
         if self.balance(n) > 0:
             if self.balance(n.right) > 0:
                 self.lr(n)
-            # else:
-                # self.lr(n)
+            else:
+                self.rlr(n)
         elif self.balance(n) < 0:
             if self.balance(n.left) < 0:
                 self.rr(n)
-            # else:
-                # self.rr(n)
+            else:
+                self.lrr(n)
 
     def lr(self, r_root):
         """Perform a left rotation (lr) around the rotation_root (r_root)."""
@@ -70,13 +71,13 @@ class AVL(BST):
         #3. b makes a it's left child
         n_root = r_root.right
         r_root.right = n_root.left
-        if n_root.left is not None:
+        if n_root.left:
             n_root.left.parent = r_root
             n_root.parent = r_root.parent
         if r_root.is_root():
             self.root = n_root
-        else:
-            r_root.set_parents_child(n_root)
+        r_root.set_parents_child(n_root)
+        n_root.parent = r_root.parent
         n_root.left = r_root
         r_root.parent = n_root
 
@@ -93,12 +94,32 @@ class AVL(BST):
         #3. b takes responsibility of c as it's right child
         n_root = r_root.left
         r_root.left = n_root.right
-        if n_root.right is not None:
+        if n_root.right:
             n_root.right.parent = r_root
             n_root.parent = r_root.parent
         if r_root.is_root():
             self.root = n_root
-        else:
-            r_root.set_parents_child(n_root)
+        r_root.set_parents_child(n_root)
         n_root.right = r_root
+        n_root.parent = r_root.parent
         r_root.parent = n_root
+
+    def lrr(self, rotation_root):
+        """Perform two phase left-right rotation."""
+        lroot = rotation_root.left
+        rotation_root.left = lroot.right
+        lroot.right.parent = rotation_root
+        lroot.parent = lroot.right
+        lroot.right = None
+        rotation_root.left.left = lroot
+        self.rr(rotation_root)
+
+    def rlr(self, rotation_root):
+        """Perform two phase right-left rotation."""
+        rroot = rotation_root.right
+        rotation_root.right = rroot.left
+        rroot.left.parent = rotation_root
+        rroot.parent = rroot.left
+        rroot.left = None
+        rotation_root.right.right = rroot
+        self.lr(rotation_root)
