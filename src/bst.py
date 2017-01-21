@@ -1,6 +1,4 @@
 """Module to implement a Binary Search Tree."""
-from stack2 import Stack
-
 
 class TreeNode(object):
     """TreeNode is the root of the tree."""
