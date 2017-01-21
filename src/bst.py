@@ -1,5 +1,5 @@
 """Module to implement a Binary Search Tree."""
-from stack2 import Stack
+from queue import Queue
 
 
 class TreeNode(object):
@@ -12,11 +12,11 @@ class TreeNode(object):
         self.right = right
         self.parent = parent
 
-    def hasLeftChild(self):
+    def has_left(self):
         """Returns a bool indicating wether this node as a child smaller in value."""
         return self.left
 
-    def hasRightChild(self):
+    def has_right(self):
         """Returns a bool indicating wether this node as a child larger in value."""
         return self.right
 
@@ -46,12 +46,12 @@ class TreeNode(object):
 
     def __iter__(self):
         if self:
-            if self.hasLeftChild():
+            if self.has_left():
                 for n in self.left:
                     yield n
             yield self.val
             result.append(self.val)
-            if self.hasRightChild():
+            if self.has_right():
                 for n in self.right:
                     yield n
 
@@ -171,32 +171,3 @@ class BST(object):
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited
-
-
-if __name__ == '__main__':
-    import timeit
-    import random
-
-    balanced_bst = BST()
-    degenerate_bst = BST()
-    for i in range(1000):
-        balanced_bst.insert(random.randint(0, 1000))
-        degenerate_bst.insert(i)
-
-    cur = balanced_bst.root
-    while cur:
-        if cur.right:
-            cur = cur.right
-        else:
-            break
-    biggest = cur.val
-
-    best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
-                              setup='from __main__ import balanced_bst, biggest',
-                              number=10000)
-    worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
-                               setup='from __main__ import degenerate_bst',
-                               number=10000)
-
-    print('Search balanced BST: ' + str(best_case),
-          '\nSearch degenerate BST: ' + str(worst_case))
