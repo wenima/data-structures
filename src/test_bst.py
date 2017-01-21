@@ -1,6 +1,7 @@
 """Test dbl_linked_list data structures."""
 
 import pytest
+from random import randint
 
 TEST_BST1 = [1, 3, 5, 4, 9, 8, 12, 11]
 TEST_BST2 = [11, 6, 8, 19, 4, 12, 5, 17, 43, 49, 31]
@@ -87,6 +88,21 @@ def test_contains_returns_false(empty_bst):
     """Test that contains return False if node is not found."""
     assert empty_bst.contains(1) == False
 
+def test_size_is_increased(bst_one_node):
+    """Test that size is increased when initialized with one node."""
+    assert bst_one_node.size == 1
+
+def test_size_is_equal_to_iterable(bst1):
+    """Test that size is increased correctly when initialized with an iterable."""
+    assert bst1.size == len(bst1) - 1
+
+def test_size_is_increased_when_adding_nodes(bst2):
+    """Test that size is decreased correctly when removing a node."""
+    add_amt = randint(0,100)
+    start_size = bst2.size
+    for i in range(add_amt):
+        bst2.insert(randint(50, 1000))
+        assert bst2.size == start_size + 1
 
 @pytest.mark.parametrize('s, result', TEST_DEPTH)
 def test_depth_returns_correct_val(s, result, bst2):
