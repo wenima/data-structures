@@ -83,7 +83,6 @@ def test_tree_is_empty(empty_bst):
     """Test size of an empty tree is equal to 0."""
     assert empty_bst.size == 0
 
-
 def test_contains_returns_false(empty_bst):
     """Test that contains return False if node is not found."""
     assert empty_bst.contains(1) == False
