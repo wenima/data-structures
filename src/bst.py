@@ -12,10 +12,6 @@ class TreeNode(object):
         self.right = right
         self.parent = parent
 
-    def is_root(self):
-        """."""
-        return not self.parent
-
     def is_leaf(self):
         """."""
         return not (self.right or self.left)
@@ -91,26 +87,6 @@ class BST(object):
     def contains(self, val):
         """Return whether val in bst."""
         return bool(self.search(val))
-
-    def depth_bad(self, start='root'):
-        """Return the max depth of the bst."""
-        if start == 'root':
-            start = self.root
-        stack = Stack([start])
-        visited = set()
-        max_depth = 0
-        while stack.top:
-            cur = stack.pop()
-            if cur not in visited:
-                visited.add(cur)
-                if cur.is_leaf():
-                    cur_depth = cur.depth(start)
-                    if cur_depth > max_depth:
-                        max_depth = cur_depth
-                else:
-                    for child in cur.children():
-                        stack.push(child)
-        return max_depth
 
     def depth(self, start='root'):
         """Totally came up with this myself."""
