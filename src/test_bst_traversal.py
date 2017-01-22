@@ -14,14 +14,6 @@ def empty_bst():
     empty_bst = BST()
     return empty_bst
 
-
-@pytest.fixture
-def bst_one_node():
-    from bst import BST
-    new_bst = BST(TEST_BST1[-1])
-    return new_bst
-
-
 @pytest.fixture
 def bst1():
     from bst import BST

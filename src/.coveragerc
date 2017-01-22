@@ -1,3 +1,3 @@
 [run]
 include = bst.py, test_bst_traversal.py
-omit = test*.*
+omit = test*.*, bellman*.*, setup.py, 
