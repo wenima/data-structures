@@ -1,5 +1,6 @@
 """Module to implement a Binary Search Tree."""
 from queue import Queue
+import sys
 
 
 class TreeNode(object):
@@ -67,7 +68,12 @@ class BST(object):
         if root:
             yield root
             for node in root.children():
-                yield from self.pre_order(root=node)
+                if sys.version_info[0] == 3:
+                    yield from self.pre_order(root=node)
+                else:
+                    for node in self.pre_order(root=node):
+                        yield node
+
 
     def in_order(self, root='root'):
         """Traverse tree by visiting the left child, then the parent and the
@@ -88,7 +94,11 @@ class BST(object):
             root = self.root
         if root:
             for node in root.children():
-                yield from self.post_order(root=node)
+                if sys.version_info[0] == 3:
+                    yield from self.post_order(root=node)
+                else:
+                    for node in self.post_order(root=node):
+                        yield node
             yield root
 
     def breadth_first(self, start):
