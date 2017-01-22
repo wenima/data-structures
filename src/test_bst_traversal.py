@@ -4,7 +4,7 @@ import pytest
 import types
 
 
-TEST_BST1 = [2, 1, 3, 5, 4, 9, 8, 12, 11]
+TEST_BST1 = [2, 1, 3, 5, 4, 9, 8, 12, 11, 11]
 TEST_BST2 = [11, 6, 8, 19, 4, 12, 5, 17, 43, 49, 31]
 
 
@@ -35,7 +35,6 @@ def bst2():
     new_bst = BST(TEST_BST2)
     return new_bst
 
-
 def test_in_order_on_empty(empty_bst):
     """Test in order traversal of empty bst returns empty generator."""
     assert list(empty_bst.in_order()) == []
@@ -53,7 +52,7 @@ def test_post_order_on_empty(empty_bst):
 
 def test_breadth_first_on_empty(empty_bst):
     """Test breadth first traversal of empty bst returns empty generator."""
-    assert list(empty_bst.breadth_first()) == []
+    assert list(empty_bst.breadth_first(empty_bst.root)) == []
 
 
 def test_in_order_returns_generator(bst1):
@@ -73,7 +72,7 @@ def test_post_order_returns_generator(bst1):
 
 def test_breadth_first_returns_generator(bst1):
     """Test breadth first traversal returns a generator."""
-    assert isinstance(bst1.breadth_first(), types.GeneratorType)
+    assert isinstance(bst1.breadth_first(bst1.root), types.GeneratorType)
 
 
 def test_in_order_bst1(bst1):
@@ -97,7 +96,7 @@ def test_pre_order_bst2(bst2):
 
 
 def test_post_order_bst1(bst1):
-    """Test post order traversal does its thang."""
+    """Test post order traversal returns correct order."""
     assert [n.val for n in bst1.post_order()] == [1, 4, 8, 11, 12, 9, 5, 3, 2]
 
 
@@ -108,9 +107,9 @@ def test_post_order_bst2(bst2):
 
 def test_breadth_first_bst1(bst1):
     """Test breadth first traversal of bst."""
-    assert list(bst1.breadth_first()) == [2, 1, 3, 5, 4, 9, 8, 12, 11]
-
+    assert [n.val for n in bst1.breadth_first(bst1.root)] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert len([n.val for n in bst1.breadth_first(bst1.root)]) == bst1.size()
 
 def test_breadth_first_bst2(bst2):
     """Test breadth first traversal of bst."""
-    assert list(bst2.breadth_first()) == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
+    assert [n.val for n in bst2.breadth_first(bst2.root)] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
