@@ -78,12 +78,12 @@ def test_breadth_first_returns_generator(bst1):
 
 def test_in_order_bst1(bst1):
     """Test in order traversal returns nodes in order."""
-    assert list(bst1.in_order()) == [1, 2, 3, 4, 5, 8, 9, 11, 12]
+    assert [n.val for n in bst1.in_order()] == [1, 2, 3, 4, 5, 8, 9, 11, 12]
 
 
 def test_in_order_bst2(bst2):
     """Test in order traversal returns nodes in order."""
-    assert list(bst2.in_order()) == [4, 5, 6, 8, 11, 12, 17, 19, 31, 43, 49]
+    assert [n.val for n in bst2.in_order()] == [4, 5, 6, 8, 11, 12, 17, 19, 31, 43, 49]
 
 
 def test_pre_order_bst1(bst1):
