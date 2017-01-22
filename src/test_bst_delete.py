@@ -57,7 +57,7 @@ def bst2(bst1):
 def test_delete_returns_correct_children(d, n, result, bst1):
     """Test delete a node keeps tree intact."""
     bst1.delete(d)
-    children = [c.val for c in bst1.search(n).children()]
+    children = [c.val for c in bst1.search(n)._children()]
     assert children == result
 
 def test_delete_all_nodes(bst1):
