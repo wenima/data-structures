@@ -1,11 +1,10 @@
 language: python
 python:
     - "2.7"
-    - "3.5"
     - "3.6"
 #command to install dependencies
 install:
     - pip install .
     - pip install -r requirements.pip
 #command to run tests
-script: py.test test_bst_traversal.py --cov=. --cov-report term-missing
+script: py.test ./src/test_bst_traversal.py --cov=. --cov-report term-missing
