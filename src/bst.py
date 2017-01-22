@@ -68,11 +68,9 @@ class BST(object):
         if root:
             yield root
             for node in root.children():
-                if sys.version_info[0] == 3:
-                    yield from self.pre_order(root=node)
-                else:
-                    for node in self.pre_order(root=node):
-                        yield node
+                    # yield from self.pre_order(root=node)
+                for node in self.pre_order(root=node):
+                    yield node
 
 
     def in_order(self, root='root'):
@@ -94,11 +92,8 @@ class BST(object):
             root = self.root
         if root:
             for node in root.children():
-                if sys.version_info[0] == 3:
-                    yield from self.post_order(root=node)
-                else:
-                    for node in self.post_order(root=node):
-                        yield node
+                for node in self.post_order(root=node):
+                    yield node
             yield root
 
     def breadth_first(self, start):
