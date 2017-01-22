@@ -8,7 +8,7 @@ setup(
     author_email="",
     license="MIT",
     package_dir={'': 'src'},
-    py_modules=['bst', 'dbl_linked_list', 'queue'],
+    py_modules=['dbl_linked_list', 'queue', 'bst'],
     install_requires=[],
     extras_require={"test": ["pytest", "pytest-watch", "pytest-cov", "tox"]},
     entry_points={}
