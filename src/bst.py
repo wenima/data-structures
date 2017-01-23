@@ -1,7 +1,7 @@
 """Module to implement a Binary Search Tree."""
 
-class TreeNode(object):
 
+class TreeNode(object):
     """Create Node objects for use in a binary tree data structure.
 
     Attributes:
@@ -30,7 +30,6 @@ class TreeNode(object):
 
 
 class BST(object):
-
     """Binary Search Treet (BST) style data structure.
 
     If initialized with an iterable, will create nodes for each item in
@@ -76,7 +75,7 @@ class BST(object):
                 self.insert(iterable)
 
     def size(self):
-        """Return number of nodes in tree"""
+        """Return number of nodes in tree."""
         return self._size
 
     def insert(self, val):
@@ -129,9 +128,10 @@ class BST(object):
             start = self.root
         if start is None:
             return 0
-        return self.depth(start=start.right) - self.depth(start=start.left)
+        return self.depth(start=start.left) - self.depth(start=start.right)
 
-if __name__ == '__main__':
+
+if __name__ == '__main__':  # pragma: no cover
     import timeit
     import random
 
