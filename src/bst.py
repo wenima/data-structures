@@ -14,10 +14,6 @@ class TreeNode(object):
         """."""
         return not (self.right or self.left)
 
-    def children(self):
-        """Return non-none children of node."""
-        return [n for n in [self.left, self.right] if n is not None]
-
     def left_or_right(self, val):
         """Compare node to a value and return which path to take."""
         if val < self.val:
@@ -37,7 +33,7 @@ class BST(object):
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
         self.root = None
-        self.size = 0
+        self._size = 0
         if iterable:
             try:
                 for val in iterable:
@@ -47,7 +43,7 @@ class BST(object):
 
     def size(self):
         """Return number of nodes in bst.."""
-        return self.size
+        return self._size
 
     def __len__(self):
         """Return number of nodes in bst."""
@@ -58,6 +54,7 @@ class BST(object):
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
+            self._size += 1
         else:
             while True:
                 if val == cur.val:
@@ -68,6 +65,7 @@ class BST(object):
                         cur.left = TreeNode(val, parent=cur)
                     else:
                         cur.right = TreeNode(val, parent=cur)
+                    self._size += 1
                     break
                 else:
                     cur = which
