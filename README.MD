@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=master)](https://travis-ci.org/wenima/data-structures)
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst-delete)](https://travis-ci.org/wenima/data-structures)
 
 #Summary
 
@@ -23,11 +23,11 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 | Name                     | Stmts | Miss | Cover | Missing                         |
 | -----------------------  | ----- | ---- | ----- | ------------------------------- |
-|                          |       |      |       |                                 |
-|                          |       |      |       |                                 |
+| src/bst.py               |  130  |  20  |  85%  | 97, 106, 161-187                |
+| src/dbl_linked_list.py   |   80  |   0  | 100%  |                                 |
+| src/queue.py             |   23  |   0  | 100%  |                                 |
 | -----------------------  |  ---  |  --  | ----  | ------------------------------- |
-| TOTAL                    |       |      |       |                                 |
+| TOTAL                    |  233  |  20  |  91%  |                                 |
 
 
 # Comments about implementation:
-stretch goal: Euler walk
