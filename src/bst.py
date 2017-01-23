@@ -136,6 +136,7 @@ class BST(object):
         self._size -= 1
 
     def breadth_first(self, start):
+        """Return a generator of breadth first traversal through tree."""
         q = Queue()
         visited = []
         if self.size() > 0:
@@ -154,6 +155,7 @@ class BST(object):
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited
+
 
 if __name__ == '__main__':
     import sys
