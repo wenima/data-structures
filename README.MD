@@ -2,7 +2,7 @@
 
 #Summary
 
-The assignment was to implement deletion for a[binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree)
+The assignment was to implement deletion for a [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree)
 
 in Python containing 1 new method:
 

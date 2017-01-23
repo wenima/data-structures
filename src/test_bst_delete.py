@@ -57,14 +57,14 @@ def bst2(bst1):
 def test_delete_returns_correct_children(d, n, result, bst1):
     """Test delete a node keeps tree intact."""
     bst1.delete(d)
-    children = [c.val for c in bst1.search(n).children()]
+    children = [c.val for c in bst1.search(n)._children()]
     assert children == result
-
 
 def test_delete_all_nodes(bst1):
     """Test that deleting all nodes leaves an empty tree."""
     #get all nodes via breadth_first
     all_nodes = bst1.breadth_first(bst1.root)
     for n in all_nodes:
+        size_before_delete = bst1.size
         bst1.delete(n.val)
-    assert len(bst1) == 0
+        assert bst1.size == size_before_delete - 1
