@@ -108,9 +108,9 @@ def test_post_order_bst2(bst2):
 
 def test_breadth_first_bst1(bst1):
     """Test breadth first traversal of bst."""
-    assert list(bst1.breadth_first()) == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert [n.val for n in bst1.breadth_first()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
 
 
 def test_breadth_first_bst2(bst2):
     """Test breadth first traversal of bst."""
-    assert list(bst2.breadth_first()) == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
+    assert [n.val for n in bst2.breadth_first()] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]

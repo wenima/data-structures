@@ -216,22 +216,25 @@ class BST(object):
         if to_d.is_root():
             self.root = replacement
 
-
-    def breadth_first_traversal(self, start):
-        """Launch a dfs search, exploring all nodes."""
+    def breadth_first(self, start='root'):
+        """Return a generator of breadth first traversal through tree."""
+        if start == 'root':
+            start = self.root
         q = Queue()
         visited = []
-        self._explore_bfs(start, q, visited)
-        return visited
+        if self.size > 0:
+            visited = self._explore_bfs(start, q, visited)
+        for node in visited:
+            yield node
 
     def _explore_bfs(self, node, queue, visited):
         if node not in visited:
             visited.append(node)
         if node.children():
-            for c in node.children():
-                if c not in visited:
-                    visited.append(c)
-                    queue.enqueue(c)
+            for child in node.children():
+                if child not in visited:
+                    visited.append(child)
+                    queue.enqueue(child)
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited

@@ -64,7 +64,7 @@ def test_delete_returns_correct_children(d, n, result, bst1):
 def test_delete_all_nodes(bst1):
     """Test that deleting all nodes leaves an empty tree."""
     #get all nodes via breadth_first
-    all_nodes = bst1.breadth_first_traversal(bst1.root)
+    all_nodes = bst1.breadth_first(bst1.root)
     for n in all_nodes:
         bst1.delete(n.val)
     assert len(bst1) == 0
