@@ -1,5 +1,6 @@
 """Module to implement a Binary Search Tree."""
-from stack2 import Stack
+from queue import Queue
+import sys
 
 
 class TreeNode(object):
@@ -12,22 +13,6 @@ class TreeNode(object):
         self.right = right
         self.parent = parent
 
-    def hasLeftChild(self):
-        """Returns a bool indicating wether this node as a child smaller in value."""
-        return self.left
-
-    def hasRightChild(self):
-        """Returns a bool indicating wether this node as a child larger in value."""
-        return self.right
-
-    def is_root(self):
-        """."""
-        return not self.parent
-
-    def is_leaf(self):
-        """."""
-        return not (self.right or self.left)
-
     def children(self):
         """Return non-none children of node."""
         return [n for n in [self.left, self.right] if n is not None]
@@ -38,23 +23,6 @@ class TreeNode(object):
             return self.left
         return self.right
 
-    def depth(self, root):
-        """Return the depth of a node, found recusively."""
-        if self is root:
-            return 0
-        return 1 + self.parent.depth(root)
-
-    def __iter__(self):
-        if self:
-            if self.hasLeftChild():
-                for n in self.left:
-                    yield n
-            yield self.val
-            result.append(self.val)
-            if self.hasRightChild():
-                for n in self.right:
-                    yield n
-
 
 class BST(object):
     """Binary search tree."""
@@ -62,35 +30,21 @@ class BST(object):
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
         self.root = None
-        self.size = 0
+        self._size = 0
         if iterable:
-            try:
-                for val in iterable:
-                    self.insert(val)
-            except TypeError:
-                self.insert(iterable)
+            for val in iterable:
+                self.insert(val)
 
     def size(self):
-        """Return number of nodes in bst.."""
-        return self.size
-
-    def __len__(self):
         """Return number of nodes in bst."""
-        return self.size
-
-    def __iter__(self):
-        return self.root.__iter__()
-
-    def in_order(self):
-        if self.root:
-            return self.root.__iter__()
-        yield None
+        return self._size
 
     def insert(self, val):
-        """Insert a new node into the bst."""
+        """Insert a new node into the tree."""
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
+            self._size += 1
         else:
             while True:
                 if val == cur.val:
@@ -101,66 +55,65 @@ class BST(object):
                         cur.left = TreeNode(val, parent=cur)
                     else:
                         cur.right = TreeNode(val, parent=cur)
+                    self._size += 1
                     break
                 else:
                     cur = which
 
-    def search(self, val, start='root'):
-        """Return node with value val if it exists, otherwise None."""
-        if start == 'root':
-            return self.search(val, start=self.root)
-        elif start is None:
-            return None
-        elif val == start.val:
-            return start
-        return self.search(val, start=start.left_or_right(val))
-
-    def contains(self, val):
-        """Return whether val in bst."""
-        return bool(self.search(val))
-
-    def depth(self, start='root'):
-        """Totally came up with this myself."""
-        if start == 'root':
-            start = self.root
-        if start is None or start.is_leaf():
-            return 0
-        return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
-
-    def balance(self, start='root'):
-        """Return left vs right balance from a node on the bst."""
-        if start == 'root':
-            start = self.root
-        if start is None:
-            return 0
-        return self.depth(start=start.right) - self.depth(start=start.left)
-
     def pre_order(self, root='root'):
-        """."""
+        """Traverse the tree by visiting the parent first and then left and
+        right children."""
         if root == 'root':
             root = self.root
         if root:
             yield root
             for node in root.children():
-                yield from self.pre_order(root=node)
+                    # yield from self.pre_order(root=node)
+                for node in self.pre_order(root=node):
+                    yield node
+
+    def in_order(self, root='root'):
+        """Traverse tree by visiting the left child, then the parent and the
+        right child."""
+        if root == 'root':
+            root = self.root
+        if root:
+            for child in self.in_order(root=root.left):
+                yield child
+            yield root
+            for child in self.in_order(root=root.right):
+                yield child
 
     def post_order(self, root='root'):
-        """."""
+        """Traverse tree by visiting left child, then the right child and then
+        the parent."""
         if root == 'root':
             root = self.root
         if root:
             for node in root.children():
-                yield from self.post_order(root=node)
+                for node in self.post_order(root=node):
+                    yield node
             yield root
 
-    def on_order(self, root='root'):
-        """."""
-        if root == 'root':
-            root = self.root
-        if root:
-            yield from self.on_order(root=root.left)
-            yield root
-            yield from self.on_order(root=root.right)
+    def breadth_first(self, start):
+        q = Queue()
+        visited = []
+        if self.size() > 0:
+            visited = self._explore_bfs(start, q, visited)
+        for node in visited:
+            yield node
+
+    def _explore_bfs(self, node, queue, visited):
+        if node not in visited:
+            visited.append(node)
+        if node.children():
+            for child in node.children():
+                if child not in visited:
+                    visited.append(child)
+                    queue.enqueue(child)
+            while len(queue):
+                self._explore_bfs(queue.dequeue(), queue, visited)
+        return visited
 
 
 if __name__ == '__main__':
