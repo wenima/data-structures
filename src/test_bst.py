@@ -1,4 +1,4 @@
-"""Test dbl_linked_list data structures."""
+"""Test for binary search tree data structures."""
 
 import pytest
 from random import randint
@@ -16,6 +16,12 @@ TEST_DICT = [
 TEST_DEPTH = [
     (55, 4),
     # (10, 5),
+]
+
+TEST_BALANCE = [
+(TEST_BST1, 4),
+(TEST_BST2, 0),
+([50, 40, 30, 20, 10, 60], -3),
 ]
 
 
@@ -111,3 +117,10 @@ def test_depth_returns_correct_val(s, result, bst2):
     """Test depth returns correct val in a full tree."""
     bst2.insert(s)
     assert bst2.depth() == result
+
+@pytest.mark.parametrize('s, result', TEST_BALANCE)
+def test_balance_returns_correct_val(s, result):
+    """Test balance returns correct val in a full tree."""
+    from bst import BST
+    b = BST(s)
+    assert b.balance() == result
