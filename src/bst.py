@@ -216,10 +216,8 @@ class BST(object):
         if to_d.is_root():
             self.root = replacement
 
-    def breadth_first(self, start='root'):
+    def breadth_first(self, start):
         """Return a generator of breadth first traversal through tree."""
-        if start == 'root':
-            start = self.root
         q = Queue()
         visited = []
         if self.size > 0:
@@ -238,6 +236,7 @@ class BST(object):
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited
+
 
 if __name__ == '__main__':
     import sys
