@@ -81,27 +81,30 @@ def test_insert_existing_node(bst2):
 
 def test_tree_is_empty(empty_bst):
     """Test size of an empty tree is equal to 0."""
-    assert empty_bst.size == 0
+    assert empty_bst.size() == 0
 
 def test_contains_returns_false(empty_bst):
     """Test that contains return False if node is not found."""
     assert empty_bst.contains(1) == False
 
-def test_size_is_increased(bst_one_node):
+def test_size_is_increased_when_initialized_w_one_node(bst_one_node):
     """Test that size is increased when initialized with one node."""
-    assert bst_one_node.size == 1
+    assert bst_one_node.size() == 1
 
 def test_size_is_equal_to_iterable(bst1):
     """Test that size is increased correctly when initialized with an iterable."""
-    assert bst1.size == len(bst1) - 1
+    assert bst1.size() == len(TEST_BST1)
 
 def test_size_is_increased_when_adding_nodes(bst2):
-    """Test that size is decreased correctly when removing a node."""
+    """Test that size is increased correctly when removing a node."""
     add_amt = randint(0,100)
-    start_size = bst2.size
+    dupes = 0
     for i in range(add_amt):
-        bst2.insert(randint(50, 1000))
-        assert bst2.size == start_size + 1
+        insert_val = randint(50, 1000)
+        if bst2.contains(insert_val):
+            dupes += 1
+        bst2.insert(insert_val)
+    assert bst2.size() == len(set(TEST_BST2)) + add_amt - dupes
 
 @pytest.mark.parametrize('s, result', TEST_DEPTH)
 def test_depth_returns_correct_val(s, result, bst2):
