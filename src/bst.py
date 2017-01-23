@@ -194,7 +194,7 @@ class BST(object):
         to_d = self.search(val)
         if to_d:
             replacement = None
-            parent = to_d.parent
+            ret = to_d.parent
             self.size -= 1
             if to_d.is_leaf():
                 to_d.set_parents_child(None)
@@ -205,9 +205,11 @@ class BST(object):
                     child.parent = to_d.parent
                     to_d.set_parents_child(child)
                     replacement = child
+                    ret = child
                 else:
                     lmost = self._get_leftmost(to_d)
                     replacement = lmost
+                    ret = lmost.parent
                     if lmost.has_right():
                         lmost.right.parent = lmost.parent
                         lmost.set_parents_child(lmost.right)
@@ -224,8 +226,7 @@ class BST(object):
                     lmost.parent = to_d.parent
             if to_d.is_root():
                 self.root = replacement
-                return self.root
-            return parent
+            return ret
 
     def breadth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""

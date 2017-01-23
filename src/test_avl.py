@@ -13,6 +13,20 @@ def balanced_avl():
     return new_avl
 
 
+@pytest.fixture
+def random_avl():
+    """Return large random avl."""
+    import random
+    from avl import AVL
+    rando_avl = AVL()
+    for i in range(50):
+        rando_avl.insert(random.randint(0, 1000))
+    return rando_avl
+
+
+RANDOM = random_avl()
+
+
 def test_check_balance_balanced_returns_none(balanced_avl):
     """Check balanced on balanced tree should return None."""
     for node in balanced_avl:
@@ -76,13 +90,17 @@ def test_rebalance_left_right_rotation():
         assert child.parent is lighty.root
 
 
-def test_auto_balance_on_insertion():
-    import random
-    from avl import AVL
-    rando_avl = AVL()
-    for i in range(100):
-        rando_avl.insert(random.randint(0, 1000))
-    for node in rando_avl:
-        if rando_avl.check_balance(node):
-            import pdb; pdb.set_trace()
-        assert rando_avl.check_balance(node) is None
+def test_auto_balance_on_insertion(random_avl):
+    """Test auto balancing on large random trees."""
+    nodes = random_avl.pre_order()
+    for node in nodes:
+        assert abs(random_avl.balance(node)) <= 1
+
+
+@pytest.mark.parametrize('value', [x.val for x in RANDOM.pre_order()])
+def test_rebalance_after_delete(value):
+    """Test avl rebalances after deletions."""
+    RANDOM.delete(value)
+    nodes = RANDOM.pre_order()
+    for node in nodes:
+        assert abs(RANDOM.balance(node)) <= 1
