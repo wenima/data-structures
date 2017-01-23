@@ -19,7 +19,7 @@ class TreeNode(object):
         self.parent = parent
 
     def is_leaf(self):
-        """."""
+        """Return True if node has no children (is a leaf)."""
         return not (self.right or self.left)
 
     def left_or_right(self, val):
@@ -76,7 +76,7 @@ class BST(object):
                 self.insert(iterable)
 
     def size(self):
-        """Return number of nodes in bst.."""
+        """Return number of nodes in tree"""
         return self._size
 
     def insert(self, val):
@@ -115,7 +115,7 @@ class BST(object):
         return bool(self.search(val))
 
     def depth(self, start='root'):
-        """Totally came up with this myself."""
+        """Return the depth of the tree."""
         if start == 'root':
             start = self.root
         if start is None or start.is_leaf():
@@ -123,7 +123,8 @@ class BST(object):
         return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
 
     def balance(self, start='root'):
-        """Return left vs right balance from a node on the bst."""
+        """Return an integer, positive or negative that represents how well
+        balanced the tree is."""
         if start == 'root':
             start = self.root
         if start is None:
