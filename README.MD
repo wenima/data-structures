@@ -1,4 +1,6 @@
-#Summary
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst)](https://travis-ci.org/wenima/data-structures)
+
+# Summary
 
 The assignment was to implement a [binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree)
 
@@ -11,7 +13,7 @@ in Python containing 6 methods:
 * contains(self, val): will return True if val is in the BST, False if not.
 * balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
 
-#Definition:
+# Definition:
 A BST is a binary tree where nodes are ordered in the following way:
 * each node contains one key (also known as data)
 * the keys in the left subtree are less then the key in its parent node, in short L < P;
@@ -29,10 +31,10 @@ For more information on the assignment, see here: https://en.wikipedia.org/wiki/
 
 | Name                     | Stmts | Miss | Cover | Missing                         |
 | -----------------------  | ----- | ---- | ----- | ------------------------------- |
-|                          |       |      |       |                                 |
-|                          |       |      |       |                                 |
+| src/bst.py               |  79   |  16  |  80%  | 135-159                         |
+| src/test_bst.py          |  73   |   1  |  99%  | 111                             |
 | -----------------------  |  ---  |  --  | ----  | ------------------------------- |
-| TOTAL                    |       |      |       |                                 |
+| TOTAL                    | 152   |  17  |  89%  |                                 |
 
 
 # Comments about implementation:
