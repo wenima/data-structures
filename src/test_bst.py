@@ -13,7 +13,7 @@ TEST_DICT = [
 ]
 
 TEST_DEPTH = [
-    (55, 4),
+    (55, 5),
     # (10, 5),
 ]
 
@@ -70,7 +70,7 @@ def test_insert_node_at_root(empty_bst):
     empty_bst.insert(10)
     assert empty_bst.root.val == 10
     assert empty_bst.root.is_leaf()
-    assert empty_bst.depth() == 0
+    assert empty_bst.depth() == 1
 
 def test_insert_existing_node(bst2):
     """Test inserting a node that already exists."""

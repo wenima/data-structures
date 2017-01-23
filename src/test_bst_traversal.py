@@ -51,9 +51,9 @@ def test_post_order_on_empty(empty_bst):
     assert list(empty_bst.post_order()) == []
 
 
-def test_breadth_first_traversal_on_empty(empty_bst):
+def test_breadth_first_on_empty(empty_bst):
     """Test breadth first traversal of empty bst returns empty generator."""
-    assert list(empty_bst.breadth_first_traversal()) == []
+    assert list(empty_bst.breadth_first()) == []
 
 
 def test_in_order_returns_generator(bst1):
@@ -73,7 +73,7 @@ def test_post_order_returns_generator(bst1):
 
 def test_breadth_first_returns_generator(bst1):
     """Test breadth first traversal returns a generator."""
-    assert isinstance(bst1.breadth_first_traversal(), types.GeneratorType)
+    assert isinstance(bst1.breadth_first(), types.GeneratorType)
 
 
 def test_in_order_bst1(bst1):
@@ -108,9 +108,9 @@ def test_post_order_bst2(bst2):
 
 def test_breadth_first_bst1(bst1):
     """Test breadth first traversal of bst."""
-    assert [n.val for n in bst1.breadth_first_traversal()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert [n.val for n in bst1.breadth_first()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
 
 
 def test_breadth_first_bst2(bst2):
     """Test breadth first traversal of bst."""
-    assert [n.val for n in bst2.breadth_first_traversal()] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
+    assert [n.val for n in bst2.breadth_first()] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
