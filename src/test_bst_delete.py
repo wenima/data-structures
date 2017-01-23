@@ -1,7 +1,6 @@
 """Test BST traversal methods."""
 
 import pytest
-import types
 
 
 TEST_BST1 = [50, 30, 70, 20, 40, 80, 60, 65, 75, 85, 32, 34, 36, 10, 76, 76]
@@ -34,6 +33,7 @@ TEST_BST_DELETE = [
 
 @pytest.fixture
 def bst_one_node():
+    """Return bst with one node."""
     from bst import BST
     new_bst = BST(TEST_BST1[-1])
     return new_bst
@@ -41,6 +41,7 @@ def bst_one_node():
 
 @pytest.fixture
 def bst1():
+    """Return bst with some nodes."""
     from bst import BST
     new_bst = BST(TEST_BST1)
     return new_bst
@@ -48,6 +49,7 @@ def bst1():
 
 @pytest.fixture
 def bst2(bst1):
+    """Return bst with more nodes."""
     bst1.insert(31)
     bst1.insert(31.5)
     return bst1
@@ -59,6 +61,7 @@ def test_delete_returns_correct_children(d, n, result, bst1):
     bst1.delete(d)
     children = [c.val for c in bst1.search(n)._children()]
     assert children == result
+
 
 def test_delete_all_nodes(bst1):
     """Test that deleting all nodes leaves an empty tree."""
