@@ -109,6 +109,7 @@ class BST(object):
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
+            self.size += 1
             return self.root
         else:
             while True:
@@ -118,9 +119,11 @@ class BST(object):
                 if which is None:
                     if val < cur.val:
                         cur.left = TreeNode(val, parent=cur)
+                        self.size += 1
                         return cur.left
                     else:
                         cur.right = TreeNode(val, parent=cur)
+                        self.size += 1
                         return cur.right
                 else:
                     cur = which
@@ -189,36 +192,40 @@ class BST(object):
     def delete(self, val):
         """Delete a node and reorganize tree as needed."""
         to_d = self.search(val)
-        replacement = None
-        if to_d.is_leaf():
-            to_d.set_parents_child(None)
-        else:
-            children = to_d.children()
-            if len(children) == 1:
-                child = children[0]
-                child.parent = to_d.parent
-                to_d.set_parents_child(child)
-                replacement = child
+        if to_d:
+            replacement = None
+            parent = to_d.parent
+            self.size -= 1
+            if to_d.is_leaf():
+                to_d.set_parents_child(None)
             else:
-                lmost = self._get_leftmost(to_d)
-                replacement = lmost
-                if lmost.has_right():
-                    lmost.right.parent = lmost.parent
-                    lmost.set_parents_child(lmost.right)
+                children = to_d.children()
+                if len(children) == 1:
+                    child = children[0]
+                    child.parent = to_d.parent
+                    to_d.set_parents_child(child)
+                    replacement = child
                 else:
-                    lmost.set_parents_child(None)
+                    lmost = self._get_leftmost(to_d)
+                    replacement = lmost
+                    if lmost.has_right():
+                        lmost.right.parent = lmost.parent
+                        lmost.set_parents_child(lmost.right)
+                    else:
+                        lmost.set_parents_child(None)
 
-                if to_d.right:
-                    lmost.right = to_d.right
-                    to_d.right.parent = lmost
-                lmost.left = to_d.left
-                to_d.left.parent = lmost
+                    if to_d.right:
+                        lmost.right = to_d.right
+                        to_d.right.parent = lmost
+                    lmost.left = to_d.left
+                    to_d.left.parent = lmost
 
-                to_d.set_parents_child(lmost)
-                lmost.parent = to_d.parent
-        if to_d.is_root():
-            self.root = replacement
-
+                    to_d.set_parents_child(lmost)
+                    lmost.parent = to_d.parent
+            if to_d.is_root():
+                self.root = replacement
+                return self.root
+            return parent
 
     def breadth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
