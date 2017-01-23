@@ -1,5 +1,5 @@
 """Module to implement a Binary Search Tree."""
-from stack2 import Stack
+
 from queue import Queue
 
 class TreeNode(object):
@@ -34,12 +34,6 @@ class TreeNode(object):
             return self.left
         return self.right
 
-    def depth(self, root):
-        """Return the depth of a node, found recusively."""
-        if self is root:
-            return 0
-        return 1 + self.parent.depth(root)
-
     def _set_parents_child(self, new_child):
         if self.parent:
             if self.parent.left is self:
@@ -54,21 +48,14 @@ class BST(object):
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
         self.root = None
-        self.size = 0
+        self._size = 0
         if iterable:
-            try:
-                for val in iterable:
-                    self.insert(val)
-            except TypeError:
-                self.insert(iterable)
+            for val in iterable:
+                self.insert(val)
 
     def size(self):
         """Return number of nodes in bst.."""
-        return self.size
-
-    def __len__(self):
-        """Return number of nodes in bst."""
-        return self.size
+        return self._size
 
     def _iterate_from(self, node):
         """Return a generator of all the children on the left of starting node"""
@@ -86,6 +73,7 @@ class BST(object):
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
+            self._size += 1
         else:
             while True:
                 if val == cur.val:
@@ -96,6 +84,7 @@ class BST(object):
                         cur.left = TreeNode(val, parent=cur)
                     else:
                         cur.right = TreeNode(val, parent=cur)
+                    self._size += 1
                     break
                 else:
                     cur = which
@@ -110,56 +99,11 @@ class BST(object):
             return start
         return self.search(val, start=start._left_or_right(val))
 
-    def contains(self, val):
-        """Return True if a node matching the given value is part of the tree."""
-        return bool(self.search(val))
-
-    def depth(self, start='root'):
-        """Return an integer representing the total height of the tree,
-        starting at 0 if the tree only as a root."""
-        if start == 'root':
-            start = self.root
-        if start is None or start._is_leaf():
-            return 0
-        return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
-
-    def pre_order(self, root='root'):
-        """Traverse the tree by visiting the parent first and then left and
-        right children."""
-        if root == 'root':
-            root = self.root
-        if root:
-            yield root
-            for node in root._children():
-                for child in self.pre_order(root=node):
-                    yield child
-
-    def post_order(self, root='root'):
-        """Traverse tree by visiting left child, then the right child and then
-        the parent."""
-        if root == 'root':
-            root = self.root
-        if root:
-            for node in root._children():
-                for child in self.post_order(root=node):
-                    yield child
-            yield root
-
-    def in_order(self, root='root'):
-        """Traverse tree by visiting the left child, then the parent and the
-        right child."""
-        if root == 'root':
-            root = self.root
-        if root:
-            for child in self.in_order(root=root.left):
-                yield child
-            yield root
-            for child in self.in_order(root=root.right):
-                yield child
-
     def delete(self, val):
         """Delete a node and reorganize tree as needed."""
         to_d = self.search(val)
+        if not to_d:
+            return None
         replacement = None
         if to_d._is_leaf():
             to_d._set_parents_child(None)
@@ -189,25 +133,24 @@ class BST(object):
                 lmost.parent = to_d.parent
         if to_d._is_root():
             self.root = replacement
-
+        self._size -= 1
 
     def breadth_first(self, start):
-        """Launch a bfs search, exploring all nodes."""
         q = Queue()
         visited = []
-        self._explore_bfs(start, q, visited)
-        return visited
+        if self.size() > 0:
+            visited = self._explore_bfs(start, q, visited)
+        for node in visited:
+            yield node
 
     def _explore_bfs(self, node, queue, visited):
-        """Helper function called by breadth_first, yielding each node as
-        it's being visited."""
         if node not in visited:
             visited.append(node)
         if node._children():
-            for c in node._children():
-                if c not in visited:
-                    visited.append(c)
-                    queue.enqueue(c)
+            for child in node._children():
+                if child not in visited:
+                    visited.append(child)
+                    queue.enqueue(child)
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited

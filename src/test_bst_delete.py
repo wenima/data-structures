@@ -4,7 +4,7 @@ import pytest
 import types
 
 
-TEST_BST1 = [50, 30, 70, 20, 40, 80, 60, 65, 75, 85, 32, 34, 36, 10, 76]
+TEST_BST1 = [50, 30, 70, 20, 40, 80, 60, 65, 75, 85, 32, 34, 36, 10, 76, 76]
 
 
 TEST_BST_DELETE = [
@@ -65,6 +65,6 @@ def test_delete_all_nodes(bst1):
     #get all nodes via breadth_first
     all_nodes = bst1.breadth_first(bst1.root)
     for n in all_nodes:
-        size_before_delete = bst1.size
+        size_before_delete = bst1.size()
         bst1.delete(n.val)
-        assert bst1.size == size_before_delete - 1
+        assert bst1.size() == size_before_delete - 1
