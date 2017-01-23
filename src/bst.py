@@ -150,7 +150,7 @@ class BST(object):
             start = self.root
         if start is None:
             return 0
-        return self.depth(start=start.right) - self.depth(start=start.left)
+        return self.depth(start=start.left) - self.depth(start=start.right)
 
     def pre_order(self, root='root'):
         """."""
@@ -188,7 +188,7 @@ class BST(object):
         to_d = self.search(val)
         if to_d:
             replacement = None
-            ret = to_d.parent
+            check_from = to_d.parent
             self.size -= 1
             if to_d.is_leaf():
                 to_d.set_parents_child(None)
@@ -202,7 +202,7 @@ class BST(object):
                 else:
                     lmost = self._get_leftmost(to_d)
                     replacement = lmost
-                    ret = lmost.parent
+                    check_from = lmost.parent
                     if lmost.has_right():
                         lmost.right.parent = lmost.parent
                         lmost.set_parents_child(lmost.right)
@@ -219,7 +219,7 @@ class BST(object):
                     lmost.parent = to_d.parent
             if to_d.is_root():
                 self.root = replacement
-            return ret
+            return check_from
 
     def breadth_first(self, start='root'):
         """Return a generator of breadth first traversal through tree."""

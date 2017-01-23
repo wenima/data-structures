@@ -57,13 +57,13 @@ class AVL(BST):
         #   check balance factor of the left child:
         #   if left child is right heavy, do a LR on the left child,
         #   followed by RR.
-        if self.balance(n) > 0:
-            if self.balance(n.right) > 0:
+        if self.balance(n) < 0:
+            if self.balance(n.right) < 0:
                 self._lr(n)
             else:
                 self._rlr(n)
-        elif self.balance(n) < 0:
-            if self.balance(n.left) < 0:
+        elif self.balance(n) > 0:
+            if self.balance(n.left) > 0:
                 self._rr(n)
             else:
                 self._lrr(n)
