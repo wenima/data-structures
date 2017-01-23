@@ -25,6 +25,14 @@ class AVL(BST):
             if r_root:
                 self.rebalance(r_root)
 
+    def delete(self, val):
+        """Delete a node and reorganize tree as needed."""
+        parent = super(AVL, self).delete(val)
+        if parent:
+            r_root = self.check_balance(parent)
+            if r_root:
+                self.rebalance(r_root)
+
     def check_balance(self, node):
         """Bubble up from a node and check for unbalanced trees."""
         while True:

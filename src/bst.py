@@ -189,36 +189,39 @@ class BST(object):
     def delete(self, val):
         """Delete a node and reorganize tree as needed."""
         to_d = self.search(val)
-        replacement = None
-        if to_d.is_leaf():
-            to_d.set_parents_child(None)
-        else:
-            children = to_d.children()
-            if len(children) == 1:
-                child = children[0]
-                child.parent = to_d.parent
-                to_d.set_parents_child(child)
-                replacement = child
+        if to_d:
+            parent = to_d.parent
+            replacement = None
+            if to_d.is_leaf():
+                to_d.set_parents_child(None)
             else:
-                lmost = self._get_leftmost(to_d)
-                replacement = lmost
-                if lmost.has_right():
-                    lmost.right.parent = lmost.parent
-                    lmost.set_parents_child(lmost.right)
+                children = to_d.children()
+                if len(children) == 1:
+                    child = children[0]
+                    child.parent = to_d.parent
+                    to_d.set_parents_child(child)
+                    replacement = child
                 else:
-                    lmost.set_parents_child(None)
+                    lmost = self._get_leftmost(to_d)
+                    replacement = lmost
+                    if lmost.has_right():
+                        lmost.right.parent = lmost.parent
+                        lmost.set_parents_child(lmost.right)
+                    else:
+                        lmost.set_parents_child(None)
 
-                if to_d.right:
-                    lmost.right = to_d.right
-                    to_d.right.parent = lmost
-                lmost.left = to_d.left
-                to_d.left.parent = lmost
+                    if to_d.right:
+                        lmost.right = to_d.right
+                        to_d.right.parent = lmost
+                    lmost.left = to_d.left
+                    to_d.left.parent = lmost
 
-                to_d.set_parents_child(lmost)
-                lmost.parent = to_d.parent
-        if to_d.is_root():
-            self.root = replacement
-
+                    to_d.set_parents_child(lmost)
+                    lmost.parent = to_d.parent
+            if to_d.is_root():
+                self.root = replacement
+                return self.root
+            return parent
 
     def breadth_first_traversal(self, start):
         """Launch a dfs search, exploring all nodes."""
@@ -238,6 +241,7 @@ class BST(object):
             while len(queue):
                 self._explore_bfs(queue.dequeue(), queue, visited)
         return visited
+
 
 if __name__ == '__main__':
     import sys
