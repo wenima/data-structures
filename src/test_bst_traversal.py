@@ -69,39 +69,39 @@ def test_breadth_first_returns_generator(bst1):
 
 def test_in_order_bst1(bst1):
     """Test in order traversal returns nodes in order."""
-    assert [n.val for n in bst1.in_order()] == [1, 2, 3, 4, 5, 8, 9, 11, 12]
+    assert [n for n in bst1.in_order()] == [1, 2, 3, 4, 5, 8, 9, 11, 12]
 
 
 def test_in_order_bst2(bst2):
     """Test in order traversal returns nodes in order."""
-    assert [n.val for n in bst2.in_order()] == [4, 5, 6, 8, 11, 12, 17, 19, 31, 43, 49]
+    assert [n for n in bst2.in_order()] == [4, 5, 6, 8, 11, 12, 17, 19, 31, 43, 49]
 
 
 def test_pre_order_bst1(bst1):
     """Test pre order traversal does a depth first traversal."""
-    assert [n.val for n in bst1.pre_order()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert [n for n in bst1.pre_order()] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
 
 
 def test_pre_order_bst2(bst2):
     """Test pre order traversal does a depth first traversal on complex bst."""
-    assert [n.val for n in bst2.pre_order()] == [11, 6, 4, 5, 8, 19, 12, 17, 43, 31, 49]
+    assert [n for n in bst2.pre_order()] == [11, 6, 4, 5, 8, 19, 12, 17, 43, 31, 49]
 
 
 def test_post_order_bst1(bst1):
     """Test post order traversal returns correct order."""
-    assert [n.val for n in bst1.post_order()] == [1, 4, 8, 11, 12, 9, 5, 3, 2]
+    assert [n for n in bst1.post_order()] == [1, 4, 8, 11, 12, 9, 5, 3, 2]
 
 
 def test_post_order_bst2(bst2):
     """Test post order on more complex bst."""
-    assert [n.val for n in bst2.post_order()] == [5, 4, 8, 6, 17, 12, 31, 49, 43, 19, 11]
+    assert [n for n in bst2.post_order()] == [5, 4, 8, 6, 17, 12, 31, 49, 43, 19, 11]
 
 
 def test_breadth_first_bst1(bst1):
     """Test breadth first traversal of bst."""
-    assert [n.val for n in bst1.breadth_first(bst1.root)] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
-    assert len([n.val for n in bst1.breadth_first(bst1.root)]) == bst1.size()
+    assert [n for n in bst1.breadth_first(bst1.root)] == [2, 1, 3, 5, 4, 9, 8, 12, 11]
+    assert len([n for n in bst1.breadth_first(bst1.root)]) == bst1.size()
 
 def test_breadth_first_bst2(bst2):
     """Test breadth first traversal of bst."""
-    assert [n.val for n in bst2.breadth_first(bst2.root)] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]
+    assert [n for n in bst2.breadth_first(bst2.root)] == [11, 6, 19, 4, 8, 12, 43, 5, 17, 31, 49]

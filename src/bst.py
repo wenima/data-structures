@@ -66,7 +66,7 @@ class BST(object):
         if root == 'root':
             root = self.root
         if root:
-            yield root
+            yield root.val
             for node in root.children():
                     # yield from self.pre_order(root=node)
                 for node in self.pre_order(root=node):
@@ -81,7 +81,7 @@ class BST(object):
         if root:
             for child in self.in_order(root=root.left):
                 yield child
-            yield root
+            yield root.val
             for child in self.in_order(root=root.right):
                 yield child
 
@@ -94,7 +94,7 @@ class BST(object):
             for node in root.children():
                 for node in self.post_order(root=node):
                     yield node
-            yield root
+            yield root.val
 
     def breadth_first(self, start):
         q = Queue()
@@ -102,7 +102,7 @@ class BST(object):
         if self.size() > 0:
             visited = self._explore_bfs(start, q, visited)
         for node in visited:
-            yield node
+            yield node.val
 
     def _explore_bfs(self, node, queue, visited):
         if node not in visited:
