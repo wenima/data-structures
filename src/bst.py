@@ -227,8 +227,10 @@ class BST(object):
                 self.root = replacement
             return ret
 
-    def breadth_first_traversal(self, start):
+    def breadth_first_traversal(self, start='root'):
         """Launch a dfs search, exploring all nodes."""
+        if start == 'root':
+            start = self.root
         q = Queue()
         visited = []
         self._explore_bfs(start, q, visited)

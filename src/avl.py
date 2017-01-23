@@ -10,7 +10,6 @@ class AVL(BST):
         """Initialize bst with root and size."""
         self.root = None
         self.size = 0
-        self.order = []
         if iterable:
             try:
                 for val in iterable:
@@ -22,7 +21,6 @@ class AVL(BST):
         """Insert and calls check method to see if we need to balance."""
         node = super(AVL, self).insert(val)
         if node:
-            self.order.append(node)
             r_root = self.check_balance(node)
             if r_root:
                 self.rebalance(r_root)

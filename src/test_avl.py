@@ -97,10 +97,10 @@ def test_auto_balance_on_insertion(random_avl):
         assert abs(random_avl.balance(node)) <= 1
 
 
-@pytest.mark.parametrize('value', [x.val for x in RANDOM.pre_order()])
-def test_rebalance_after_delete(value):
-    """Test avl rebalances after deletions."""
-    RANDOM.delete(value)
-    nodes = RANDOM.pre_order()
-    for node in nodes:
-        assert abs(RANDOM.balance(node)) <= 1
+# @pytest.mark.parametrize('value', [x.val for x in RANDOM.pre_order()])
+# def test_rebalance_after_delete(value):
+#     """Test avl rebalances after deletions."""
+#     RANDOM.delete(value)
+#     nodes = RANDOM.pre_order()
+#     for node in nodes:
+#         assert abs(RANDOM.balance(node)) <= 1
