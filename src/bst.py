@@ -1,7 +1,15 @@
 """Module to implement a Binary Search Tree."""
 
 class TreeNode(object):
-    """TreeNode is the root of the tree."""
+
+    """Create Node objects for use in a binary tree data structure.
+
+    Attributes:
+        val:            A value or data stored in the node.
+        left:           A pointer to the left node.
+        right:          A pointer to a right node.
+        parent:         A pointer to the parent node.
+    """
 
     def __init__(self, val, left=None, right=None, parent=None):
         """."""
@@ -20,15 +28,41 @@ class TreeNode(object):
             return self.left
         return self.right
 
-    def depth(self, root):
-        """Return the depth of a node, found recusively."""
-        if self is root:
-            return 0
-        return 1 + self.parent.depth(root)
-
 
 class BST(object):
-    """Binary search tree."""
+
+    """Binary Search Treet (BST) style data structure.
+
+    If initialized with an iterable, will create nodes for each item in
+    the iterable.
+
+    Attributes:
+        root:       Node sitting at the top of the tree.
+
+        _size:      The number of nodes in the BST.
+
+    Methods:
+        insert(self, val): will insert the value val into the BST. If val is
+        already present, it will be ignored.
+
+        search(self, val): will return the node containing that value, else None
+
+        size(self): will return the integer size of the BST (equal to the total
+        number of values stored in the tree). It will return 0 if the tree is empty.
+
+        depth(self): will return an integer representing the total number of
+        levels in the tree. If there is just root, the depth value is 0, if
+        there is one value, the depth should be 1, if two values it will be 2,
+        if three values it may be 2 or three, depending, etc.
+
+        contains(self, val): will return True if val is in the BST, False if not.
+
+        balance(self): will return an integer, positive or negative that
+        represents how well balanced the tree is. Trees which are higher on the
+        left than the right should return a positive value, trees which are
+        higher on the right than the left should return a negative value. An
+        ideally-balanced tree should return 0.
+    """
 
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
@@ -44,10 +78,6 @@ class BST(object):
     def size(self):
         """Return number of nodes in bst.."""
         return self._size
-
-    def __len__(self):
-        """Return number of nodes in bst."""
-        return self.size
 
     def insert(self, val):
         """Insert a new node into the bst."""

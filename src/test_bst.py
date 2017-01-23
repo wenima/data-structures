@@ -124,3 +124,7 @@ def test_balance_returns_correct_val(s, result):
     from bst import BST
     b = BST(s)
     assert b.balance() == result
+
+def test_balance_called_with_None_returns_zero(empty_bst):
+    """Test balance returns zero."""
+    assert empty_bst.balance(None) == 0
