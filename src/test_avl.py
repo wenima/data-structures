@@ -30,7 +30,7 @@ RANDOM = random_avl()
 def test_check_balance_balanced_returns_none(balanced_avl):
     """Check balanced on balanced tree should return None."""
     for node in balanced_avl:
-        assert balanced_avl.check_balance(node) is None
+        assert balanced_avl._check_balance(node) is None
 
 
 def test_check_balance_unbalanced_returns_unbalanced_subtree_root(balanced_avl):
@@ -39,7 +39,7 @@ def test_check_balance_unbalanced_returns_unbalanced_subtree_root(balanced_avl):
     node = balanced_avl.search(36)
     node.left = TreeNode(35, parent=node)
     node.left.left = TreeNode(34.4, parent=node.left)
-    assert balanced_avl.check_balance(node.left.left).val == 36
+    assert balanced_avl._check_balance(node.left.left).val == 36
 
 
 def test_rebalance_left_rotation():

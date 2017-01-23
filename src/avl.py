@@ -21,7 +21,7 @@ class AVL(BST):
         """Insert and calls check method to see if we need to balance."""
         node = super(AVL, self).insert(val)
         if node:
-            r_root = self.check_balance(node)
+            r_root = self._check_balance(node)
             if r_root:
                 self.rebalance(r_root)
 
@@ -29,19 +29,11 @@ class AVL(BST):
         """Insert and calls check method to see if we need to balance."""
         node = super(AVL, self).delete(val)
         if node:
-            r_root = self.check_balance(node)
+            r_root = self._check_balance(node)
             if r_root:
                 self.rebalance(r_root)
 
-    def delete(self, val):
-        """Delete a node and reorganize tree as needed."""
-        parent = super(AVL, self).delete(val)
-        if parent:
-            r_root = self.check_balance(parent)
-            if r_root:
-                self.rebalance(r_root)
-
-    def check_balance(self, node):
+    def _check_balance(self, node):
         """Bubble up from a node and check for unbalanced trees."""
         while True:
             balance = self.balance(start=node)
@@ -67,16 +59,16 @@ class AVL(BST):
         #   followed by RR.
         if self.balance(n) > 0:
             if self.balance(n.right) > 0:
-                self.lr(n)
+                self._lr(n)
             else:
-                self.rlr(n)
+                self._rlr(n)
         elif self.balance(n) < 0:
             if self.balance(n.left) < 0:
-                self.rr(n)
+                self._rr(n)
             else:
-                self.lrr(n)
+                self._lrr(n)
 
-    def lr(self, r_root):
+    def _lr(self, r_root):
         """Perform a left rotation (lr) around the rotation_root (r_root)."""
         # assume:
         #   a
@@ -98,7 +90,7 @@ class AVL(BST):
         n_root.left = r_root
         r_root.parent = n_root
 
-    def rr(self, r_root):
+    def _rr(self, r_root):
         """Perform a right rotation (rl) around the rotation_root (r_root)."""
         # assume:
         #           c
@@ -120,7 +112,7 @@ class AVL(BST):
         n_root.parent = r_root.parent
         r_root.parent = n_root
 
-    def lrr(self, rotation_root):
+    def _lrr(self, rotation_root):
         """Perform two phase left-right rotation."""
         left_root = rotation_root.left
         new_root = left_root.right
@@ -131,9 +123,9 @@ class AVL(BST):
         if new_root.left:
             new_root.left.parent = left_root
         new_root.left = left_root
-        self.rr(rotation_root)
+        self._rr(rotation_root)
 
-    def rlr(self, rotation_root):
+    def _rlr(self, rotation_root):
         """Perform two phase right-left rotation."""
         right_root = rotation_root.right
         new_root = right_root.left
@@ -144,4 +136,4 @@ class AVL(BST):
         if new_root.right:
             new_root.right.parent = right_root
         new_root.right = right_root
-        self.lr(rotation_root)
+        self._lr(rotation_root)
