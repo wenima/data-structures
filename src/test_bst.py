@@ -13,8 +13,9 @@ TEST_DICT = [
 ]
 
 TEST_DEPTH = [
-    (55, 5),
-    # (10, 5),
+    (55, 1),
+    (11, 4),
+    (19, 3)
 ]
 
 TEST_BALANCE = [
@@ -132,7 +133,7 @@ def test_size_is_increased_when_adding_nodes(bst2):
 def test_depth_returns_correct_val(s, result, bst2):
     """Test depth returns correct val in a full tree."""
     bst2.insert(s)
-    assert bst2.depth() == result
+    assert bst2.depth(bst2.search(s)) == result
 
 
 @pytest.mark.parametrize('s, result', TEST_BALANCE)
