@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=master)](https://travis-ci.org/wenima/data-structures)
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst-balance)](https://travis-ci.org/wenima/data-structures)
 
 #Summary
 
