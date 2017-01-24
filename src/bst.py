@@ -1,5 +1,4 @@
 """Module to implement a Binary Search Tree."""
-from stack2 import Stack
 from queue import Queue
 
 
