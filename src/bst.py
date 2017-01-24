@@ -63,7 +63,7 @@ class BST(object):
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
         self.root = None
-        self.size = 0
+        self._size = 0
         if iterable:
             try:
                 for val in iterable:
@@ -73,22 +73,18 @@ class BST(object):
 
     def size(self):
         """Return number of nodes in bst.."""
-        return self.size
+        return self._size
 
     def __len__(self):
         """Return number of nodes in bst."""
-        return self.size
+        return self.size()
 
     def __iter__(self):
+        """Allow iteration through bst."""
         return self.root.__iter__()
 
-    # def in_order(self):
-    #     if self.root:
-    #         return self.root.__iter__()
-    #     yield None
-
     def _iterate_from(self, node):
-        """Return a generator of all the children on the left of starting node"""
+        """Return a generator of all the children on the left of starting node."""
         while node is not None:
             yield node
             node = node.left
@@ -103,7 +99,7 @@ class BST(object):
         cur = self.root
         if cur is None:
             self.root = TreeNode(val)
-            self.size += 1
+            self._size += 1
             return self.root
         else:
             while True:
@@ -113,11 +109,11 @@ class BST(object):
                 if which is None:
                     if val < cur.val:
                         cur.left = TreeNode(val, parent=cur)
-                        self.size += 1
+                        self._size += 1
                         return cur.left
                     else:
                         cur.right = TreeNode(val, parent=cur)
-                        self.size += 1
+                        self._size += 1
                         return cur.right
                 else:
                     cur = which
@@ -189,7 +185,7 @@ class BST(object):
         if to_d:
             replacement = None
             check_from = to_d.parent
-            self.size -= 1
+            self._size -= 1
             if to_d.is_leaf():
                 to_d.set_parents_child(None)
             else:
@@ -229,7 +225,7 @@ class BST(object):
             start = self.root
         q = Queue()
         visited = []
-        if self.size > 0:
+        if self._size > 0:
             visited = self._explore_bfs(start, q, visited)
         for node in visited:
             yield node.val

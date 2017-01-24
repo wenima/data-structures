@@ -10,20 +10,15 @@ TEST_BST2 = [11, 6, 8, 19, 4, 12, 5, 17, 43, 49, 31]
 
 @pytest.fixture
 def empty_bst():
+    """Return an bst with no nodes."""
     from bst import BST
     empty_bst = BST()
     return empty_bst
 
 
 @pytest.fixture
-def bst_one_node():
-    from bst import BST
-    new_bst = BST(TEST_BST1[-1])
-    return new_bst
-
-
-@pytest.fixture
 def bst1():
+    """Return an bst with some nodes."""
     from bst import BST
     new_bst = BST(TEST_BST1)
     return new_bst
@@ -31,6 +26,7 @@ def bst1():
 
 @pytest.fixture
 def bst2():
+    """Return an bst with some other nodes."""
     from bst import BST
     new_bst = BST(TEST_BST2)
     return new_bst

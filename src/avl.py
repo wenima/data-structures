@@ -9,7 +9,7 @@ class AVL(BST):
     def __init__(self, iterable=None):
         """Initialize bst with root and size."""
         self.root = None
-        self.size = 0
+        self._size = 0
         if iterable:
             try:
                 for val in iterable:
