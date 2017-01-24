@@ -25,6 +25,28 @@ class HashTable(object):
 
     def get(self, key):
         """Return the value stored with the given key."""
+        startslot = self._hash(key) % self.size
+
+        data = None
+        stop = False
+        found = False
+        position = startslot
+        #bad code; needs refactor
+        while self.buckets[position] != None and not found and not stop:
+            if self.buckets[position] == key:
+                found = True
+                data = self.buckets[position]
+        else:
+            position = self.rehash(position, len(self.slots))
+            if position == startslot:
+                stop = True
+        return data
+
+    def __getitem__(self, key):
+        return self.get(key)
+
+    def __setitem__(self, key, data):
+        self.set(key, data)
 
     def set(self, key, val):
         """Store the given val using the given key."""
