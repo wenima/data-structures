@@ -106,23 +106,24 @@ def test_auto_balance_on_insertion(diff_avl):
     avl, values = diff_avl
     nodes = avl.pre_order()
     for node in nodes:
-        assert abs(avl.balance(node)) <= 1
+        assert abs(avl.balance(avl.search(node))) <= 1
 
 
 def test_auto_balance_on_insertion_random_tree(random_avl):
     """Test auto balancing on large random trees."""
     nodes = random_avl.pre_order()
     for node in nodes:
-        assert abs(random_avl.balance(node)) <= 1
+        assert abs(random_avl.balance(random_avl.search(node))) <= 1
 
 
-@pytest.mark.parametrize('value', [x.val for x in RANDOM.pre_order()])
+@pytest.mark.parametrize('value', list(RANDOM.pre_order()))
 def test_rebalance_after_delete_random_tree(value):
     """Test avl rebalances after deletions."""
     RANDOM.delete(value)
     nodes = RANDOM.pre_order()
     for node in nodes:
-        assert abs(RANDOM.balance(node)) <= 1
+        actual_node = RANDOM.search(node)
+        assert abs(RANDOM.balance(actual_node)) <= 1
 
 
 def test_rebalance_after_delete_for_deep(diff_avl):
@@ -130,7 +131,8 @@ def test_rebalance_after_delete_for_deep(diff_avl):
     avl, values = diff_avl
     nodes = avl.pre_order()
     for node in nodes:
+        actual_node = avl.search(node)
         for value in values:
-            if value != node.val:
+            if value != node:
                 avl.delete(value)
-                assert abs(avl.balance(node)) <= 1
+                assert abs(avl.balance(actual_node)) <= 1

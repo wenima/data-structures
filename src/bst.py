@@ -157,7 +157,7 @@ class BST(object):
         if root == 'root':
             root = self.root
         if root:
-            yield root
+            yield root.val
             for node in root.children():
                 for child in self.pre_order(root=node):
                     yield child
@@ -170,7 +170,7 @@ class BST(object):
             for node in root.children():
                 for child in self.post_order(root=node):
                     yield child
-            yield root
+            yield root.val
 
     def in_order(self, root='root'):
         """."""
@@ -179,7 +179,7 @@ class BST(object):
         if root:
             for child in self.in_order(root=root.left):
                 yield child
-            yield root
+            yield root.val
             for child in self.in_order(root=root.right):
                 yield child
 
@@ -232,7 +232,7 @@ class BST(object):
         if self.size > 0:
             visited = self._explore_bfs(start, q, visited)
         for node in visited:
-            yield node
+            yield node.val
 
     def _explore_bfs(self, node, queue, visited):
         if node not in visited:

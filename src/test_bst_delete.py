@@ -66,5 +66,5 @@ def test_delete_all_nodes(bst1):
     #get all nodes via breadth_first
     all_nodes = bst1.breadth_first(bst1.root)
     for n in all_nodes:
-        bst1.delete(n.val)
+        bst1.delete(n)
     assert len(bst1) == 0
