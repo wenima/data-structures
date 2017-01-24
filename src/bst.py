@@ -202,7 +202,9 @@ class BST(object):
                 else:
                     lmost = self._get_leftmost(to_d)
                     replacement = lmost
-                    check_from = lmost.parent
+                    check_from = lmost
+                    if lmost.parent is not to_d:
+                        check_from = lmost.parent
                     if lmost.has_right():
                         lmost.right.parent = lmost.parent
                         lmost.set_parents_child(lmost.right)
@@ -245,7 +247,7 @@ class BST(object):
         return visited
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == 'timeit':
         import timeit

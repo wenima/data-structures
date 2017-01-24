@@ -58,15 +58,18 @@ class AVL(BST):
         #   if left child is right heavy, do a LR on the left child,
         #   followed by RR.
         if self.balance(n) < 0:
-            if self.balance(n.right) < 0:
+            if self.balance(n.right) <= 0:
                 self._lr(n)
             else:
                 self._rlr(n)
         elif self.balance(n) > 0:
-            if self.balance(n.left) > 0:
+            if self.balance(n.left) >= 0:
                 self._rr(n)
             else:
                 self._lrr(n)
+        next_node = self._check_balance(n)
+        if next_node:
+            self.rebalance(next_node)
 
     def _lr(self, r_root):
         """Perform a left rotation (lr) around the rotation_root (r_root)."""
