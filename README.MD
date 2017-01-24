@@ -23,10 +23,12 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 | Name                     | Stmts | Miss | Cover | Missing                         |
 | -----------------------  | ----- | ---- | ----- | ------------------------------- |
-|                          |       |      |       |                                 |
-|                          |       |      |       |                                 |
+|         avl.py           |  87   |  0   | 100%  |                                 |
+|         bst.py           |  178  |  1   |  99%  |   80                            |
+|   dbl_linked_list.py     |  80   |  0   | 100%  |                                 |
+|        queue.py          |  23   |  0   | 100%  |                                 |
 | -----------------------  |  ---  |  --  | ----  | ------------------------------- |
-| TOTAL                    |       |      |       |                                 |
+| TOTAL                    |  368  |  1   |  99%  |                                 |
 
 
 # Comments about implementation:

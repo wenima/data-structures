@@ -38,6 +38,13 @@ def random_avl():
 RANDOM = random_avl()
 
 
+def test_init_non_iterable():
+    """If non iterable is passed to init, it should insert non iterable."""
+    from avl import AVL
+    avl = AVL(5)
+    assert avl.root.val == 5
+
+
 def test_check_balance_balanced_returns_none(balanced_avl):
     """Check balanced on balanced tree should return None."""
     for node in balanced_avl:
