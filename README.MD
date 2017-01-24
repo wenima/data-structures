@@ -33,3 +33,14 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 
 # Comments about implementation:
+
+Our goal is to create a hash function that minimizes the number of collisions, is easy to compute, and evenly distributes the items in the hash table. It should not be too complex to become the main part of the storage&search process.
+
+## Different hash functions:
+For integers:
+* folding method: divide the item into equal size pieces and add these back together.
+Using the remainder method, this would create a slot to put in the value.
+* mid-square method: square the item, extract some portion of it and use remainder method.
+For strings:
+* ord method: use the ordinal value on each character, add up the numbers, and find the slot
+by using the remainder method.
