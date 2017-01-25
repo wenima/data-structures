@@ -6,10 +6,9 @@ class HashTable(object):
 
     def __init__(self, size=1024, hash_func='additive'):
         """Set up hash with specified hash function and size."""
-        self.size = size
         self.nums = [10, 6, 3, 11, 15]
         self.buckets = []
-        for i in range(self.size):
+        for i in range(size):
             self.buckets.append([])
         inpt = hash_func.lower()
         if inpt == 'additive':
@@ -21,7 +20,7 @@ class HashTable(object):
         elif inpt == 'custom':
             self.hash_func = self._custom_oat_hash
         else:
-            raise NameError("Hash function " + hash_func + " is not an option.")
+            raise NameError("Hash function, " + hash_func + ", is not an option.")
 
     def get(self, key):
         """Return the value stored with the given key."""
@@ -42,7 +41,18 @@ class HashTable(object):
                 stop = True
         return data
 
+    def simple_get(self, key):
+        """Retrieve the given val using the given key."""
+        bucket = self._get_bucket(key)
+        idx = self._find_idx(key, bucket)
+        if idx is not None:
+            return bucket[idx]
+        else:
+            raise KeyError('Key not found in hash table.')
+
     def __getitem__(self, key):
+        if self.hash_func is not self._custom_oat_hash:
+            return self.simple_get(key)
         return self.get(key)
 
     def __setitem__(self, key, data):
