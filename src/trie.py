@@ -13,23 +13,31 @@ class TreeNode(object):
         parent:         A pointer to the parent node.
     """
 
-    def __init__(self, char, hash=None, left=None, right=None, parent=None):
+    def __init__(self, char, left=None, right=None, parent=None):
         """."""
-        self.val = val
+        self.hash = None
         self.char = char
         self.left = left
         self.right = right
+        self.center = None
         self.parent = parent
 
     def is_leaf(self):
         """Return True if node has no children (is a leaf)."""
         return not (self.right or self.left)
 
-    def left_or_right(self, val):
+    def is_root(self):
+        """Return whether node is the root node."""
+        return not self.parent
+
+    def left_or_right(self, char):
         """Compare node to a value and return which path to take."""
-        if val < self.val:
+        if char == self.char:
+            return self.center
+        elif char < self.char:
             return self.left
-        return self.right
+        else:
+            return self.right
 
 
 class TST(object):
@@ -62,12 +70,9 @@ class TST(object):
         self.root = None
         self._size = 0
         if iterable:
-            #!raise error if it's a string
-            #!not dealing with sentences yet, just one word strings
             try:
                 for w in iterable:
-                    h = self._additive_hash(key)
-                    self.insert(w, h)
+                    self.insert(w)
             except TypeError:
                 self.insert(iterable)
 
@@ -76,43 +81,42 @@ class TST(object):
         return self._size
 
     def _additive_hash(self, key):
-        "Return the additive hash for a given key."
-        #!refactor into list comprehension
+        """Return the additive hash for a given key."""
         h = 0
         for i in range(len(key)):
             h += ord(key[i])
         return h
 
-    def insert(self, w, h):
+    def insert(self, word):
         """Insert a new node into the tst."""
-        cur = self.root
-        for c in w:
-            if cur is None:
-                self.root = TreeNode(c)
-                self._size += 1
+        furthest, idx = self._find_furthest(word)
+        if not furthest:
+            new_node = TreeNode(word[idx])
+            self.root = new_node
+            start = new_node
+            idx += 1
+        else:
+            if word[idx] < furthest.char:
+                furthest.left = TreeNode(word[idx], parent=furthest)
             else:
-                if c < cur.char:
-                    cur.left =
+                furthest.right = TreeNode(word[idx], parent=furthest)
+            start = furthest.left_or_right(word[idx])
+            idx += 1
+        for char in word[idx:]:
+            start.center = TreeNode(char, parent=start)
+            start = start.center
+        start.hash = self._additive_hash(word)
 
-
-
-
-                #BST code starts here
-                if c == cur:
-                    cur.match == TreeNode(c, parent=cur)
-
-                if val == cur.val:
-                    break
-                which = cur.left_or_right(val)
-                if which is None:
-                    if val < cur.val:
-                        cur.left = TreeNode(val, parent=cur)
-                    else:
-                        cur.right = TreeNode(val, parent=cur)
-                    self._size += 1
-                    break
-                else:
-                    cur = which
+    def _find_furthest(self, word):
+        cur = self.root
+        prev = None
+        idx = 0
+        while cur and idx < len(word):
+            prev = cur
+            cur = cur.left_or_right(word[idx])
+            if prev.char == word[idx]:
+                idx += 1
+        return prev, idx
 
     def search(self, val, start='root'):
         """Return node with value val if it exists, otherwise None."""
@@ -124,9 +128,10 @@ class TST(object):
             return start
         return self.search(val, start=start.left_or_right(val))
 
-    def contains(self, val):
+    def contains(self, word):
         """Return whether val in bst."""
-        return bool(self.search(val))
+        furthest = self._find_furthest(word)[0]
+        return furthest.hash == self._additive_hash(word)
 
     def depth(self, start='root'):
         """Return the depth of the tree."""
@@ -146,30 +151,30 @@ class TST(object):
         return self.depth(start=start.left) - self.depth(start=start.right)
 
 
-if __name__ == '__main__':  # pragma: no cover
-    import timeit
-    import random
+# if __name__ == '__main__':  # pragma: no cover
+#     import timeit
+#     import random
 
-    balanced_bst = BST()
-    degenerate_bst = BST()
-    for i in range(1000):
-        balanced_bst.insert(random.randint(0, 1000))
-        degenerate_bst.insert(i)
+#     balanced_bst = BST()
+#     degenerate_bst = BST()
+#     for i in range(1000):
+#         balanced_bst.insert(random.randint(0, 1000))
+#         degenerate_bst.insert(i)
 
-    cur = balanced_bst.root
-    while cur:
-        if cur.right:
-            cur = cur.right
-        else:
-            break
-    biggest = cur.val
+#     cur = balanced_bst.root
+#     while cur:
+#         if cur.right:
+#             cur = cur.right
+#         else:
+#             break
+#     biggest = cur.val
 
-    best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
-                              setup='from __main__ import balanced_bst, biggest',
-                              number=10000)
-    worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
-                               setup='from __main__ import degenerate_bst',
-                               number=10000)
+#     best_case = timeit.timeit(stmt='balanced_bst.search(biggest)',
+#                               setup='from __main__ import balanced_bst, biggest',
+#                               number=10000)
+#     worst_case = timeit.timeit(stmt='degenerate_bst.search(99)',
+#                                setup='from __main__ import degenerate_bst',
+#                                number=10000)
 
-    print('Search balanced BST: ' + str(best_case),
-          '\nSearch degenerate BST: ' + str(worst_case))
+#     print('Search balanced BST: ' + str(best_case),
+#           '\nSearch degenerate BST: ' + str(worst_case))
