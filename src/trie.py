@@ -1,5 +1,6 @@
 """Module to implement a Ternary Search Tree."""
 
+from stack import Stack
 
 class TreeNode(object):
     """Create Node objects for use in a binary tree data structure.
@@ -13,13 +14,13 @@ class TreeNode(object):
         parent:         A pointer to the parent node.
     """
 
-    def __init__(self, char, left=None, right=None, parent=None):
+    def __init__(self, char='', left=None, right=None, center=None, parent=None):
         """."""
         self.hash = None
         self.char = char
         self.left = left
         self.right = right
-        self.center = None
+        self.center = center
         self.parent = parent
 
     def is_leaf(self):
@@ -38,6 +39,10 @@ class TreeNode(object):
             return self.left
         else:
             return self.right
+
+    def children(self):
+        """Return non-none children of node."""
+        return [n for n in [self.left, self.right] if n is not None]
 
 
 class TST(object):
@@ -89,21 +94,27 @@ class TST(object):
 
     def insert(self, word):
         """Insert a new node into the tst."""
+        if self.contains(word):
+            return
         furthest, idx = self._find_furthest(word)
         if not furthest:
             new_node = TreeNode(word[idx])
+            self._size += 1
             self.root = new_node
             start = new_node
             idx += 1
         else:
             if word[idx] < furthest.char:
                 furthest.left = TreeNode(word[idx], parent=furthest)
+                self._size += 1
             else:
                 furthest.right = TreeNode(word[idx], parent=furthest)
+                self._size += 1
             start = furthest.left_or_right(word[idx])
             idx += 1
         for char in word[idx:]:
             start.center = TreeNode(char, parent=start)
+            self._size += 1
             start = start.center
         start.hash = self._additive_hash(word)
 
@@ -129,26 +140,34 @@ class TST(object):
         return self.search(val, start=start.left_or_right(val))
 
     def contains(self, word):
-        """Return whether val in bst."""
+        if not self._size:
+            return False
         furthest = self._find_furthest(word)[0]
         return furthest.hash == self._additive_hash(word)
 
-    def depth(self, start='root'):
-        """Return the depth of the tree."""
-        if start == 'root':
-            start = self.root
-        if start is None or start.is_leaf():
-            return 0
-        return max(self.depth(start=start.left), self.depth(start=start.right)) + 1
+    def depth_first_traversal(self, start, returnval=None):
+        """Launch a dfs search, exploring all nodes. Return either all visited
+        nodes or return only the nodes that contain hashes."""
+        visited = []
+        words = []
+        s = Stack()
+        self._explore(start, s, visited)
+        if returnval == 'words':
+            return words
+        return visited
 
-    def balance(self, start='root'):
-        """Return an integer, positive or negative that represents how well
-        balanced the tree is."""
-        if start == 'root':
-            start = self.root
-        if start is None:
-            return 0
-        return self.depth(start=start.left) - self.depth(start=start.right)
+    def _explore(self, node, stack, visited, words):
+        """Explore a given node, updated visited and stack and calls itself
+        with a new unvisited node."""
+        if node.hash:
+            words.append(node)
+        visited.append(node)
+        if node.children():
+            stack.push(node)
+            for child in node.children():
+                if child not in visited:
+                    self._explore(node, stack, visited, words)
+        return visited, words
 
 
 # if __name__ == '__main__':  # pragma: no cover
