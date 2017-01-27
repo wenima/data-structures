@@ -11,7 +11,7 @@ as a class with 4 public methods:
 
 # Definition:
 A trie is a tree data structure in which the root holds references to all following characters eventually leading down
-to leafes which either hold the complete string or the end is signalled by '$'. A trie nodes can have the following representations:
+to leaves which either hold the complete string or the end is signaled by '$'. Trie nodes can have the following representations:
 * an array
 * a Binary-Search-Tree
 * a hash-table

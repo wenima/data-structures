@@ -1,1 +1,3 @@
 [run]
+include = ./src/trie.py, ./src/test_trie.py
+omit = test*.*, setup.py

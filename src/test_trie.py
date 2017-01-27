@@ -7,16 +7,23 @@ import types
 TEST_TST_INSERT = [
     #insert into the TEST, giving a string and check for no. of leaves and
     #size (no of unique chars in the path to a word represents a node)
-    ('sea'),
-    ('sea shells'),
-    ('the quick brown fox jumped over the lazy dog'),
+    # ('sea'), [3],
+    # ('sea shells', [8]),
+    # ('the quick brown fox jumped over the lazy dog'),
+    ('sea shells by the ocean with sand'),
     ]
 
 TEST_TST = [
-(1, [3]),
-(2, [8]),
-(8, [36]),
+(3),
+(8),
+(36),
 ]
+
+# TEST_TST = [
+# (1, [3]),
+# (2, [8]),
+# (8, [36]),
+# ]
 
 HASHES = [
 
@@ -36,7 +43,7 @@ def empty_tst():
     empty_tst = TST()
     return empty_tst
 
-@pytest.fixture(params=TEST_TST)
+@pytest.fixture(params=TEST_TST_INSERT)
 def tst(request):
     from trie import TST
     new_tst = TST(request.param)
@@ -59,7 +66,14 @@ def test_insert_at_end_of_tree(empty_tst):
     assert empty_tst.contains('xyz')
     assert empty_tst._size == 3
 
-# @pytest.mark.parametrize('leaves, nodes', TEST_TST)
+# @pytest.mark.parametrize('nodes', TEST_TST)
+def test_inserts_multiple_words(tst):
+    """Test of insertion into the tree using different inputs."""
+    assert tst.root.char is not None
+    children_val = [c.char for c in tst.root.children()]
+    assert sorted(['b', 'e', 't']) == sorted(children_val)
+
+
 # def test_insert_returns_correct_number_of_nodes_and_words(leaves, nodes, tst):
 #     """Test insert into a TST."""
 #     assert count_leaves() == leaves
