@@ -28,10 +28,10 @@ TEST_TST = [
 # ]
 
 TEST_HASHES = [
-# ('sea', [313]),
-('sea shells by the ocean', [313, 651, 219, 321, 518]),
-('the quick brown fox jumped over the lazy dog', [321, 541, 552, 333, 645, 444, 321, 448, 314]),
-('zzzyyyyccc zz zzaazz qwerstsbt rrraaarrr racecar a', [1147, 244, 682, 1007, 975, 721, 97]),
+# ('sea', 1, [313]),
+('sea shells by the ocean', 5, [313, 651, 219, 321, 518]),
+('the quick brown fox jumped over the lazy dog', 8, [321, 541, 552, 333, 645, 444, 321, 448, 314]),
+('zzzyyyyccc zz zzaazz qwerstsbt rrraaarrr racecar a', 7, [1147, 244, 682, 1007, 975, 721, 97]),
 ]
 
 @pytest.fixture
@@ -72,11 +72,12 @@ def test_insert_at_end_of_tree(empty_tst):
     assert empty_tst._size == 3
 
 
-@pytest.mark.parametrize('sentence, result', TEST_HASHES)
-def test_hash_values_are_correct_and_present(sentence, result, empty_tst):
+@pytest.mark.parametrize('sentence, wc, result', TEST_HASHES)
+def test_hash_values_are_correct_and_present(sentence, wc, result, empty_tst):
     """Test hash values are correct and present in the tree."""
     empty_tst.insert(sentence)
     assert [empty_tst._find_furthest(w)[0].hash for w in sentence.split()] == result
+    assert empty_tst.size() == wc
 
 
 

@@ -74,6 +74,7 @@ class TST(object):
         """Initialize bst with root and size."""
         self.root = None
         self._size = 0
+        self._wc = 0
         if input_string:
             try:
                 iterable = input_string.split()
@@ -86,7 +87,7 @@ class TST(object):
 
     def size(self):
         """Return number of nodes in tree."""
-        return self._size
+        return self._wc
 
     def _additive_hash(self, key):
         """Return the additive hash for a given key."""
@@ -118,7 +119,8 @@ class TST(object):
         exists and sets the hash or just returns if the word has already been set.
         Then inserts all the characters in the word by finding the node to insert
         at, comparing the character value and inserting the part of the word
-        which is not matched yet."""
+        which is not matched yet. Sets the hash at last character and increments
+        word count attribute."""
         words = word.split()
         for w in words:
             furthest, idx = self._find_furthest(w)
@@ -129,6 +131,7 @@ class TST(object):
                 continue
             elif idx == len(w):
                 furthest.hash = self._additive_hash(w)
+                self._wc +=1
                 continue
             else:
                 self._add_new_node(furthest, w[idx])
@@ -139,6 +142,7 @@ class TST(object):
                 self._size += 1
                 start = start.center
             start.hash = self._additive_hash(w)
+            self._wc += 1
 
 
     def _find_furthest(self, word):
