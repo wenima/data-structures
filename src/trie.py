@@ -31,7 +31,7 @@ class TreeNode(object):
         """Return whether node is the root node."""
         return not self.parent
 
-    def left_or_right(self, char):
+    def left_right_center(self, char):
         """Compare node to a value and return which path to take."""
         if char == self.char:
             return self.center
@@ -74,8 +74,6 @@ class TST(object):
         """Initialize bst with root and size."""
         self.root = None
         self._size = 0
-        self._hashes = {}
-        self._words = {}
         if input_string:
             try:
                 iterable = input_string.split()
@@ -92,48 +90,34 @@ class TST(object):
 
     def _additive_hash(self, key):
         """Return the additive hash for a given key."""
-        h = 0
-        for i in range(len(key)):
-            h += ord(key[i])
-        return h
+        return sum([ord(c) for c in key])
 
     def insert(self, word):
-        if word in self._hashes.values():
-            return
-        if self._size == 0:
-            h = self._additive_hash(word)
-        else:
-            h = self._additive_hash(word[:-1])
-        if h in self._hashes.keys():
-            stored = self._hashes[h]
-            for node, hashes in self._words.items():
-                if h == hashes:
-                    furthest = node
-                    idx = len(stored)
-                    break
-        else:
-            furthest, idx = self._find_furthest(word)
+        furthest, idx = self._find_furthest(word)
         if not furthest:
             new_node = TreeNode(word[idx])
             self._size = 1
             self.root = new_node
             start = new_node
             idx += 1
+        elif furthest.hash == self._additive_hash(word):
+            return
         else:
             if word[idx] < furthest.char:
                 furthest.left = TreeNode(word[idx], parent=furthest)
-            else:
+            elif word[idx] > furthest.char:
                 furthest.right = TreeNode(word[idx], parent=furthest)
+            else:
+                furthest.center = TreeNode(word[idx], parent=furthest)
             self._size += 1
-            start = furthest.left_or_right(word[idx])
+            start = furthest.left_right_center(word[idx])
+            idx += 1
         for char in word[idx:]:
             start.center = TreeNode(char, parent=start)
             self._size += 1
             start = start.center
-        start.hash = h
-        node = start
-        self._hashes[h] = word
-        self._words[node] = h
+        start.hash = self._additive_hash(word)
+
 
     def _find_furthest(self, word):
         cur = self.root
@@ -141,7 +125,7 @@ class TST(object):
         idx = 0
         while cur and idx < len(word):
             prev = cur
-            cur = cur.left_or_right(word[idx])
+            cur = cur.left_right_center(word[idx])
             if prev.char == word[idx]:
                 idx += 1
         return prev, idx
@@ -154,7 +138,7 @@ class TST(object):
             return None
         elif val == start.val:
             return start
-        return self.search(val, start=start.left_or_right(val))
+        return self.search(val, start=start.left_right_center(val))
 
     def contains(self, word):
         if not self._size:
