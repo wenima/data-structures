@@ -92,42 +92,68 @@ class TST(object):
         """Return the additive hash for a given key."""
         return sum([ord(c) for c in key])
 
-    def insert(self, word):
-        furthest, idx = self._find_furthest(word)
-        if not furthest:
-            new_node = TreeNode(word[idx])
-            self._size = 1
-            self.root = new_node
-            start = new_node
-            idx += 1
-        elif furthest.hash == self._additive_hash(word):
-            return
+    def _set_root(self, char):
+        """If tree has no root, set the root node with the first char of the
+        word and return the new node to be set as start node."""
+        new_node = TreeNode(char)
+        self._size = 1
+        self.root = new_node
+        return self.root
+
+    def _add_new_node(self, furthest, char):
+        """Once the point has been found where new characters get inserted
+        (furthest), adds a new node depending wether the character to be
+        inserted is smaller, equal to or greater than the character at
+        furthest node."""
+        if char < furthest.char:
+            furthest.left = TreeNode(char, parent=furthest)
+        elif char > furthest.char:
+            furthest.right = TreeNode(char, parent=furthest)
         else:
-            if word[idx] < furthest.char:
-                furthest.left = TreeNode(word[idx], parent=furthest)
-            elif word[idx] > furthest.char:
-                furthest.right = TreeNode(word[idx], parent=furthest)
+            furthest.center = TreeNode(char, parent=furthest)
+        self._size += 1
+
+    def insert(self, word):
+        """Checks to see if word is a sentence, then checks if the word already
+        exists and sets the hash or just returns if the word has already been set.
+        Then inserts all the characters in the word by finding the node to insert
+        at, comparing the character value and inserting the part of the word
+        which is not matched yet."""
+        words = word.split()
+        for w in words:
+            furthest, idx = self._find_furthest(w)
+            if not furthest:
+                start = self._set_root(w[idx])
+                idx += 1
+            elif furthest.hash == self._additive_hash(w):
+                continue
+            elif idx == len(w):
+                furthest.hash = self._additive_hash(w)
+                continue
             else:
-                furthest.center = TreeNode(word[idx], parent=furthest)
-            self._size += 1
-            start = furthest.left_right_center(word[idx])
-            idx += 1
-        for char in word[idx:]:
-            start.center = TreeNode(char, parent=start)
-            self._size += 1
-            start = start.center
-        start.hash = self._additive_hash(word)
+                self._add_new_node(furthest, w[idx])
+                start = furthest.left_right_center(w[idx])
+                idx += 1
+            for char in w[idx:]:
+                start.center = TreeNode(char, parent=start)
+                self._size += 1
+                start = start.center
+            start.hash = self._additive_hash(w)
 
 
     def _find_furthest(self, word):
+        """Finds the first occurence where the given word is not yet in the
+        tree, returns this node and the index from which to start insertion."""
         cur = self.root
         prev = None
         idx = 0
-        while cur and idx < len(word):
+        while cur:
             prev = cur
             cur = cur.left_right_center(word[idx])
             if prev.char == word[idx]:
                 idx += 1
+                if idx == len(word):
+                    break
         return prev, idx
 
     def search(self, val, start='root'):

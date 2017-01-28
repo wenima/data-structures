@@ -73,10 +73,9 @@ def test_insert_at_end_of_tree(empty_tst):
 
 
 @pytest.mark.parametrize('sentence, result', TEST_HASHES)
-def test_hash_values_are_correct_and_present(sentence, result, capsys, empty_tst):
+def test_hash_values_are_correct_and_present(sentence, result, empty_tst):
     """Test hash values are correct and present in the tree."""
     empty_tst.insert(sentence)
-    print
     assert [empty_tst._find_furthest(w)[0].hash for w in sentence.split()] == result
 
 
