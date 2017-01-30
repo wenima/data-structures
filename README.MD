@@ -36,6 +36,13 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 Our goal is to create a hash function that minimizes the number of collisions, is easy to compute, and evenly distributes the items in the hash table. It should not be too complex to become the main part of the storage&search process.
 
+## Currently implemented hash functions:
+* Additive: add the unicode number representation of each character in the key.
+* One-at-a-time: perform basic bitwise operations on each character's unicode
+  number representation and on the total sum.
+* FNV: muliply large numbers by other large numbers and add them together.
+* Custom one-at-a-time: Same operation as one-at-a-time, but with customizable constants.
+
 ## Different hash functions:
 For integers:
 * folding method: divide the item into equal size pieces and add these back together.
