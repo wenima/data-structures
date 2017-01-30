@@ -121,22 +121,27 @@ def test_inserts_multiple_words(tst):
     assert f.center.char == 's'
     assert tst.root.char == 's'
 
-# def test_remove_word_from_tree_exists_decrements_wordcount_var(tst):
-#     """Test remove word from tree which exists reduces the word count."""
-#     wc = tst.size()
-#     tst.remove('sea')
-#     assert tst.size() == wc - 1
-#
-# def test_remove_word_from_tree_not_in_tree(tst):
-#     """Test that attempting to remove a word which is not in the tree raises a
-#     LookupError."""
-#     with pytest.raises(LookupError):
-#         tst.remove('doesnotexist')
-#
-# def test_remove_word_from_tree_exits_is_substring(tst):
-#     """Test remove word from tree which exists and is a substring of otherwise
-#     words."""
-#     tst.remove('sea')
-#     assert tst.contains('sea') is False
+def test_remove_word_from_tree_exists_decrements_wordcount_var(empty_tst):
+    """Test remove word from tree which exists reduces the word count."""
+    empty_tst.insert('sea')
+    wc = empty_tst.size()
+    empty_tst.remove('sea')
+    assert empty_tst.size() == wc - 1
 
-# def test_remove_word_left_
+def test_remove_word_from_tree_not_in_tree(tst):
+    """Test that attempting to remove a word which is not in the tree raises a
+    LookupError."""
+    with pytest.raises(LookupError):
+        tst.remove('doesnotexist')
+
+def test_remove_word_from_tree_exits_is_substring(empty_tst):
+    """Test remove word from tree which exists and is a prefix of another
+    words"""
+    empty_tst.insert('seashells')
+    empty_tst.insert('sea')
+    assert empty_tst.contains('sea')
+    empty_tst.remove('sea')
+    assert empty_tst.contains('sea') is False
+    assert empty_tst._find_furthest('sea')[0].hash is None
+
+# def test_remove_

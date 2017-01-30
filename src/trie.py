@@ -25,7 +25,7 @@ class TreeNode(object):
 
     def is_leaf(self):
         """Return True if node has no children (is a leaf)."""
-        return not (self.right or self.left or self._center)
+        return not (self.right or self.left or self.center)
 
     def is_root(self):
         """Return whether node is the root node."""
@@ -113,18 +113,15 @@ class TST(object):
         self.root = new_node
         return self.root
 
-    def _add_new_node(self, furthest, char):
+    def _add_new_node_left_right(self, furthest, char):
         """Return a new node inserted at the furthest point based on wether the
         character inserted is smaller or equal to the character at
-        furthest node. If center is a null reference, add the new node there."""
+        furthest node."""
         new_node = TreeNode(char, parent=furthest)
-        if furthest.center:
-            if char < furthest.char:
-                furthest.left = new_node
-            elif char > furthest.char:
-                furthest.right = new_node
-        else:
-            furthest.center = new_node
+        if char < furthest.char:
+            furthest.left = new_node
+        elif char > furthest.char:
+            furthest.right = new_node
         self._size += 1
         return new_node
 
@@ -145,11 +142,14 @@ class TST(object):
                 continue
             elif idx == len(w):
                 furthest.hash = self._additive_hash(w)
-                self._wc +=1
+                self._wc += 1
                 continue
             else:
-                start = self._add_new_node(furthest, w[idx])
-                idx += 1
+                if furthest.center is None and furthest.char == word[idx - 1]:
+                    start = furthest
+                else:
+                    start = self._add_new_node_left_right(furthest, w[idx])
+                    idx += 1
             for char in w[idx:]:
                 start.center = TreeNode(char, parent=start)
                 self._size += 1
@@ -180,7 +180,7 @@ class TST(object):
                 if not cur.hash:
                     cur.center = None
                     break
-                if len(cur.children()) > 1:
+                if len(cur.children()) > 1
                     if cur.left:
                         #left tree is brought in center and assumes responsibility for right tree
                         cur.parent.center = cur.left
