@@ -9,7 +9,7 @@ setup(
     license="MIT",
     package_dir={'': 'src'},
     py_modules=["hashtable"],
-    install_requires=[],
+    install_requires=['Faker'],
     extras_require={"test": ["pytest", "pytest-watch", "pytest-cov", "tox"]},
     entry_points={}
 )
