@@ -158,52 +158,13 @@ class TST(object):
             self._wc += 1
 
     def remove(self, key):
-        """Remove key in tree:
-        1) key is in tree and is a prefix of another word
-            set hash to none at last character of key
-        2) last characer of key is a leaf:
-            traverse up until a non-center parent is found. remove hash and
-            remove link to branch holding key
-        3) last character of key is a node which has one or two chilren which
-        are not center children
-            remove hash at that node and relink all children to the node's parent.
-        If a hash is removed, reduce the size of word count by 1.
-        """
+        """Remove key in tree, raise LookupError if not found."""
         f, idx = self._find_furthest(key)
         h = self._additive_hash(key)
         if f.hash != h:
             raise LookupError("Key not found")
         f.hash = None
-        if f.is_leaf():
-            cur = f
-            while True:
-                if not cur.hash:
-                    cur.center = None
-                    break
-                if len(cur.children()) > 1
-                    if cur.left:
-                        #left tree is brought in center and assumes responsibility for right tree
-                        cur.parent.center = cur.left
-                        cur.left.right = cur. right
-                    #if no left tree, right tree is moved to center
-                    cur.parent.center = cur.right
-                    break
-                if not cur._is_center():
-                    if cur._is_left():
-                        #if there is a single left branch with no other branches, simply delete the reference to this branch
-                        cur.parent.left = None
-                    if cur._is_right():
-                        cur.parent.right = None
-                    break
-                cur = cur.parent
-        else:
-            #when left tree is moved to center, right tree needs to branch of new center
-            if f.left and not f.center:
-                cur.center = cur.left
-                cur.center.right = cur.right
         self._wc -= 1
-
-
 
     def _find_furthest(self, word):
         """Finds the first occurence where the given word is not yet in the

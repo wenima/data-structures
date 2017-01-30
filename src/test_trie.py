@@ -3,7 +3,7 @@
 import pytest
 import types
 
-CARS_REMOVE_STRING = 'car cards cars'
+CARES_REMOVE_STRING = 'cares care cards cars'
 SEA_REMOVE_STRING = 'seashells sea seaside seahawks'
 
 TEST_TST_INSERT = [
@@ -65,7 +65,7 @@ def empty_tst():
 def tst_remove():
     """Return a tst of a specific structure to test remove method."""
     from trie import TST
-    new_tst = TST(CARS_REMOVE_STRING)
+    new_tst = TST(CARES_REMOVE_STRING)
     return new_tst
 
 @pytest.fixture(params=TEST_TST_INSERT)
@@ -128,11 +128,12 @@ def test_remove_word_from_tree_exists_decrements_wordcount_var(empty_tst):
     empty_tst.remove('sea')
     assert empty_tst.size() == wc - 1
 
-def test_remove_word_from_tree_not_in_tree(tst):
+def test_remove_word_from_tree_not_in_tree(empty_tst):
     """Test that attempting to remove a word which is not in the tree raises a
     LookupError."""
+    empty_tst.insert('sometext')
     with pytest.raises(LookupError):
-        tst.remove('doesnotexist')
+        empty_tst.remove('doesnotexist')
 
 def test_remove_word_from_tree_exits_is_substring(empty_tst):
     """Test remove word from tree which exists and is a prefix of another
@@ -144,4 +145,9 @@ def test_remove_word_from_tree_exits_is_substring(empty_tst):
     assert empty_tst.contains('sea') is False
     assert empty_tst._find_furthest('sea')[0].hash is None
 
-# def test_remove_
+def test_remove_words_on_middle_branch_realign_left_branch(tst_remove):
+    """Test that removing 2 words on the center branch balances the tree."""
+    tst_remove.remove('care')
+    tst_remove.remove('cares')
+    assert tst_remove.contains('care') is False
+    assert tst_remove.size() == 2
