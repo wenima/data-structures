@@ -38,7 +38,8 @@ def test_ht_init_raises_error_if_given_hash_not_option():
 
 def test_hashes_return_numbers(hash_table):
     """Hash functions should return integers."""
-    assert type(hash_table.hash_func('key')) is int
+    import numbers
+    assert isinstance(hash_table.hash_func('key'), numbers.Number)
 
 
 def test_set_raises_error_if_key_not_string(hash_table):

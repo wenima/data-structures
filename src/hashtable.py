@@ -145,7 +145,7 @@ def findbest(nums=None, loops=100, ht_size=500):
         ht = HashTable(size=ht_size, hash_func='custom')
         ht.nums = nums
         for i in range(ht.size):
-            ht.set(fake.user_name(), i)
+            ht.set(str(fake.user_name()), i)
         len_empty = len([x for x in ht.buckets if len(x) == 0])
         if len_empty < best_len_empty:
             best_len_empty = len_empty
