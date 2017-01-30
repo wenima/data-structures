@@ -25,11 +25,23 @@ class TreeNode(object):
 
     def is_leaf(self):
         """Return True if node has no children (is a leaf)."""
-        return not (self.right or self.left)
+        return not (self.right or self.left or self._center)
 
     def is_root(self):
         """Return whether node is the root node."""
         return not self.parent
+
+    def _is_left(self):
+        """Return True if child is left child of parent."""
+        return True if self.parent.left is self else False
+
+    def _is_right(self):
+        """Return True if child is right child of parent."""
+        return True if self.parent.right is self else False
+
+    def _is_center(self):
+        """Return True if child is center child of parent."""
+        return True if self.parent.center is self else False
 
     def left_right_center(self, char):
         """Compare node to a value and return which path to take."""
@@ -102,17 +114,19 @@ class TST(object):
         return self.root
 
     def _add_new_node(self, furthest, char):
-        """Once the point has been found where new characters get inserted
-        (furthest), adds a new node depending wether the character to be
-        inserted is smaller, equal to or greater than the character at
-        furthest node."""
-        if char < furthest.char:
-            furthest.left = TreeNode(char, parent=furthest)
-        elif char > furthest.char:
-            furthest.right = TreeNode(char, parent=furthest)
+        """Return a new node inserted at the furthest point based on wether the
+        character inserted is smaller or equal to the character at
+        furthest node. If center is a null reference, add the new node there."""
+        new_node = TreeNode(char, parent=furthest)
+        if furthest.center:
+            if char < furthest.char:
+                furthest.left = new_node
+            elif char > furthest.char:
+                furthest.right = new_node
         else:
-            furthest.center = TreeNode(char, parent=furthest)
+            furthest.center = new_node
         self._size += 1
+        return new_node
 
     def insert(self, word):
         """Checks to see if word is a sentence, then checks if the word already
@@ -134,8 +148,7 @@ class TST(object):
                 self._wc +=1
                 continue
             else:
-                self._add_new_node(furthest, w[idx])
-                start = furthest.left_right_center(w[idx])
+                start = self._add_new_node(furthest, w[idx])
                 idx += 1
             for char in w[idx:]:
                 start.center = TreeNode(char, parent=start)
@@ -143,6 +156,53 @@ class TST(object):
                 start = start.center
             start.hash = self._additive_hash(w)
             self._wc += 1
+
+    def remove(self, key):
+        """Remove key in tree:
+        1) key is in tree and is a prefix of another word
+            set hash to none at last character of key
+        2) last characer of key is a leaf:
+            traverse up until a non-center parent is found. remove hash and
+            remove link to branch holding key
+        3) last character of key is a node which has one or two chilren which
+        are not center children
+            remove hash at that node and relink all children to the node's parent.
+        If a hash is removed, reduce the size of word count by 1.
+        """
+        f, idx = self._find_furthest(key)
+        h = self._additive_hash(key)
+        if f.hash != h:
+            raise LookupError("Key not found")
+        f.hash = None
+        if f.is_leaf():
+            cur = f
+            while True:
+                if not cur.hash:
+                    cur.center = None
+                    break
+                if len(cur.children()) > 1:
+                    if cur.left:
+                        #left tree is brought in center and assumes responsibility for right tree
+                        cur.parent.center = cur.left
+                        cur.left.right = cur. right
+                    #if no left tree, right tree is moved to center
+                    cur.parent.center = cur.right
+                    break
+                if not cur._is_center():
+                    if cur._is_left():
+                        #if there is a single left branch with no other branches, simply delete the reference to this branch
+                        cur.parent.left = None
+                    if cur._is_right():
+                        cur.parent.right = None
+                    break
+                cur = cur.parent
+        else:
+            #when left tree is moved to center, right tree needs to branch of new center
+            if f.left and not f.center:
+                cur.center = cur.left
+                cur.center.right = cur.right
+        self._wc -= 1
+
 
 
     def _find_furthest(self, word):
