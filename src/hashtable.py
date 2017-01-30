@@ -7,6 +7,8 @@ class HashTable(object):
     def __init__(self, size=1024, hash_func='additive'):
         """Set up hash with specified hash function and size."""
         self.nums = [10, 6, 3, 11, 15]
+        self.size = size
+        self.count = 0
         self.buckets = []
         for i in range(size):
             self.buckets.append([])
@@ -22,7 +24,7 @@ class HashTable(object):
         else:
             raise NameError("Hash function, " + hash_func + ", is not an option.")
 
-    def get(self, key):
+    def get(self, key):  # pragma: no cover
         """Return the value stored with the given key."""
         startslot = self._hash(key) % self.size
 
@@ -44,34 +46,37 @@ class HashTable(object):
     def simple_get(self, key):
         """Retrieve the given val using the given key."""
         bucket = self._get_bucket(key)
-        idx = self._find_idx(key, bucket)
+        idx = self._get_sub_bucket_idx(key, bucket)
         if idx is not None:
-            return bucket[idx]
+            return bucket[idx][1]
         else:
             raise KeyError('Key not found in hash table.')
 
     def __getitem__(self, key):
-        if self.hash_func is not self._custom_oat_hash:
+        """Try to find and return item."""
+        if self.hash_func is not 'cuckoo':
             return self.simple_get(key)
         return self.get(key)
 
     def __setitem__(self, key, data):
+        """Set a kv pair of (key, data)."""
         self.set(key, data)
 
     def set(self, key, val):
         """Store the given val using the given key."""
         bucket = self._get_bucket(key)
-        idx = self._find_idx(key, bucket)
+        idx = self._get_sub_bucket_idx(key, bucket)
         if idx is not None:
             bucket[idx] = (key, val)
         else:
+            self.count += 1
             bucket.append((key, val))
 
     def _get_bucket(self, key):
         idx = self._hash(key) % self.size
         return self.buckets[idx]
 
-    def _find_idx(self, key, bucket):
+    def _get_sub_bucket_idx(self, key, bucket):
         for idx, kv_pair in enumerate(bucket):
             if kv_pair[0] == key:
                 return idx
@@ -122,24 +127,28 @@ class HashTable(object):
 
         return h
 
+    def __len__(self):
+        """Return the number of items in table."""
+        return self.count
 
-def findbest(nums=None, loops=100):
+
+def findbest(nums=None, loops=100, ht_size=500):
     """Try to find better values for the oat hash."""
     from faker import Faker
     import random
     fake = Faker()
-    best = 1000
+    best_len_empty = 1000
     bestnums = None
     if nums is None:
         nums = [10, 6, 3, 11, 15]
-    for i in range(300):
-        ht = HashTable(size=600, hash_func='custom')
+    for i in range(loops):
+        ht = HashTable(size=ht_size, hash_func='custom')
         ht.nums = nums
-        for i in range(loops):
+        for i in range(ht.size):
             ht.set(fake.user_name(), i)
         len_empty = len([x for x in ht.buckets if len(x) == 0])
-        if len_empty < best:
-            best = len_empty
+        if len_empty < best_len_empty:
+            best_len_empty = len_empty
             bestnums = ht.nums[:]
         for idx, num in enumerate(ht.nums):
             if random.randint(0, 1):
@@ -147,14 +156,15 @@ def findbest(nums=None, loops=100):
             else:
                 ht.nums[idx] += random.randint(0, 9)
         nums = ht.nums[:]
-    return bestnums, best
+    return bestnums, best_len_empty
 
 
-if __name__ == '__main__':
+if __name__ == '__main__':  # pragma: no cover
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == 'test':
         from faker import Faker
         fake = Faker()
+
         ht_add = HashTable()
         ht_oat = HashTable(hash_func='oat')
         ht_fnv = HashTable(hash_func='fnv')
@@ -163,20 +173,22 @@ if __name__ == '__main__':
             ht_oat.set(fake.user_name(), i)
             ht_fnv.set(fake.user_name(), i)
 
-        len_empty_add = len([x for x in ht_add.buckets if len(x) == 0])
-        len_empty_oat = len([x for x in ht_oat.buckets if len(x) == 0])
-        len_empty_fnv = len([x for x in ht_fnv.buckets if len(x) == 0])
-        max_length_add = len(max(ht_add.buckets, key=lambda x: len(x)))
-        max_length_oat = len(max(ht_oat.buckets, key=lambda x: len(x)))
-        max_length_fnv = len(max(ht_fnv.buckets, key=lambda x: len(x)))
+        thegoods = []
+        thegoods.append(len([x for x in ht_add.buckets if not x]))
+        thegoods.append(len(max(ht_add.buckets, key=lambda x: len(x))))
+        thegoods.append(len([x for x in ht_oat.buckets if not x]))
+        thegoods.append(len(max(ht_oat.buckets, key=lambda x: len(x))))
+        thegoods.append(len([x for x in ht_fnv.buckets if not x]))
+        thegoods.append(len(max(ht_fnv.buckets, key=lambda x: len(x))))
 
-        print('\nHash tables of size 1024, with 1024 key-value pairs:')
-        print('\nAdditive hash function:')
-        print('Empty buckets: ' + str(len_empty_add))
-        print('Largest bucket size: ' + str(max_length_add))
-        print('\nOne-at-a-time hash function:')
-        print('Empty buckets: ' + str(len_empty_oat))
-        print('Largest bucket size: ' + str(max_length_oat))
-        print('\nFNV hash function:')
-        print('Empty buckets: ' + str(len_empty_fnv))
-        print('Largest bucket size: ' + str(max_length_fnv))
+        rap = '''\nHash tables of size 1024, with 1024 key-value pairs:')
+                 \n\nADDITIVE HASH:
+                 \nEmpty buckets: {}
+                 \nLargest bucket size: {}
+                 \n\nONE AT A TIME:
+                 \nEmpty buckets: {}
+                 \nLargest bucket size: {}
+                 \n\nFNV:
+                 \nEmpty buckets: {}
+                 \nLargest bucket size: {}'''
+        print(rap.format(*[x for x in thegoods]))
