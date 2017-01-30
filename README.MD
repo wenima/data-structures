@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=hash-table)](https://travis-ci.org/wenima/data-structures)
+
 # Summary
 
 The assignment was to implement a [hash table](https://en.wikipedia.org/wiki/Hash_table)
@@ -26,10 +28,8 @@ For more information on the assignment, see here: https://codefellows.github.io/
 
 | Name                     | Stmts | Miss | Cover | Missing                         |
 | -----------------------  | ----- | ---- | ----- | ------------------------------- |
-|                          |       |      |       |                                 |
-|                          |       |      |       |                                 |
+|      hashtable.py        |  104  |  1   | 99%   |  59                             |
 | -----------------------  |  ---  |  --  | ----  | ------------------------------- |
-| TOTAL                    |       |      |       |                                 |
 
 
 # Comments about implementation:
