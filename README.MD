@@ -5,10 +5,10 @@
 The assignment was to implement a [hash table](https://en.wikipedia.org/wiki/Hash_table)
 using 2 hash functions. The first can be a simpler Additive Hash.
 
-The implementation should contain the following
+The implementation contains the following
 
-* get(key) - should return the value stored with the given key
-* set(key, val) - should store the given val using the given key
+* get(key) - should return the value stored with the given key. Bracket notation supported (table['key'] == 'val)
+* set(key, val) - should store the given val using the given key. Bracket notation supported (table['key'] = 'val')
 * \_hash(key) - should hash the key provided (note that this is an internal api)
 
 # Definition:
