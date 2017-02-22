@@ -164,6 +164,48 @@ class Graph(object):
         path.reverse()
         return length, path
 
+    def _initialize(graph, source):
+    """Set up each node within the graph where we assume that rest of the nodes
+    are very far away."""
+    d = {}
+    p = {}
+    for node in graph:
+        d[node] = float('Inf')
+        p[node] = None
+    d[source] = 0 # For the source we know how to reach
+    return d, p
+
+
+    def _relax(node, neighbour, graph, d, p):
+    """Check if the distance between node and neighbour is lower than the one
+    we know of and record if it is."""
+    if d[neighbour] > d[node] + graph[node][neighbour]:
+        d[neighbour]  = d[node] + graph[node][neighbour]
+        p[neighbour] = node
+
+    def bellman_ford(graph, source):
+    """Returns two dictionaries, d and p where d holds all nodes and the cost
+    to reach each one and p holds the predecessors which show which path
+    to take each node with the lost cost. Basic algo with no optimization."""
+    d, p = initialize(graph, source)
+    for i in range(len(graph)-1): #Run this until it converges
+        cur_d = d
+        Tracer()()
+        for u in graph:
+            for v in graph[u]:
+                relax(u, v, graph, d, p)
+        Tracer()()
+        if d == cur_d:
+            print(i)
+            break
+
+    #check for negative-weight cycles
+    for u in graph:
+        for v in graph[u]:
+            assert d[v] <= d[u] + graph[u][v]
+
+    return d, p
+
 # Make Random Graph
 
 
@@ -197,4 +239,3 @@ if __name__ == '__main__':
 
     print("Breadth First Traversal - 100 node graph - between 0 and 10 edges:")
     print(timeit.repeat(stmt="breadth_test(g)", setup="from simple_graph import breadth_test, g", number=10000))
-
