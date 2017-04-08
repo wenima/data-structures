@@ -1,4 +1,4 @@
-#Summary
+# Summary
 
 The assignment was to implement a [Linked List](https://en.wikipedia.org/wiki/linked_list)
 in Python containing 6 methods:
@@ -27,9 +27,8 @@ For more information on the assignment, see here: https://codefellows.github.io/
 | --------------      |  ---  |  --  | ----  | ------- |
 | TOTAL               |  174  |  0   | 100%  |         |
 
-* comment on coverage: I confirmed with David that my code worked and we couldn't figure out why pytest was not able to step into it when pythontutor.com and my local run was. I'll try to type it up in Jupyter as well and see what happens there. I commented that piece of code out now as it was prompting you to comment on our pull request that we had untested code.
 
 
 # Comments about implementation:
 
-* the linked_list.py module contains two "helper" functions. ```python _iterate_from()``` takes in a list object from which to iterate (usually head) and returns an iterable which then can be used in differen ways, one of them is ```_node_values``` which uses list comprehension to return a list containing all values/data of all the nodes.
+* the linked_list.py module contains two "helper" functions. ```python _iterate_from()``` takes in a list object from which to iterate (usually head) and returns an iterable which then can be used in different ways, one of them is ```_node_values``` which uses list comprehension to return a list containing all values/data of all the nodes.
