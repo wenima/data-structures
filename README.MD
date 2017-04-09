@@ -1,6 +1,6 @@
 # Summary
 =======
-[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst)](https://travis-ci.org/wenima/data-structures)
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst)]https://travis-ci.org/wenima/data-structures.svg?branch=master
 
 The assignment was to implement a [binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree) in Python containing 6 methods:
 
