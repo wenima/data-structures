@@ -1,0 +1,3 @@
+[run]
+include = ./src/bst.py, ./src/test_bst.py
+omit = test*.*, setup.py

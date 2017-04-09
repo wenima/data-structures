@@ -1,32 +1,36 @@
 # Summary
+=======
+[![Build Status](https://travis-ci.org/wenima/data-structures.svg?branch=bst)](https://travis-ci.org/wenima/data-structures)
 
-The assignment was to implement a [Linked List](https://en.wikipedia.org/wiki/linked_list)
-in Python containing 6 methods:
+The assignment was to implement a [binary tree search](https://en.wikipedia.org/wiki/Binary_search_tree) in Python containing 6 methods:
 
-* push(val) will insert the value ‘val’ at the head of the list
-* pop() will pop the first value off the head of the list and return it.
-* size() will return the length of the list
-* search(val) will return the node containing ‘val’ in the list, if present, else None
-* remove(node) will remove the given node from the list, wherever it might be (node must be an item in the list)
-* display() will return a unicode string representing the list as if it were a Python tuple literal: “(12, ‘sam’, 37, ‘tango’)”
+* bst.insert(self, val): will insert the value val into the BST. If val is already present, it will be ignored.
+* search(self, val): will return the node containing that value, else None
+* size(self): will return the integer size of the BST (equal to the total number of values stored in the tree). It will return 0 if the tree is empty.
+* depth(self): will return an integer representing the total number of levels in the tree. If there is just root, the depth value is 0, if there is one value, the depth should be 1, if two values it will be 2, if three values it may be 2 or three, depending, etc.
+* contains(self, val): will return True if val is in the BST, False if not.
+* balance(self): will return an integer, positive or negative that represents how well balanced the tree is. Trees which are higher on the left than the right should return a positive value, trees which are higher on the right than the left should return a negative value. An ideally-balanced tree should return 0.
 
-For more information on the assignment, see here: https://codefellows.github.io/sea-python-401d5/assignments/linked_list.html
+# Definition:
+
+A BST is a binary tree where nodes are ordered in the following way:
+* each node contains one key (also known as data)
+* the keys in the left subtree are less then the key in its parent node, in short L < P;
+* the keys in the right subtree are greater the key in its parent node, in short P < R;
+* duplicate keys are not allowed.
 
 
-# Coverage:
+For more information on the assignment, see here: https://en.wikipedia.org/wiki/Binary_search_tree
 
----------- coverage: platform darwin, python 3.5.2-final-0 -----------
+# Testing:
 
-
-| Name                | Stmts | Miss | Cover | Missing |
-| ------------------- | ----- | ---- | ----- | ------- |
-| linked_list.py      |  47   |  0   | 100%  |         |
-| stack.py            |   8   |  0   | 100%  |         |
-| test_linked_list.py |  47   |  0   | 100%  |         |
-| test_stack.py       |  47   |  0   | 100%  |         |
-| --------------      |  ---  |  --  | ----  | ------- |
-| TOTAL               |  174  |  0   | 100%  |         |
-
+=======
+| Name                     | Stmts | Miss | Cover | Missing                         |
+| -----------------------  | ----- | ---- | ----- | ------------------------------- |
+| src/bst.py               |  79   |  16  |  80%  | 135-159                         |
+| src/test_bst.py          |  73   |   1  |  99%  | 111                             |
+| -----------------------  |  ---  |  --  | ----  | ------------------------------- |
+| TOTAL                    | 152   |  17  |  89%  |                                 |
 
 
 # Comments about implementation:
