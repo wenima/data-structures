@@ -1,4 +1,5 @@
-"""Module to show the implemenation of an AVL tree."""
+"""Module to show the implemenation of an AVL tree.
+https://en.wikipedia.org/wiki/AVL_tree"""
 
 from bst import BST
 
